@@ -8,7 +8,34 @@
 \usepackage[english, german]{babel}
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
 \usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{csquotes}
+\usepackage{setspace}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{todonotes}
+\usepackage{hyperref}
+
+\usepackage[style = authoryear-ibid]{biblatex}
+\addbibresource{sonstiges/main.bib}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning, calc, arrows}
+\tikzset{>=triangle 45}
+
+
+\newtheorem{definition}{Definition}[section]
 
 \begin{document}
+\pagenumbering{Roman}
 \include{sonstiges/titlepage}
+
+\onehalfspacing
+\tableofcontents
+
+% Kapitel
+\pagenumbering{arabic}
+\include{kapitel/einleitung/einleitung.tex}
+
+% Anhänge
+\printbibliography[title = Literaturverzeichnis]
 \end{document}

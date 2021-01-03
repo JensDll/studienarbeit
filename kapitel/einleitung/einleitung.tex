@@ -1,0 +1,75 @@
+\chapter{Einleitung}
+Redet man heutzutage über das Thema Kryptographie, sind im Gespräch wahrscheinlich
+Themen wie E-Mail-Verschlüsselung, Internetprotokolle oder Anwendungen im
+Bankenwesen. Auch bekannt sind die Angriffe auf kryptographische Systeme,
+wie zum Beispiel die Entzifferung der durch die Enigma-Chiffriermaschine
+verschlüsselten deutschen Funksprüche während des Zweiten Weltkrieges. Es scheint als
+wäre Kryptographie stark mit den modernen elektronischen Kommunikationstechniken
+verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptographie
+gehen zurück bis etwa 2000 v. Chr., als bereits im antiken Ägypten neben den
+Standard-Hieroglyphen zusätzlich auch \enquote{geheime} Zeichen
+verwendet wurden \parencite[2]{BOOK:KRYPTOGRAPHIE}. Es werden prinzipiell zwei
+unterschiedliche kryptographische Verfahren unterschieden, diese sind
+Symmetrische- und Asymmetrische Algorithmen. Die symmetrische Verschlüsselung ist
+seit langer Zeit ein fester Bestandteil der Kryptographie, mit bekannten historischen
+Verfahren wie die Cäsar-Chiffre welche bereits im antiken Rom für das Verschlüsseln von
+Nachrichten verwendet wurde. Asymmetrische Verschlüsselung hingegen ist eine gänzlich neue Form
+der Kryptographie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
+1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:KRYPTOGRAPHIE}.
+Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie} zu sehen.
+Es ist zu bemerken, dass an oberster Stelle nicht die Kryptographie, sondern
+der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
+
+\paragraph{Kryptographie}
+Die Wissenschaft eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
+verstanden werden kann, für den sie bestimmt ist.
+
+\paragraph{Kryptanalyse}
+Die Wissenschaft ein kryptographisches System zu analysieren mit dem Ziel mögliche
+Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil der
+Kryptologie. Ohne Personen welche versuchen ein kryptographisches System zu
+brechen, wird man nie herausfinden können ob das System wirklich sicher ist.
+Ein starkes Kryptoverfahren sollte dem \textit{Kerckhoffs's principle} unterliegen, welches
+im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:KRYPTOGRAPHIE}
+durch folgende Definition beschrieben ist \parencite*[11]{BOOK:KRYPTOGRAPHIE}:
+\begin{definition}[\textit{Kerckhoffs's principle}]
+\enquote{A cryptosystem should be secure even if the attacker knows all details about
+the system, with the exception of the secret key. In particular, the system should be secure when
+the attacker knows the encryption and decryption algorithms.}
+\end{definition}
+Auf den ersten Blick scheint das \textit{Kerckhoffs's principle} nicht sonderlich intuitiv.
+Es sei einfach zu glauben, dass ein System
+sicherer sein muss wenn die Details der Implementierung geheim gehalten werden.
+In der Regel ist dies aber nicht so, ein Kryptoverfahren bleibt nicht für immer geheim und die
+Vergangenheit hat gezeigt, dass ein System dessen geheimes Design an die Öffentlichkeit
+gelangt, fast immer unsicher ist. http://www.math.ucsd.edu/~crypto/Projects/MarkBarry/index.htm
+\begin{figure}
+\begin{center}
+
+\begin{tikzpicture}
+[every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
+\node(root) {Kryptologie};
+            
+\node[below left=of root]  (A) {Kryptographie};
+\node[below right=of root] (B) {Kryptanalyse};
+
+\node[below left=of A] (C) {Symmetrische \\ Chiffren};
+\node[below=of A] (D) {Asymmetrische \\ Chiffren};
+\node[below right=of A] (E) {Protokolle};
+
+\coordinate (x) at ($(root.south) - (0, 0.5cm)$);
+\draw (root) -- (x);
+\draw [->] (x) -| (A);
+\draw [->] (x) -| (B);
+
+\coordinate (y) at ($(A.south) - (0, 0.5cm)$);
+\draw (A) -- (y);
+\draw [->] (y) -| (C);
+\draw [->] (y) -| (D);
+\draw [->] (y) -| (E);
+\end{tikzpicture}
+
+\end{center}
+\caption{Die Kryptologie und ihre Untergebiete}
+\label{fig:kryptologie}
+\end{figure}
