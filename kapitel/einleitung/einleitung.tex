@@ -16,33 +16,11 @@ Verfahren wie die Cäsar-Chiffre welche bereits im antiken Rom für das Verschl�
 Nachrichten verwendet wurde. Asymmetrische Verschlüsselung hingegen ist eine gänzlich neue Form
 der Kryptographie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
 1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:KRYPTOGRAPHIE}.
-Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie} zu sehen.
+Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie}
+zu sehen \parencite[3]{BOOK:KRYPTOGRAPHIE}.
 Es ist zu bemerken, dass an oberster Stelle nicht die Kryptographie, sondern
 der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
 
-\paragraph{Kryptographie}
-Die Wissenschaft eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
-verstanden werden kann, für den sie bestimmt ist.
-
-\paragraph{Kryptanalyse}
-Die Wissenschaft ein kryptographisches System zu analysieren mit dem Ziel mögliche
-Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil der
-Kryptologie. Ohne Personen welche versuchen ein kryptographisches System zu
-brechen, wird man nie herausfinden können ob das System wirklich sicher ist.
-Ein starkes Kryptoverfahren sollte dem \textit{Kerckhoffs's principle} unterliegen, welches
-im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:KRYPTOGRAPHIE}
-durch folgende Definition beschrieben ist \parencite*[11]{BOOK:KRYPTOGRAPHIE}:
-\begin{definition}[\textit{Kerckhoffs's principle}]
-\enquote{A cryptosystem should be secure even if the attacker knows all details about
-the system, with the exception of the secret key. In particular, the system should be secure when
-the attacker knows the encryption and decryption algorithms.}
-\end{definition}
-Auf den ersten Blick scheint das \textit{Kerckhoffs's principle} nicht sonderlich intuitiv.
-Es sei einfach zu glauben, dass ein System
-sicherer sein muss wenn die Details der Implementierung geheim gehalten werden.
-In der Regel ist dies aber nicht so, ein Kryptoverfahren bleibt nicht für immer geheim und die
-Vergangenheit hat gezeigt, dass ein System dessen geheimes Design an die Öffentlichkeit
-gelangt, fast immer unsicher ist. http://www.math.ucsd.edu/~crypto/Projects/MarkBarry/index.htm
 \begin{figure}
 \begin{center}
 
@@ -73,3 +51,44 @@ gelangt, fast immer unsicher ist. http://www.math.ucsd.edu/~crypto/Projects/Mark
 \caption{Die Kryptologie und ihre Untergebiete}
 \label{fig:kryptologie}
 \end{figure}
+
+\paragraph{Kryptographie}
+Die Wissenschaft eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
+verstanden werden kann, für den sie bestimmt ist.
+
+\paragraph{Kryptanalyse}
+Die Wissenschaft ein kryptographisches System zu analysieren mit dem Ziel mögliche
+Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil der
+Kryptologie. Ohne Personen welche versuchen ein kryptographisches System zu
+brechen, wird man nie herausfinden können ob das System wirklich sicher ist.
+Ein starkes Kryptoverfahren sollte dem \textit{Kerckhoffs's principle} unterliegen, welches
+im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:KRYPTOGRAPHIE}
+durch folgende Definition beschrieben ist \parencite*[11]{BOOK:KRYPTOGRAPHIE}:
+\begin{definition}[\textit{Kerckhoffs's principle}]
+\enquote{A cryptosystem should be secure even if the attacker knows all details about
+the system, with the exception of the secret key. In particular, the system should be secure when
+the attacker knows the encryption and decryption algorithms.}
+\end{definition}
+Auf den ersten Blick scheint das \textit{Kerckhoffs's principle} nicht sonderlich intuitiv.
+Es sei einfach zu glauben, dass ein System
+sicherer sein muss, wenn die Details der Implementierung geheim gehalten werden.
+In der Regel ist dies aber nicht so. Ein Kryptoverfahren bleibt nicht für immer geheim und die
+Vergangenheit hat gezeigt, dass ein System dessen geheimes Design an die Öffentlichkeit
+gelangt, fast immer unsicher ist. Ein hierfür gutes Beispiel ist das Content Scrambling System (CSS)
+für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Industrie die 
+Funktionsweise von CSS geheim zu halten, gelang das Design durch Reverse Code Engineering
+dennoch schnell an die Öffentlichkeit. Es zeigten sich Mängel in der Implementierung,
+welche das Brechen der Verschlüsselung mit sehr geringen Aufwand ermöglichten \parencite{SITE:CSS}.
+
+\section{Symmetrische Verschlüsselung}
+Denkt man an die Teilbereiche der Kryptographie, ist die Symmetrische Verschlüsselung
+das wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
+Algorithmus zum Ver- und Entschlüsseln von Nachrichten und haben sich auf einen
+gemeinsamen geheimen Schlüssel geeinigt. Wie es in der Literatur sehr beliebt ist,
+wird die Idee der symmetrischen Verschlüsselung
+mit einem einfachen Beispiel eingeführt:
+Zwei Parteien Alice und Bob möchten über einen unsicheren Kanal Nachrichten untereinander austauschen.
+Ein unsicherer Kanal ist hierbei lediglich eine öffentliche Kommunikationsstrecke,
+z.B. das Internet, eine Luftstrecke im Fall von WLAN oder Mobilfunk oder jedes andere Medium,
+über das sich digitale Daten übertragen lassen. Es ist klar warum das Verschlüsseln von
+Daten in einer solchen Situation erwünscht sein könnte.
