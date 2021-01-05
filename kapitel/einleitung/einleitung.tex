@@ -8,48 +8,48 @@ wäre Kryptographie stark mit den modernen elektronischen Kommunikationstechnike
 verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptographie
 gehen zurück bis etwa 2000 v. Chr., als bereits im antiken Ägypten neben den
 Standard-Hieroglyphen zusätzlich auch \enquote{geheime} Zeichen
-verwendet wurden \parencite[2]{BOOK:KRYPTOGRAPHIE}. Es werden prinzipiell zwei
+verwendet wurden \parencite[2]{BOOK:crypto}. Es werden prinzipiell zwei
 unterschiedliche kryptographische Verfahren unterschieden, diese sind
 Symmetrische- und Asymmetrische Algorithmen. Die symmetrische Verschlüsselung ist
 seit langer Zeit ein fester Bestandteil der Kryptographie, mit bekannten historischen
 Verfahren wie die Cäsar-Chiffre welche bereits im antiken Rom für das Verschlüsseln von
 Nachrichten verwendet wurde. Asymmetrische Verschlüsselung hingegen ist eine gänzlich neue Form
 der Kryptographie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
-1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:KRYPTOGRAPHIE}.
+1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:crypto}.
 Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie}
-zu sehen \parencite[3]{BOOK:KRYPTOGRAPHIE}.
+zu sehen \parencite[3]{BOOK:crypto}.
 Es ist zu bemerken, dass an oberster Stelle nicht die Kryptographie, sondern
 der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
 
 \begin{figure}
-\begin{center}
+  \begin{center}
 
-\begin{tikzpicture}
-[every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
-\node(root) {Kryptologie};
-            
-\node[below left=of root]  (A) {Kryptographie};
-\node[below right=of root] (B) {Kryptanalyse};
+    \begin{tikzpicture}
+      [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
+      \node(root) {Kryptologie};
 
-\node[below left=of A] (C) {Symmetrische \\ Chiffren};
-\node[below=of A] (D) {Asymmetrische \\ Chiffren};
-\node[below right=of A] (E) {Protokolle};
+      \node[below left=of root]  (A) {Kryptographie};
+      \node[below right=of root] (B) {Kryptanalyse};
 
-\coordinate (x) at ($(root.south) - (0, 0.5cm)$);
-\draw (root) -- (x);
-\draw [->] (x) -| (A);
-\draw [->] (x) -| (B);
+      \node[below left=of A] (C) {Symmetrische \\ Chiffren};
+      \node[below=of A] (D) {Asymmetrische \\ Chiffren};
+      \node[below right=of A] (E) {Protokolle};
 
-\coordinate (y) at ($(A.south) - (0, 0.5cm)$);
-\draw (A) -- (y);
-\draw [->] (y) -| (C);
-\draw [->] (y) -| (D);
-\draw [->] (y) -| (E);
-\end{tikzpicture}
+      \coordinate (x) at ($(root.south) - (0, 0.5cm)$);
+      \draw (root) -- (x);
+      \draw [->] (x) -| (A);
+      \draw [->] (x) -| (B);
 
-\end{center}
-\caption{Die Kryptologie und ihre Untergebiete}
-\label{fig:kryptologie}
+      \coordinate (y) at ($(A.south) - (0, 0.5cm)$);
+      \draw (A) -- (y);
+      \draw [->] (y) -| (C);
+      \draw [->] (y) -| (D);
+      \draw [->] (y) -| (E);
+    \end{tikzpicture}
+
+  \end{center}
+  \caption{Die Kryptologie und ihre Untergebiete}
+  \label{fig:kryptologie}
 \end{figure}
 
 \paragraph{Kryptographie}
@@ -62,20 +62,22 @@ Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil de
 Kryptologie. Ohne Personen welche versuchen ein kryptographisches System zu
 brechen, wird man nie herausfinden können ob das System wirklich sicher ist.
 Ein starkes Kryptoverfahren sollte dem \textit{Kerckhoffs's principle} unterliegen, welches
-im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:KRYPTOGRAPHIE}
-durch folgende Definition beschrieben ist \parencite*[11]{BOOK:KRYPTOGRAPHIE}:
+im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:crypto}
+durch folgende Definition beschrieben ist \parencite*[11]{BOOK:crypto}:
+
 \begin{definition}[\textit{Kerckhoffs's principle}]
-\enquote{A cryptosystem should be secure even if the attacker knows all details about
-the system, with the exception of the secret key. In particular, the system should be secure when
-the attacker knows the encryption and decryption algorithms.}
+  \enquote{A cryptosystem should be secure even if the attacker knows all details about
+    the system, with the exception of the secret key. In particular, the system should be secure when
+    the attacker knows the encryption and decryption algorithms.}
 \end{definition}
+
 Auf den ersten Blick scheint das \textit{Kerckhoffs's principle} nicht sonderlich intuitiv.
 Es sei einfach zu glauben, dass ein System
 sicherer sein muss, wenn die Details der Implementierung geheim gehalten werden.
 In der Regel ist dies aber nicht so. Ein Kryptoverfahren bleibt nicht für immer geheim und die
 Vergangenheit hat gezeigt, dass ein System dessen geheimes Design an die Öffentlichkeit
 gelangt, fast immer unsicher ist. Ein hierfür gutes Beispiel ist das Content Scrambling System (CSS)
-für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Industrie die 
+für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Industrie die
 Funktionsweise von CSS geheim zu halten, gelang das Design durch Reverse Code Engineering
 dennoch schnell an die Öffentlichkeit. Es zeigten sich Mängel in der Implementierung,
 welche das Brechen der Verschlüsselung mit sehr geringen Aufwand ermöglichten \parencite{SITE:CSS}.
@@ -86,9 +88,114 @@ das wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
 Algorithmus zum Ver- und Entschlüsseln von Nachrichten und haben sich auf einen
 gemeinsamen geheimen Schlüssel geeinigt. Wie es in der Literatur sehr beliebt ist,
 wird die Idee der symmetrischen Verschlüsselung
-mit einem einfachen Beispiel eingeführt:
+mit einem einfachen Beispiel eingeführt \parencite[4-6]{BOOK:crypto}:
 Zwei Parteien Alice und Bob möchten über einen unsicheren Kanal Nachrichten untereinander austauschen.
-Ein unsicherer Kanal ist hierbei lediglich eine öffentliche Kommunikationsstrecke,
-z.B. das Internet, eine Luftstrecke im Fall von WLAN oder Mobilfunk oder jedes andere Medium,
-über das sich digitale Daten übertragen lassen. Es ist klar warum das Verschlüsseln von
-Daten in einer solchen Situation erwünscht sein könnte.
+Ein unsicherer Kanal ist hierbei lediglich die Kommunikationsstrecke,
+z.B. das Internet, die Luftschnittstelle bei WLAN und Mobilfunk
+oder jedes andere Medium, über das sich digitale Daten übertragen lassen.
+
+\begin{figure}[h]
+  \begin{center}
+
+    \begin{tikzpicture}
+      [box/.style={draw, align=center},
+        rounded/.style={rounded corners=2mm}]
+
+      \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
+      (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
+      \node[left=3cm of K, box, rounded] (A) {\small Alice};
+      \node[right=3cm of K, box, rounded] (B) {\small Bob};
+      \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
+
+      \draw[->] (A) -- node[near start, above] {\small $x$} (K);
+      \draw[->] (K) -- node[right] {\small $x$} (O);
+      \draw[->] (K) -- node[near end, above] {\small $x$} (B);
+    \end{tikzpicture}
+
+  \end{center}
+  \caption{Kommunikation über einen unsicheren Kanal}
+\end{figure}
+
+\noindent
+Es ist klar warum Alice und Bob gerne geheime Nachrichten austauschen würden. Alice möchte sich an ihrem
+Bankkonto anmelden und sendet ihr Passwort zu Bob. Ein potenzieller Angreifer Oscar
+soll die Passwörter von Alice nicht in Klartext mitlesen können.
+In einer solchen Situation bietet die Symmetrische Verschlüsselung eine gute Lösung:
+Bevor Alice ihr Passwort sendet, verschlüsselt sie es mit einem symmetrischen Algorithmus.
+Bob invertiert die Verschlüsselung und erhält die unverschlüsselte Nachricht. Wurde für
+die Verschlüsselung ein sicherer Algorithmus gewählt, erscheint die Nachricht für Oscar nur wie
+eine zufällige Folge von Bits.
+\newpage
+
+\begin{figure}[h]
+  \begin{center}
+
+    \begin{tikzpicture}
+      [box/.style={draw, align=center},
+        rounded/.style={rounded corners=2mm}]
+
+      \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
+      (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
+
+      \node[left=of K, box] (E) {\small Verschlüsselung \\ \small $e()$};
+      \node[left=of E, box, rounded] (A) {\small Alice};
+
+      \node[right=of K, box] (D) {\small Entschlüsselung \\ \small $d()$};
+      \node[right=of D, box, rounded] (B) {\small Bob};
+
+      \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
+
+      \node[below=of K, cylinder, draw, shape border rotate=180] (SK) {\small sicherer Kanal};
+
+      \draw[->] (A) -- node[above] {\small $x$} (E);
+      \draw[->] (E) -- node[above] {\small $y$} (K);
+
+      \draw[<-] (B) -- node[above] {\small $x$} (D);
+      \draw[<-] (D) -- node[above] {\small $y$} (K);
+
+      \draw[<-] (O) -- node[right] {\small $y$} (K);
+
+      \draw[->] ($(SK.top) + (2.5mm, 0)$) -| node[near end, right] {$k$} (E.south);
+      \draw[->] (SK) -| node[near end, right] {$k$} (D.south);
+    \end{tikzpicture}
+
+  \end{center}
+  \caption{Kommunikation mit symmetrischer Verschlüsselung}
+  \label{fig:sym-encryption}
+\end{figure}
+
+\noindent
+Die Variablen $x, y$ und $k$ aus \autoref{fig:sym-encryption} haben in der
+Kryptographie eine besondere Bedeutung:
+
+\begin{itemize}[itemsep = 0pt]
+  \item $x$ ist der Klartext (engl. \textit{plaintext}).
+  \item $y$ ist das Chiffrat oder der Geheimtext (engl. \textit{ciphertext}).
+  \item $k$ ist der Schlüssel (engl. \textit{key}).
+  \item $e(\cdot)$ ist die Verschlüsselung (engl. \textit{encryption}).
+  \item $d(\cdot)$ ist die Entschlüsselung (engl. \textit{decryption}),
+        d.h. die Umkehrfunktion von $e$.
+\end{itemize}
+
+\noindent
+Für die Symmetrische Verschlüsselung wird der geheime Schlüssel $k$ benötigt. Dieser
+muss vor der Kommunikation auf einem sicheren Weg zwischen Alice und Bob verteilt werden.
+
+\section{Modulare Arithmetik}
+Fast alle kryptographischen Algorithmen, sowohl Symmetrische als auch Asymmetrische Chiffren,
+basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13]{BOOK:crypto}.
+Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben)
+in der wir es gewöhnt sind in unendlichen
+Mengen zu rechnen, z.B. die natürlichen Zahlen oder die reellen Zahlen. Die modulare Arithmetik,
+d.h. die Division mit Rest, bietet eine gute Möglichkeit um in diesen begrenzten Mengen zu rechnen.
+
+\begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
+  Folgende Aussagen über drei ganze Zahlen $a$, $b$, $m$, wobei $m > 0$, sind äquivalent:
+  \begin{enumerate}[label=\roman*), itemsep = 0pt]
+    \item $a$ und $b$ lassen bei Division mit Rest durch $m$ denselben Rest.
+    \item Die Differenz $a - b$ ist durch $m$ teilbar.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Test
+\end{proof}
