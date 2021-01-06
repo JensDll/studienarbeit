@@ -220,8 +220,9 @@ zu können.
     \Rightarrow m & | (q_1m + r_1) - (q_2m + r_2) \\
     \Rightarrow m & | (q_1 - q_2)m + (r_1 - r_2)
   \end{align*}
-  $m|(q_1 - q_2)m + (r_1 - r_2)$ und $m|(q_1 - q_2)m$, weshalb folgen muss: $m|(r_1 - r_2)$.
-  \footnote{Nach der Regel wenn $a|x$ und $a|y \Rightarrow a|x-y$. \\
+  $m|(q_1 - q_2)m + (r_1 - r_2)$ und $m|(q_1 - q_2)m$, weshalb gelten muss: $m|(r_1 - r_2)$.
+  \footnote{Aus $a|b$ und $a|c$ folgt $a|(xb + yc)$,
+    $\forall \, x,y \in \mathbb{Z}$ \parencite[23]{BOOK:numberTheory}. \\
     Also mit konkreten Werten $m|(q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \Rightarrow m|(r_1 - r_2)$.} \\
   $r_1 - r_2$ muss ein Vielfaches von $m$ sein oder 0. Da sich $r_1$ und $r_2$ im Bereich
   $[0,m)$ befinden ist die einzige Lösung $r_1 - r_2 = 0$. Es folgt: $r_1 = r_2$.
@@ -296,13 +297,13 @@ wie es in der Kryptographie oft der Fall ist.
 
 \begin{remark}
   \citeauthor{BOOK:crypto} \parencite*[16]{BOOK:crypto} haben sich in ihrem Buch darauf geeinigt,
-  in der Kongruenz Schreibweise \eqref{eq:kongruenz} ein $b$ für gewöhnlich
+  in der Kongruenzrelation \eqref{eq:kongruenz} ein $b$ für gewöhnlich
   so zu wählen, dass:
   \begin{equation*}
     0 \leq b < m
   \end{equation*}
   Man schreibt somit $27 \equiv 6 \pod{7}$ und nicht $27 \equiv -1 \pod{7}$
-  oder $27 \equiv 13 \pod{7}$. \footnote{Mit der Vereinbarung ist das $b$ der Relation
+  oder $27 \equiv 13 \pod{7}$. \footnote{Mit dieser Vereinbarung ist das $b$ der Relation
     $a \equiv b \pod{m}$ eine Lösung für die Gleichung \\ $a \mod{m} = r = b$.}
   Mathematisch macht es jedoch keinen Unterschied.
 \end{remark}
