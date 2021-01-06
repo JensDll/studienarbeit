@@ -25,8 +25,20 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
-\newtheorem{definition}{Definition}[section]
+\theoremstyle{plain}
 \newtheorem{lemma}{Lemma}[section]
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+% https://tex.stackexchange.com/questions/16453/denoting-the-end-of-example-remark
+\newtheorem{examplex}{\normalfont\textit Beispiel}[section]
+\newenvironment{example}
+  {\pushQED{\qed}\renewcommand{\qedsymbol}{$\triangle$}\examplex}
+  {\popQED\endexamplex}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Bemerkung}[section]
+
 
 \begin{document}
 \pagenumbering{Roman}
