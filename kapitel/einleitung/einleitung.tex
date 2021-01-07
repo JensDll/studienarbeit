@@ -308,3 +308,88 @@ wie es in der Kryptographie oft der Fall ist.
   Mathematisch macht es jedoch keinen Unterschied.
 \end{remark}
 
+\newpage
+\noindent
+Um das bekannte Verschlüsselungsverfahren, die Cäsar-Chiffre, im nächsten Abschnitt
+besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ definiert:
+\begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste modulo $m$]
+  % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
+  \leavevmode
+  \begin{enumerate}[itemsep = 0pt]
+    \item Der Ring $\mathbb{Z}_m$ mit $m \in \mathbb{N}$ und $m > 2$ ist
+          definiert als die Menge $\mathbb{Z}_m = \{0,1,\dots,m - 1\}$
+    \item Zu je zwei Elementen $a,b \in \mathbb{Z}_m$ existiert eindeutig in $\mathbb{Z}_m$
+          \begin{enumerate}[itemsep = 0pt, topsep=0pt]
+            \item Eine Summe $a + b \mod{m}$
+            \item Ein Produkt $a \cdot b \mod{m}$
+          \end{enumerate}
+  \end{enumerate}
+\end{definition}
+
+\section{Die Verschiebe- oder Cäsar-Chiffre}
+Die Cäsar-Chiffre ist das vielleicht bekannteste historische Verschlüsselungsverfahren,
+es wird von \citeauthor{BOOK:crypto} auf Seiten 18-19 eingeführt \parencite*{BOOK:crypto}.
+Bei der Cäsar-Chiffre handelt es sich um eine spezielle Form der Buchstabensubstitution.
+Jedes Zeichen im Klartext wird zur Verschlüsselung um einen bestimmten Wert
+im Alphabet verschoben.
+Um die Cäsar-Chiffre mathematisch zu
+beschreiben, muss das zu Grunde liegende Alphabet enkodiert werden.
+Eine Methode ist die fortlaufend Nummerierung der Buchstaben. Das so kodierte
+lateinische Alphabet ist in \autoref{tab:encode-alph} zu sehen.
+
+\begin{table}[h]
+  \centering
+  \caption{Enkodierung des lateinischen Alphabets}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+    \hline
+    A  & B  & C  & D  & E  & F  & G  & H  & I  & J  & K  & L  & M  \\
+    0  & 1  & 2  & 3  & 4  & 5  & 6  & 7  & 8  & 9  & 10 & 11 & 12 \\
+    \hline
+    N  & O  & P  & Q  & R  & S  & T  & U  & V  & W  & X  & Y  & Z  \\
+    13 & 14 & 15 & 16 & 17 & 18 & 19 & 20 & 21 & 22 & 23 & 24 & 25 \\
+    \hline
+  \end{tabular}
+  \label{tab:encode-alph}
+\end{table}
+
+\noindent
+Würde ein Buchstabe zu weit verschoben, wird von vorne begonnen.
+Sowohl Klartext- als auch Geheimtextbuchstaben sind somit Teil des Rings $\mathbb{Z}_{26}$.
+Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
+
+\begin{definition}[Cäsar-Chiffre]
+  Es seien $x,y,k \in \mathbb{Z}_{26}$. Dann gilt:
+  \begin{description}[itemsep = 0pt]
+    \item[Verschlüsselung:] $y = e_k(x) \equiv x + k \mod{26}$
+    \item[Entschlüsselung:] $x = d_k(y) \equiv y - k \mod{26}$
+  \end{description}
+\end{definition}
+
+Das Verschlüsselungsverfahren funktioniert.
+\begin{proof}
+  Die Entschlüsselung der Verschlüsselung ergibt den Klartext. \\
+  Zu zeigen: $d_k(e_k(x)) = x$.
+  \begin{equation*}
+    d_k(e_k(y)) = x \equiv x + k - k \equiv x \mod{26}
+  \end{equation*}
+\end{proof}
+\begin{example}
+  Es sei $k = 9$ und der Klartext:
+  \begin{equation*}
+    \text{\texttt{A\kern 0.2mmT\kern 0.2mmT\kern 0.2mmA\kern 0.2mmC\kern 0.2mmK}}
+    = x_1,x_2,\dots,x_6 = 0,19,19,0,2,10
+  \end{equation*}
+  Der Geheimtext wird wie folgt berechnet:
+  \begin{equation*}
+    y_1,y_2,\dots,y_6 = 9,2,2,9,11,19 =
+    \text{\texttt{J\kern 0.2mmC\kern 0.2mmC\kern 0.2mmJ\kern 0.2mmL\kern 0.2mmT}}
+  \end{equation*}
+\end{example}
+
+\noindent
+Wie zu erwarten ist die Cäsar-Chiffre natürlich nicht sonderlich sicher.
+Es gibt nur 26 verschiedene Schlüssel (wobei $k = 0$ den Klartext nicht verändert),
+welche schnell alle ausprobiert werden können. Zusätzlich
+haben Klar- und Geheimtext die selben statistischen Eigenschaften.
+Klartextbuchstaben werden immer auf die selben Geheimtextbuchstaben abgebildet. Dies
+erlaubt es eine Häufigkeitsanalyse durchzuführen.
