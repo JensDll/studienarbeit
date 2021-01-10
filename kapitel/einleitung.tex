@@ -16,8 +16,7 @@ Verfahren wie die Cäsar-Chiffre welche bereits im antiken Rom für das Verschl�
 Nachrichten verwendet wurde. Asymmetrische Verschlüsselung hingegen ist eine gänzlich neue Form
 der Kryptographie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
 1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:crypto}.
-Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie}
-zu sehen \parencite[3]{BOOK:crypto}.
+Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie} zu sehen.
 Es ist zu bemerken, dass an oberster Stelle nicht die Kryptographie, sondern
 der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
 
@@ -48,7 +47,7 @@ der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Berei
     \end{tikzpicture}
 
   \end{center}
-  \caption{Die Kryptologie und ihre Untergebiete}
+  \caption{Die Kryptologie und ihre Untergebiete \parencite[3]{BOOK:crypto}}
   \label{fig:kryptologie}
 \end{figure}
 
@@ -138,10 +137,10 @@ eine zufällige Folge von Bits.
       \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
       (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
 
-      \node[left=of K, box] (E) {\small Verschlüsselung \\ \small $e()$};
+      \node[left=of K, box] (E) {\small Verschlüsselung \\ \small $e(x)$};
       \node[left=of E, box, rounded] (A) {\small Alice};
 
-      \node[right=of K, box] (D) {\small Entschlüsselung \\ \small $d()$};
+      \node[right=of K, box] (D) {\small Entschlüsselung \\ \small $d(y)$};
       \node[right=of D, box, rounded] (B) {\small Bob};
 
       \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
@@ -156,8 +155,8 @@ eine zufällige Folge von Bits.
 
       \draw[<-] (O) -- node[right] {\small $y$} (K);
 
-      \draw[->] ($(SK.top) + (2.5mm, 0)$) -| node[near end, right] {$k$} (E.south);
-      \draw[->] (SK) -| node[near end, right] {$k$} (D.south);
+      \draw[->] ($(SK.top) + (2.5mm, 0)$) -| node[near end, right] {\small $k$} (E.south);
+      \draw[->] (SK) -| node[near end, right] {\small $k$} (D.south);
     \end{tikzpicture}
 
   \end{center}
@@ -206,25 +205,25 @@ zu können.
   Es gilt: $r_1 = r_2$. \\
   Zu zeigen: $m|(a-b)$.
   \begin{align*}
-    a - b             & = q_1m + r_1 - q_2m + r_2  \\
-    a - b             & = (q_1 - q_2)m + r_1 - r_2 \\
-    \Rightarrow a - b & = (q_1 - q_2)m             \\
-    \frac{a - b}{m}   & = q_1 - q_2
+    a - b      & = q_1m + r_1 - q_2m + r_2  \\
+    a - b      & = (q_1 - q_2)m + r_1 - r_2 \\
+    \iff a - b & = (q_1 - q_2)m
   \end{align*}
-  Aus den letzten beiden Gleichungen folgt: $m | (a - b)$. \\
+  Aus der letzten Gleichung folgt: $m | (a - b)$. \\
   \textit{ii)} $\Rightarrow$ \textit{i)}: \\
   Es gilt: $m | (a - b)$. \\
   Zu zeigen: $r_1 = r_2$.
   \begin{align*}
-    m             & | (a - b)                     \\
-    \Rightarrow m & | (q_1m + r_1) - (q_2m + r_2) \\
-    \Rightarrow m & | (q_1 - q_2)m + (r_1 - r_2)
+    m                 & | (a - b)                     \\
+    \Leftrightarrow m & | (q_1m + r_1) - (q_2m + r_2) \\
+    \Leftrightarrow m & | (q_1 - q_2)m + (r_1 - r_2)
   \end{align*}
   $m|(q_1 - q_2)m + (r_1 - r_2)$ und $m|(q_1 - q_2)m$, weshalb gelten muss: $m|(r_1 - r_2)$.
   \footnote{Aus $a|b$ und $a|c$ folgt $a|(xb + yc)$,
     $\forall \, x,y \in \mathbb{Z}$ \parencite[23]{BOOK:numberTheory}. \\
-    Also mit konkreten Werten $m|(q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \Rightarrow m|(r_1 - r_2)$.} \\
-  $r_1 - r_2$ muss ein Vielfaches von $m$ sein oder 0. Da sich $r_1$ und $r_2$ im Bereich
+    Also mit konkreten Werten $m|(q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \Leftrightarrow m|(r_1 - r_2)$.} \\
+  Entweder $r_1 - r_2$ ist ein Vielfaches von $m$ oder 0.
+  Da sich $r_1$ und $r_2$ im Bereich
   $[0,m)$ befinden ist die einzige Lösung $r_1 - r_2 = 0$. Es folgt: $r_1 = r_2$.
 \end{proof}
 
@@ -316,7 +315,7 @@ besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ def
   % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
   \leavevmode
   \begin{enumerate}[itemsep = 0pt]
-    \item Der Ring $\mathbb{Z}_m$ mit $m \in \mathbb{N}$ und $m > 2$ ist
+    \item Der Ring $\mathbb{Z}_m$ mit $m \in \mathbb{N}$ ist
           definiert als die Menge $\mathbb{Z}_m = \{0,1,\dots,m - 1\}$
     \item Zu je zwei Elementen $a,b \in \mathbb{Z}_m$ existiert eindeutig in $\mathbb{Z}_m$
           \begin{enumerate}[itemsep = 0pt, topsep=0pt]
@@ -334,7 +333,7 @@ Jedes Zeichen im Klartext wird zur Verschlüsselung um einen bestimmten Wert
 im Alphabet verschoben.
 Um die Cäsar-Chiffre mathematisch zu
 beschreiben, muss das zu Grunde liegende Alphabet enkodiert werden.
-Eine Methode ist die fortlaufend Nummerierung der Buchstaben. Das so kodierte
+Eine Möglichkeit ist die fortlaufende Nummerierung der Buchstaben. Das so kodierte
 lateinische Alphabet ist in \autoref{tab:encode-alph} zu sehen.
 
 \begin{table}[h]
@@ -353,7 +352,8 @@ lateinische Alphabet ist in \autoref{tab:encode-alph} zu sehen.
 \end{table}
 
 \noindent
-Würde ein Buchstabe zu weit verschoben, wird von vorne begonnen.
+Würde ein Buchstabe zu weit verschoben werden, wird von vorne,
+also bei dem ersten Buchstabe weitergemacht.
 Sowohl Klartext- als auch Geheimtextbuchstaben sind somit Teil des Rings $\mathbb{Z}_{26}$.
 Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
 
@@ -365,12 +365,14 @@ Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
   \end{description}
 \end{definition}
 
+\newpage
+\noindent
 Das Verschlüsselungsverfahren funktioniert.
 \begin{proof}
   Die Entschlüsselung der Verschlüsselung ergibt den Klartext. \\
   Zu zeigen: $d_k(e_k(x)) = x$.
   \begin{equation*}
-    d_k(e_k(y)) = x \equiv x + k - k \equiv x \mod{26}
+    d_k(e_k(x)) = x \equiv x + k - k \equiv x \mod{26}
   \end{equation*}
 \end{proof}
 \begin{example}
@@ -380,6 +382,12 @@ Das Verschlüsselungsverfahren funktioniert.
     = x_1,x_2,\dots,x_6 = 0,19,19,0,2,10
   \end{equation*}
   Der Geheimtext wird wie folgt berechnet:
+  \begin{align*}
+    e_9(0)  & \equiv 9 \mod{26}           \\
+    e_9(2)  & \equiv 11 \mod{26}          \\
+    e_9(10) & \equiv 19 \mod{26}          \\
+    e_9(19) & \equiv 28 \equiv 2 \mod{26}
+  \end{align*}
   \begin{equation*}
     y_1,y_2,\dots,y_6 = 9,2,2,9,11,19 =
     \text{\texttt{J\kern 0.2mmC\kern 0.2mmC\kern 0.2mmJ\kern 0.2mmL\kern 0.2mmT}}
@@ -387,9 +395,9 @@ Das Verschlüsselungsverfahren funktioniert.
 \end{example}
 
 \noindent
-Wie zu erwarten ist die Cäsar-Chiffre natürlich nicht sonderlich sicher.
+Wie zu erwarten ist die Cäsar-Chiffre natürlich nicht besonders sicher.
 Es gibt nur 26 verschiedene Schlüssel (wobei $k = 0$ den Klartext nicht verändert),
 welche schnell alle ausprobiert werden können. Zusätzlich
-haben Klar- und Geheimtext die selben statistischen Eigenschaften.
+haben Klartext und Geheimtext die selben statistischen Eigenschaften.
 Klartextbuchstaben werden immer auf die selben Geheimtextbuchstaben abgebildet. Dies
-erlaubt es eine Häufigkeitsanalyse durchzuführen.
+erlaubt es eine Häufigkeitsanalyse der Buchstaben durchzuführen.

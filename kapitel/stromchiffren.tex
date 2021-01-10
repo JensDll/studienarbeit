@@ -1,0 +1,42 @@
+\chapter{Stromchiffren}
+
+\begin{figure}[h]
+  \begin{center}
+
+    \begin{tikzpicture}
+      [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
+      \node(root) {Kryptographie};
+
+      \node[below left=of root] (A) {Symmetrische \\ Chiffren};
+      \node[below=of root] (B) {Asymmetrische \\ Chiffren};
+      \node[below right=of root] (C) {Protokolle};
+
+      \node[below left=1cm and -1cm of A] (D) {Stromchiffren};
+      \node[below right=1cm and -1cm of A] (E) {Blockchiffren};
+
+      \coordinate (x) at ($(root.south) - (0, 0.5cm)$);
+      \draw (root) -- (x);
+      \draw [->] (x) -| (A);
+      \draw [->] (x) -| (B);
+      \draw [->] (x) -| (C);
+
+      \coordinate (y) at ($(A.south) - (0, 0.5cm)$);
+      \draw (A) -- (y);
+      \draw [->] (y) -| (D);
+      \draw [->] (y) -| (E);
+    \end{tikzpicture}
+
+  \end{center}
+  \caption{Unterteilung der Symmetrischen Chiffren \parencite[29]{BOOK:crypto}}
+  \label{fig:sym-ciphers-overview}
+\end{figure}
+
+\noindent
+Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
+der Kryptographie, stellen wir fest: Das Gebiet
+der symmetrischen Verschlüsselungsverfahren kann aufgeteilt werden in Strom- und Blockchiffren.
+In diesem Kapitel soll die Funktionsweise von Stromchiffren untersucht und der Unterschied zu
+den Blockchiffren erläutert werden. Außerdem wird gezeigt welche
+Rolle hierbei die Zufallszahlengeneratoren spielen.
+
+\section{Stromchiffren und Blockchiffren}
