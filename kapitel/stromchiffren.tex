@@ -1,32 +1,29 @@
 \chapter{Stromchiffren}
 
 \begin{figure}[h]
-  \begin{center}
+  \centering
+  \begin{tikzpicture}
+    [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
+    \node(root) {Kryptographie};
 
-    \begin{tikzpicture}
-      [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
-      \node(root) {Kryptographie};
+    \node[below left=of root] (A) {Symmetrische \\ Chiffren};
+    \node[below=of root] (B) {Asymmetrische \\ Chiffren};
+    \node[below right=of root] (C) {Protokolle};
 
-      \node[below left=of root] (A) {Symmetrische \\ Chiffren};
-      \node[below=of root] (B) {Asymmetrische \\ Chiffren};
-      \node[below right=of root] (C) {Protokolle};
+    \node[below left=1cm and -1cm of A] (D) {Stromchiffren};
+    \node[below right=1cm and -1cm of A] (E) {Blockchiffren};
 
-      \node[below left=1cm and -1cm of A] (D) {Stromchiffren};
-      \node[below right=1cm and -1cm of A] (E) {Blockchiffren};
+    \coordinate[below=0.5cm of root] (x);
+    \draw (root) -- (x);
+    \draw [->] (x) -| (A);
+    \draw [->] (x) -| (B);
+    \draw [->] (x) -| (C);
 
-      \coordinate (x) at ($(root.south) - (0, 0.5cm)$);
-      \draw (root) -- (x);
-      \draw [->] (x) -| (A);
-      \draw [->] (x) -| (B);
-      \draw [->] (x) -| (C);
-
-      \coordinate (y) at ($(A.south) - (0, 0.5cm)$);
-      \draw (A) -- (y);
-      \draw [->] (y) -| (D);
-      \draw [->] (y) -| (E);
-    \end{tikzpicture}
-
-  \end{center}
+    \coordinate[below=0.5cm of A] (y);
+    \draw (A) -- (y);
+    \draw [->] (y) -| (D);
+    \draw [->] (y) -| (E);
+  \end{tikzpicture}
   \caption{Unterteilung der Symmetrischen Chiffren \parencite[29]{BOOK:crypto}}
   \label{fig:sym-ciphers-overview}
 \end{figure}
@@ -34,9 +31,118 @@
 \noindent
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
 der Kryptographie, stellen wir fest: Das Gebiet
-der symmetrischen Verschlüsselungsverfahren kann aufgeteilt werden in Strom- und Blockchiffren.
+der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Strom- und Blockchiffren.
 In diesem Kapitel soll die Funktionsweise von Stromchiffren untersucht und der Unterschied zu
 den Blockchiffren erläutert werden. Außerdem wird gezeigt welche
 Rolle hierbei die Zufallszahlengeneratoren spielen.
 
 \section{Stromchiffren und Blockchiffren}
+Die symmetrischen Verschlüsselungsverfahren sind unterteilt in Strom- und Blockchiffren.
+Während beide Verfahren das Ziel haben Informationen zu verschlüsseln, ist die jeweilige
+Methode eine unterschiedliche. Stromchiffren verschlüsseln jedes Bit im Klartext einzeln,
+während Blockchiffren pro Durchlauf mehrere Bits verschlüsseln können.
+\autoref{fig:stream-vs-block-cipher} zeigt diesen prinzipiellen Unterschied, für den Fall, dass
+$n$ Bits verschlüsselt werden sollen.
+
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    [box/.style={draw, inner xsep=4mm, inner ysep=2mm}]
+
+    \node[box] (stream) {Stromchiffre};
+    \node[font=\small, above=of stream] (k1) {$k$};
+    \node[below=1pt of stream] {(a)};
+
+    \node[box, right=5cm of stream] (block) {Blockchiffre};
+    \node[font=\small, above=of block] (k2) {$k$};
+    \node[below=1pt of block] {(b)};
+
+    \draw[->] (k1) to (stream);
+    \draw[<-] (stream.west) to node[pos=1, above, font=\small] {$x_1,x_2,\dots,x_n$} ++(-1.5cm,0);
+    \draw[->] (stream.east) to node[pos=1, above, font=\small] {$y_1,y_2,\dots,y_n$} ++(1.5cm,0);
+
+    \draw[->] (k2) to (block);
+    \draw[<-] (block.west) to
+    node[pos=1, above, font=\small, align=center] {
+      $x_1$ \\
+      $x_2$ \\
+      \vdots \\
+      $x_n$
+    } ++(-1.5cm,0);
+    \draw[->] (block.east) to
+    node[pos=1, above, font=\small, align=center] {
+      $y_1$ \\
+      $y_2$ \\
+      \vdots \\
+      $y_n$
+    } ++(1.5cm,0);
+  \end{tikzpicture}
+  \caption{Das Prinzip der Verschlüsselung von $n$ Bits mittels Strom- (a) und
+    Blockchiffre (b) \parencite[30]{BOOK:crypto}}
+  \label{fig:stream-vs-block-cipher}
+\end{figure}
+
+\noindent
+Blockchiffren arbeiten mit Datenblöcken fester Länge, wobei ein Großteil der
+relevanten Algorithmen eine Eingangsweite von 64 oder 128 Bits besitzen.
+Prominente Beispiele sind Verfahren wie der Data Encryption Standard
+(DES, Blocklänge 64 Bit, \cite[55-58]{BOOK:crypto}) oder der Advanced Encryption Standard
+(AES, Blocklänge 128 Bit, \cite[87-90]{BOOK:crypto}).
+Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOOK:crypto}:
+
+\begin{enumerate}[itemsep = 0pt]
+  \item Blockchiffren werden in der Praxis, vor allem für die Verschlüsselung im Internet,
+        häufiger eingesetzt als Stromchiffren.
+  \item Stromchiffren sind oft klein und schnell und deshalb attraktiv für Anwendungen,
+        bei denen vergleichsweise wenig Rechenleistung zur Verfügung steht, beispielsweise bei
+        Mobilgeräten oder anderen eingebetteten Systemen. Ein bekanntes Verfahren ist der
+        A5/1 Algorithmus, welcher Teil des GSM-Mobilfunkstandards ist und die Gesprächsdaten
+        an der Luftschnittstelle verschlüsselt. A5/1 gilt aufgrund der kurzen Schlüssellänge von
+        64 Bit nicht mehr als uneingeschränkt sicher, erschwert aber dennoch das einfache Abhören.
+  \item In der Vergangenheit galt der generelle Gedanke, dass Stromchiffren
+        effizienter seien als Blockchiffren.
+        Im Allgemeinen gilt diese Annahme heutzutage jedoch nicht mehr. Moderne Verfahren wie AES
+        können sowohl in Hardware als auch Software sehr effizient implementiert werden.
+\end{enumerate}
+
+\newpage
+\section{Die Ver- und Entschlüsselung mit Stromchiffren}
+Wie oben erwähnt, verschlüsseln Stromchiffren jedes Bit im Klartext einzeln. Hierfür
+wird durch einen geheimen Schlüssel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
+des Klartextes kombiniert wird. Die Ver- und Entschlüsselung ist verblüffend einfach, es handelt
+sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
+
+\begin{definition}[{Ver- und Entschlüsselung mit Stromchiffren, \cite[31]{BOOK:crypto}}]
+  Es seien $x_i,y_i,s_i \in \{0,1\}$ die einzelnen Bits aus Klartext, Geheimtext und Schlüs\-selstrom.
+  Es gilt:
+  \begin{description}[itemsep = 0pt]
+    \item[Verschlüsselung:] $y_i = e_{s_i}(x_i) \equiv x_i + s_i \mod{2}$
+    \item[Entschlüsselung:] $x_i = d_{s_i}(y_i) \equiv y_i + s_i \mod{2}$
+  \end{description}
+\end{definition}
+
+\noindent
+Betrachtet man die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf welche
+besprochen werden müssen:
+
+\begin{enumerate}[itemsep = 0pt]
+  \item Verschlüsselung und Entschlüsselung sind die selbe Funktion!
+  \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
+  \item Was sind die Eigenschaften der Schlüsselstrom Bits $s_i$?
+\end{enumerate}
+
+\paragraph{Warum ist Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
+Bis auf spezielle Kürzungsregeln erlauben Kongruenzen (ganz analog wie mit Gleichungen)
+das Ausführen der elementaren Rechenoperationen \parencite[181-183]{BOOK:numberTheory}.
+Mit diesem Wissen kann die Verschlüsselungsfunktion durch einfaches Umformen in die
+Entschlüsselungsfunktion überführt werden.
+\begin{proof}
+  \begin{align*}
+    y_i  & \equiv x_i + s_i \mod{2}  \\
+    -x_i & \equiv -y_i + s_i \mod{2} \\
+    x_i  & \equiv y_i + s_i \mod{2}
+  \end{align*}
+\end{proof}
+\noindent
+Im letzten Schritt wird erneut von dem Wechsel zwischen Restklassen gebrauch gemacht,
+denn es gilt $-1 \equiv 1 \mod{2}$.
