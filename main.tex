@@ -8,12 +8,21 @@
 \usepackage[english, german]{babel}
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
 \usepackage{graphicx}
-\usepackage{hyperref}
 \usepackage{csquotes}
 \usepackage{setspace}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{caption}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks = true,
+  linkcolor = Red,
+  filecolor = Magenta,      
+  urlcolor = Green,
+  citecolor = Cyan
+}
 
 \usepackage[style = authoryear-ibid]{biblatex}
 \addbibresource{sonstiges/main.bib}
@@ -21,6 +30,14 @@
 \usepackage{tikz}
 \usetikzlibrary{positioning, calc, arrows, shapes}
 \tikzset{>=triangle 45}
+\tikzset{XOR/.style={draw,circle,append after command={
+          [shorten >=\pgflinewidth, shorten <=\pgflinewidth,]
+          (\tikzlastnode.north) edge (\tikzlastnode.south)
+          (\tikzlastnode.east) edge (\tikzlastnode.west)
+        }
+    }
+}
+\tikzset{xor/.style={draw, circle, font=\large}}
 
 \usepackage{amssymb}
 \usepackage{amsmath}

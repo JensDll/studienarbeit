@@ -108,7 +108,7 @@ Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOO
 \newpage
 \section{Die Ver- und Entschlüsselung mit Stromchiffren}
 Wie oben erwähnt, verschlüsseln Stromchiffren jedes Bit im Klartext einzeln. Hierfür
-wird durch einen geheimen Schlüssel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
+wird durch einen Schlüssel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
 des Klartextes kombiniert wird. Die Ver- und Entschlüsselung ist verblüffend einfach, es handelt
 sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 
@@ -123,12 +123,12 @@ sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 
 \noindent
 Betrachtet man die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf welche
-besprochen werden müssen:
+besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 
 \begin{enumerate}[itemsep = 0pt]
-  \item Verschlüsselung und Entschlüsselung sind die selbe Funktion!
+  \item Warum ist Verschlüsselung und Entschlüsselung die selbe Funktion?
   \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
-  \item Was sind die Eigenschaften der Schlüsselstrom Bits $s_i$?
+  \item Was sind die Eigenschaften der Schlüsselstrombits $s_i$?
 \end{enumerate}
 
 \paragraph{Warum ist Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
@@ -144,5 +144,146 @@ Entschlüsselungsfunktion überführt werden.
   \end{align*}
 \end{proof}
 \noindent
-Im letzten Schritt wird erneut von dem Wechsel zwischen Restklassen gebrauch gemacht,
+Im letzten Schritt wird erneut von dem Wechsel innerhalb der Restklasse Gebrauch gemacht,
 denn es gilt $-1 \equiv 1 \mod{2}$.
+
+\paragraph{Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
+Das Rechnen in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
+der Menge $\{0,1\}$. Dieses Verhalten ist sehr hilfreich, denn es ermöglicht das Ausdrücken der
+Arithmetik durch einfache boolesche Algebra.
+Betrachtet man die Wahrheitstabelle \ref{tab:truth-table-addition-mod-2}
+der Addition in $\mathbb{Z}_2$, kann sofort eine weitere Beobachtung gemacht werden:
+Die Addition modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ein XOR-Gatter.
+
+\begin{table}[h]
+  \centering
+  \caption{Wahrheitstabelle der Addition modulo 2}
+  \begin{tabular}{cc|c}
+    $x_i$ & $s_i$ & $y_i \equiv x_i + s_i \mod{2}$ \\ \hline
+    0     & 0     & 0                              \\
+    0     & 1     & 1                              \\
+    1     & 0     & 1                              \\
+    1     & 1     & 0                              \\
+  \end{tabular}
+  \label{tab:truth-table-addition-mod-2}
+\end{table}
+
+\noindent
+Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptographischen Verfahren.
+Was es so besonders macht und es von anderen Logikgattern
+wie beispielsweise der Und-Verknüpfung unterscheidet, soll jetzt untersucht werden.
+Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
+des XOR-Gatters befinden wir uns demnach in der ersten oder zweiten Zeile:
+
+\begin{table}[h]
+  \centering
+  \caption{Wahrheitstabelle der Exklusiv-Oder-Verknüpfung}
+  \begin{tabular}{cc|c}
+    $x_i$      & $s_i$      & $y_i = x_i \oplus s_i$ \\ \hline
+    \textbf{0} & \textbf{0} & \textbf{0}             \\
+    \textbf{0} & \textbf{1} & \textbf{1}             \\
+    1          & 0          & 1                      \\
+    1          & 1          & 0                      \\
+  \end{tabular}
+  \label{tab:truth-table-xor}
+\end{table}
+
+\noindent
+Je nach Schlüsselbit $s_i$ ist das Geheimtextbit $y_i$ gegeben als
+$y_i = 0 \oplus 0 \vee 0 \oplus 1 = 0 \vee 1$.
+Verhalten sich die Schlüsselbit unvorhersehbar , d.h. sie sind mit genau 50 prozentiger
+Wahrscheinlichkeit entweder null oder eins, ist es nur durch das Chiffrat nicht möglich auf
+den Klartext zu schließen. Gleichermaßen kann argumentiert werden, sei $x_i = 1$.
+Zu jedem Zeitpunkt hat ein Angreifer nur eine 50 prozentige Chance den richtigen Klartext zu erraten.
+Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern.
+\autoref{fig:enc-dec-stream-cipher} zeigt den Ver- und Entschlüsselungsprozess
+bei Stromchiffren.
+\newpage
+
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \node[XOR, scale=2] (xor-e) {};
+    \node[above=of xor-e] (s1) {$s_i$};
+
+    \node[draw, align=center, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse, right=1.5cm of xor-e]
+    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
+
+    \node[XOR, scale=2, right=1.5cm of K] (xor-d) {};
+    \node[above=of xor-d] (s2) {$s_i$};
+
+    \draw[<-] (xor-e.west) to node[pos=1, above] {$x_i$} ++(-1.5cm,0);
+    \draw[->] (s1) to (xor-e);
+    \draw[->] (xor-e) to node[above] {$y_i$} (K);
+
+    \draw[->] (K) to node[above] {$y_i$} (xor-d);
+    \draw[->] (s2) to (xor-d);
+    \draw[->] (xor-d) to node[pos=1, above] {$x_i$} ++(1.5cm,0);
+  \end{tikzpicture}
+  \caption{Der Ver- und Entschlüsselungsprozess bei Stromchiffren}
+  \label{fig:enc-dec-stream-cipher}
+\end{figure}
+
+\noindent
+In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert werden:
+
+\newcommand{\streamencryption}{
+  \begin{aligned}
+    x_0,\dots,x_7 = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}  \\
+    \oplus                &                                      \\
+    s_0,\dots,s_7 = 00111 & 010_2                                \\
+    y_0,\dots,y_7 = 01101 & 010_2 = 106_{10} = \text{\texttt{j}}
+  \end{aligned}
+}
+
+\newcommand{\streamdecryption}{
+  \begin{aligned}
+    y_0,\dots,y_7 = 01101 & 010_2 = 106_{10} = \text{\texttt{j}} \\
+    \oplus                &                                      \\
+    s_0,\dots,s_7 = 00111 & 010_2                                \\
+    x_0,\dots,x_7 = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}
+  \end{aligned}
+}
+
+\newcommand{\streamarrow}{\tikz{\draw[->] (0,0) to
+    node[above] {$\text{\texttt{j}} = 01101010_2$} (2,0);}}
+
+\begin{example}
+  Alice möchte Bob eine Nachricht senden. Sie verschickt den Buchstaben \texttt{P},
+  wobei dieser zur Verschlüsselung in
+  ASCII-Zeichenkodierung angegeben ist $\text{\texttt{P}} = 80_{10} = 01010000_2$. Der
+  Schlüsselstrom wird außerdem angegeben, es seien $(s_0,s_1,\dots,s_7) = 00111010_2$.
+
+  \begin{table*}[h]
+    \centering
+    \begin{tabular}{lc}
+      $\streamencryption$              & \textbf{Alice} \\
+                                       &                \\
+      \multicolumn{1}{c}{\streamarrow} & \textbf{Oscar} \\
+                                       &                \\
+      $\streamdecryption$              & \textbf{Bob}
+    \end{tabular}
+  \end{table*}
+
+  \noindent
+  Vor der Übertragung wird der Großbuchstabe \texttt{P} durch die XOR-Verknüpfung
+  in den Kleinbuchstaben \texttt{j}
+  umgewandelt. Der Gegenspieler Oscar kann mit dieser Informationen aufgrund der oben beschriebenen
+  Eigenschaften nur wenig anfangen.
+\end{example}
+
+\noindent
+Stromchiffren erscheinen fast zu gut, um wahr zu sein, doch wie gewohnt sind die Dinge in
+der Realität nicht immer so einfach. Es bleibt die letzte der drei Fragestellungen zu
+beantworten.
+\newpage
+
+\paragraph{Was sind die Eigenschaften der Schlüsselstrombits?}\mbox{}\\
+Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
+Dies bestätigt eine nahe liegende Vermutung, dass die Generierung dieser Bitfolge
+($s_1,s_2,\dots,s_n$) die zentrale Fragestellung bei der Verschlüsselungsmethode bildet.
+Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
+Folge von Bits aussehen muss. Im nachfolgenden Abschnitt werden deshalb Zufallszahlen
+diskutiert und wie diese generiert werden können.
+
+\section{Zufallszahlengeneratoren}
