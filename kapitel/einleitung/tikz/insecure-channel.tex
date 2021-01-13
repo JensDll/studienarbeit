@@ -1,0 +1,20 @@
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    [box/.style={draw, align=center},
+      rounded/.style={rounded corners=2mm}]
+
+    \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
+    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
+    \node[left=3cm of K, box, rounded] (A) {\small Alice};
+    \node[right=3cm of K, box, rounded] (B) {\small Bob};
+    \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
+
+    \draw[->] (A) -- node[near start, above] {\small $x$} (K);
+    \draw[->] (K) -- node[right] {\small $x$} (O);
+    \draw[->] (K) -- node[near end, above] {\small $x$} (B);
+  \end{tikzpicture}
+
+  \caption{Kommunikation über einen unsicheren Kanal}
+\end{figure}

@@ -1,0 +1,37 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    [box/.style={draw, inner xsep=4mm, inner ysep=2mm}]
+
+    \node[box] (stream) {Stromchiffre};
+    \node[font=\small, above=of stream] (k1) {$k$};
+    \node[below=1pt of stream] {(a)};
+
+    \node[box, right=5cm of stream] (block) {Blockchiffre};
+    \node[font=\small, above=of block] (k2) {$k$};
+    \node[below=1pt of block] {(b)};
+
+    \draw[->] (k1) to (stream);
+    \draw[<-] (stream.west) to node[pos=1, above, font=\small] {$x_1,x_2,\dots,x_n$} ++(-1.5cm,0);
+    \draw[->] (stream.east) to node[pos=1, above, font=\small] {$y_1,y_2,\dots,y_n$} ++(1.5cm,0);
+
+    \draw[->] (k2) to (block);
+    \draw[<-] (block.west) to
+    node[pos=1, above, font=\small, align=center] {
+      $x_1$ \\
+      $x_2$ \\
+      \vdots \\
+      $x_n$
+    } ++(-1.5cm,0);
+    \draw[->] (block.east) to
+    node[pos=1, above, font=\small, align=center] {
+      $y_1$ \\
+      $y_2$ \\
+      \vdots \\
+      $y_n$
+    } ++(1.5cm,0);
+  \end{tikzpicture}
+  \caption{Das Prinzip der Verschlüsselung von $n$ Bits mittels Strom- (a) und
+    Blockchiffre (b) \parencite[30]{BOOK:crypto}}
+  \label{fig:stream-vs-block-cipher}
+\end{figure}

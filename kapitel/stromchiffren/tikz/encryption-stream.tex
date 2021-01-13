@@ -1,0 +1,23 @@
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    \node[XOR, scale=2] (xor-e) {};
+    \node[above=of xor-e] (s1) {$s_i$};
+
+    \node[draw, align=center, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse, right=1.5cm of xor-e]
+    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
+
+    \node[XOR, scale=2, right=1.5cm of K] (xor-d) {};
+    \node[above=of xor-d] (s2) {$s_i$};
+
+    \draw[<-] (xor-e.west) to node[pos=1, above] {$x_i$} ++(-1.5cm,0);
+    \draw[->] (s1) to (xor-e);
+    \draw[->] (xor-e) to node[above] {$y_i$} (K);
+
+    \draw[->] (K) to node[above] {$y_i$} (xor-d);
+    \draw[->] (s2) to (xor-d);
+    \draw[->] (xor-d) to node[pos=1, above] {$x_i$} ++(1.5cm,0);
+  \end{tikzpicture}
+  \caption{Der Ver- und Entschlüsselungsprozess bei Stromchiffren}
+  \label{fig:enc-dec-stream-cipher}
+\end{figure}

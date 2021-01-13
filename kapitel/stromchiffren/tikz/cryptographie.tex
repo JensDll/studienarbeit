@@ -1,0 +1,27 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
+    \node(root) {Kryptographie};
+
+    \node[below left=of root] (A) {Symmetrische \\ Chiffren};
+    \node[below=of root] (B) {Asymmetrische \\ Chiffren};
+    \node[below right=of root] (C) {Protokolle};
+
+    \node[below left=1cm and -1cm of A] (D) {Stromchiffren};
+    \node[below right=1cm and -1cm of A] (E) {Blockchiffren};
+
+    \coordinate[below=0.5cm of root] (x);
+    \draw (root) -- (x);
+    \draw [->] (x) -| (A);
+    \draw [->] (x) -| (B);
+    \draw [->] (x) -| (C);
+
+    \coordinate[below=0.5cm of A] (y);
+    \draw (A) -- (y);
+    \draw [->] (y) -| (D);
+    \draw [->] (y) -| (E);
+  \end{tikzpicture}
+  \caption{Unterteilung der Symmetrischen Chiffren \parencite[29]{BOOK:crypto}}
+  \label{fig:sym-ciphers-overview}
+\end{figure}

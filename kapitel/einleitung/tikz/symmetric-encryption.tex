@@ -1,0 +1,35 @@
+\begin{figure}[h]
+  \centering
+
+  \begin{tikzpicture}
+    [box/.style={draw, align=center},
+      rounded/.style={rounded corners=2mm}]
+
+    \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
+    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
+
+    \node[left=of K, box] (E) {\small Verschlüsselung \\ \small $e(x)$};
+    \node[left=of E, box, rounded] (A) {\small Alice};
+
+    \node[right=of K, box] (D) {\small Entschlüsselung \\ \small $d(y)$};
+    \node[right=of D, box, rounded] (B) {\small Bob};
+
+    \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
+
+    \node[below=of K, cylinder, draw, shape border rotate=180] (SK) {\small sicherer Kanal};
+
+    \draw[->] (A) -- node[above] {\small $x$} (E);
+    \draw[->] (E) -- node[above] {\small $y$} (K);
+
+    \draw[<-] (B) -- node[above] {\small $x$} (D);
+    \draw[<-] (D) -- node[above] {\small $y$} (K);
+
+    \draw[<-] (O) -- node[right] {\small $y$} (K);
+
+    \draw[->] ($(SK.top) + (2.5mm, 0)$) -| node[near end, right] {\small $k$} (E.south);
+    \draw[->] (SK) -| node[near end, right] {\small $k$} (D.south);
+  \end{tikzpicture}
+
+  \caption{Kommunikation mit symmetrischer Verschlüsselung}
+  \label{fig:sym-encryption}
+\end{figure}

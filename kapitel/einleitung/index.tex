@@ -20,34 +20,7 @@ Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptolog
 Es ist zu bemerken, dass an oberster Stelle nicht die Kryptographie, sondern
 der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
 
-\begin{figure}
-  \centering
-  \begin{tikzpicture}
-    [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
-    \node(root) {Kryptologie};
-
-    \node[below left=of root]  (A) {Kryptographie};
-    \node[below right=of root] (B) {Kryptanalyse};
-
-    \node[below left=of A] (C) {Symmetrische \\ Chiffren};
-    \node[below=of A] (D) {Asymmetrische \\ Chiffren};
-    \node[below right=of A] (E) {Protokolle};
-
-    \coordinate (x) at ($(root.south) - (0, 0.5cm)$);
-    \draw (root) -- (x);
-    \draw [->] (x) -| (A);
-    \draw [->] (x) -| (B);
-
-    \coordinate (y) at ($(A.south) - (0, 0.5cm)$);
-    \draw (A) -- (y);
-    \draw [->] (y) -| (C);
-    \draw [->] (y) -| (D);
-    \draw [->] (y) -| (E);
-  \end{tikzpicture}
-
-  \caption{Die Kryptologie und ihre Untergebiete \parencite[3]{BOOK:crypto}}
-  \label{fig:kryptologie}
-\end{figure}
+\input{kapitel/einleitung/tikz/cryptology.tex}
 
 \paragraph{Kryptographie}
 Die Wissenschaft eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
@@ -92,26 +65,7 @@ Ein unsicherer Kanal ist hierbei lediglich die Kommunikationsstrecke,
 z.B. das Internet, die Luftschnittstelle bei WLAN und Mobilfunk
 oder jedes andere Medium, über das sich digitale Daten übertragen lassen.
 
-\begin{figure}[h]
-  \centering
-
-  \begin{tikzpicture}
-    [box/.style={draw, align=center},
-      rounded/.style={rounded corners=2mm}]
-
-    \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
-    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
-    \node[left=3cm of K, box, rounded] (A) {\small Alice};
-    \node[right=3cm of K, box, rounded] (B) {\small Bob};
-    \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
-
-    \draw[->] (A) -- node[near start, above] {\small $x$} (K);
-    \draw[->] (K) -- node[right] {\small $x$} (O);
-    \draw[->] (K) -- node[near end, above] {\small $x$} (B);
-  \end{tikzpicture}
-
-  \caption{Kommunikation über einen unsicheren Kanal}
-\end{figure}
+\input{kapitel/einleitung/tikz/insecure-channel.tex}
 
 \noindent
 Es ist klar warum Alice und Bob gerne geheime Nachrichten austauschen würden. Alice möchte sich an ihrem
@@ -124,41 +78,7 @@ die Verschlüsselung ein sicherer Algorithmus gewählt, erscheint die Nachricht 
 eine zufällige Folge von Bits.
 \newpage
 
-\begin{figure}[h]
-  \centering
-
-  \begin{tikzpicture}
-    [box/.style={draw, align=center},
-      rounded/.style={rounded corners=2mm}]
-
-    \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
-    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
-
-    \node[left=of K, box] (E) {\small Verschlüsselung \\ \small $e(x)$};
-    \node[left=of E, box, rounded] (A) {\small Alice};
-
-    \node[right=of K, box] (D) {\small Entschlüsselung \\ \small $d(y)$};
-    \node[right=of D, box, rounded] (B) {\small Bob};
-
-    \node[above=of K, box, rounded] (O) {\small Oscar \\ \small (Angreifer)};
-
-    \node[below=of K, cylinder, draw, shape border rotate=180] (SK) {\small sicherer Kanal};
-
-    \draw[->] (A) -- node[above] {\small $x$} (E);
-    \draw[->] (E) -- node[above] {\small $y$} (K);
-
-    \draw[<-] (B) -- node[above] {\small $x$} (D);
-    \draw[<-] (D) -- node[above] {\small $y$} (K);
-
-    \draw[<-] (O) -- node[right] {\small $y$} (K);
-
-    \draw[->] ($(SK.top) + (2.5mm, 0)$) -| node[near end, right] {\small $k$} (E.south);
-    \draw[->] (SK) -| node[near end, right] {\small $k$} (D.south);
-  \end{tikzpicture}
-
-  \caption{Kommunikation mit symmetrischer Verschlüsselung}
-  \label{fig:sym-encryption}
-\end{figure}
+\input{kapitel/einleitung/tikz/symmetric-encryption.tex}
 
 \noindent
 Die Variablen $x, y$ und $k$ aus \autoref{fig:sym-encryption} haben in der
@@ -303,10 +223,10 @@ wie es in der Kryptographie oft der Fall ist.
   Mathematisch macht es jedoch keinen Unterschied.
 \end{remark}
 
-\newpage
 \noindent
 Um das bekannte Verschlüsselungsverfahren, die Cäsar-Chiffre, im nächsten Abschnitt
 besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ definiert:
+\newpage
 \begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste modulo $m$]
   % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
   \leavevmode

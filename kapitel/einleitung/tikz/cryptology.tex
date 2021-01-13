@@ -1,0 +1,28 @@
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
+    \node(root) {Kryptologie};
+
+    \node[below left=of root]  (A) {Kryptographie};
+    \node[below right=of root] (B) {Kryptanalyse};
+
+    \node[below left=of A] (C) {Symmetrische \\ Chiffren};
+    \node[below=of A] (D) {Asymmetrische \\ Chiffren};
+    \node[below right=of A] (E) {Protokolle};
+
+    \coordinate (x) at ($(root.south) - (0, 0.5cm)$);
+    \draw (root) -- (x);
+    \draw [->] (x) -| (A);
+    \draw [->] (x) -| (B);
+
+    \coordinate (y) at ($(A.south) - (0, 0.5cm)$);
+    \draw (A) -- (y);
+    \draw [->] (y) -| (C);
+    \draw [->] (y) -| (D);
+    \draw [->] (y) -| (E);
+  \end{tikzpicture}
+
+  \caption{Die Kryptologie und ihre Untergebiete \parencite[3]{BOOK:crypto}}
+  \label{fig:kryptologie}
+\end{figure}

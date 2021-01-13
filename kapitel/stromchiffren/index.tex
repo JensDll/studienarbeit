@@ -1,32 +1,6 @@
 \chapter{Stromchiffren}
 
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    [every node/.style={draw, inner xsep=4mm, inner ysep=2mm, rounded corners=2mm, align=center}]
-    \node(root) {Kryptographie};
-
-    \node[below left=of root] (A) {Symmetrische \\ Chiffren};
-    \node[below=of root] (B) {Asymmetrische \\ Chiffren};
-    \node[below right=of root] (C) {Protokolle};
-
-    \node[below left=1cm and -1cm of A] (D) {Stromchiffren};
-    \node[below right=1cm and -1cm of A] (E) {Blockchiffren};
-
-    \coordinate[below=0.5cm of root] (x);
-    \draw (root) -- (x);
-    \draw [->] (x) -| (A);
-    \draw [->] (x) -| (B);
-    \draw [->] (x) -| (C);
-
-    \coordinate[below=0.5cm of A] (y);
-    \draw (A) -- (y);
-    \draw [->] (y) -| (D);
-    \draw [->] (y) -| (E);
-  \end{tikzpicture}
-  \caption{Unterteilung der Symmetrischen Chiffren \parencite[29]{BOOK:crypto}}
-  \label{fig:sym-ciphers-overview}
-\end{figure}
+\input{kapitel/stromchiffren/tikz/cryptographie.tex}
 
 \noindent
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
@@ -44,43 +18,7 @@ während Blockchiffren pro Durchlauf mehrere Bits verschlüsseln können.
 \autoref{fig:stream-vs-block-cipher} zeigt diesen prinzipiellen Unterschied, für den Fall, dass
 $n$ Bits verschlüsselt werden sollen.
 
-\begin{figure}[h]
-  \centering
-  \begin{tikzpicture}
-    [box/.style={draw, inner xsep=4mm, inner ysep=2mm}]
-
-    \node[box] (stream) {Stromchiffre};
-    \node[font=\small, above=of stream] (k1) {$k$};
-    \node[below=1pt of stream] {(a)};
-
-    \node[box, right=5cm of stream] (block) {Blockchiffre};
-    \node[font=\small, above=of block] (k2) {$k$};
-    \node[below=1pt of block] {(b)};
-
-    \draw[->] (k1) to (stream);
-    \draw[<-] (stream.west) to node[pos=1, above, font=\small] {$x_1,x_2,\dots,x_n$} ++(-1.5cm,0);
-    \draw[->] (stream.east) to node[pos=1, above, font=\small] {$y_1,y_2,\dots,y_n$} ++(1.5cm,0);
-
-    \draw[->] (k2) to (block);
-    \draw[<-] (block.west) to
-    node[pos=1, above, font=\small, align=center] {
-      $x_1$ \\
-      $x_2$ \\
-      \vdots \\
-      $x_n$
-    } ++(-1.5cm,0);
-    \draw[->] (block.east) to
-    node[pos=1, above, font=\small, align=center] {
-      $y_1$ \\
-      $y_2$ \\
-      \vdots \\
-      $y_n$
-    } ++(1.5cm,0);
-  \end{tikzpicture}
-  \caption{Das Prinzip der Verschlüsselung von $n$ Bits mittels Strom- (a) und
-    Blockchiffre (b) \parencite[30]{BOOK:crypto}}
-  \label{fig:stream-vs-block-cipher}
-\end{figure}
+\input{kapitel/stromchiffren/tikz/principle-encryption-stream.tex}
 
 \noindent
 Blockchiffren arbeiten mit Datenblöcken fester Länge, wobei ein Großteil der
@@ -200,29 +138,7 @@ Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern.
 bei Stromchiffren.
 \newpage
 
-\begin{figure}
-  \centering
-  \begin{tikzpicture}
-    \node[XOR, scale=2] (xor-e) {};
-    \node[above=of xor-e] (s1) {$s_i$};
-
-    \node[draw, align=center, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse, right=1.5cm of xor-e]
-    (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
-
-    \node[XOR, scale=2, right=1.5cm of K] (xor-d) {};
-    \node[above=of xor-d] (s2) {$s_i$};
-
-    \draw[<-] (xor-e.west) to node[pos=1, above] {$x_i$} ++(-1.5cm,0);
-    \draw[->] (s1) to (xor-e);
-    \draw[->] (xor-e) to node[above] {$y_i$} (K);
-
-    \draw[->] (K) to node[above] {$y_i$} (xor-d);
-    \draw[->] (s2) to (xor-d);
-    \draw[->] (xor-d) to node[pos=1, above] {$x_i$} ++(1.5cm,0);
-  \end{tikzpicture}
-  \caption{Der Ver- und Entschlüsselungsprozess bei Stromchiffren}
-  \label{fig:enc-dec-stream-cipher}
-\end{figure}
+\input{kapitel/stromchiffren/tikz/encryption-stream.tex}
 
 \noindent
 In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert werden:
@@ -274,14 +190,14 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
 
 \noindent
 Stromchiffren erscheinen fast zu gut, um wahr zu sein, doch wie gewohnt sind die Dinge in
-der Realität nicht immer so einfach. Es bleibt die letzte der drei Fragestellungen zu
+der Realität nicht immer so einfach. Es bleibt die Letzte der drei Fragestellungen zu
 beantworten.
 \newpage
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombits?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
-Dies bestätigt eine nahe liegende Vermutung, dass die Generierung dieser Bitfolge
-($s_1,s_2,\dots,s_n$) die zentrale Fragestellung bei der Verschlüsselungsmethode bildet.
+Es folgt hieraus, dass die Generierung dieser Bitfolge
+($s_1,s_2,\dots,s_n$) die zentrale Fragestellung der Verschlüsselungsmethode bildet.
 Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
 Folge von Bits aussehen muss. Im nachfolgenden Abschnitt werden deshalb Zufallszahlen
 diskutiert und wie diese generiert werden können.
