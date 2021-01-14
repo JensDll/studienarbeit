@@ -111,7 +111,7 @@ Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptographischen Verfahr
 Was es so besonders macht und es von anderen Logikgattern
 wie beispielsweise der Und-Verknüpfung unterscheidet, soll jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
-des XOR-Gatters befinden wir uns demnach in der ersten oder zweiten Zeile:
+des XOR-Gatters befindet man sich demnach in der ersten oder zweiten Zeile:
 
 \begin{table}[h]
   \centering
@@ -184,7 +184,7 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   \noindent
   Vor der Übertragung wird der Großbuchstabe \texttt{P} durch die XOR-Verknüpfung
   in den Kleinbuchstaben \texttt{j}
-  umgewandelt. Der Gegenspieler Oscar kann mit dieser Informationen aufgrund der oben beschriebenen
+  umgewandelt. Der Gegenspieler Oscar kann mit dieser Information aufgrund der oben beschriebenen
   Eigenschaften nur wenig anfangen.
 \end{example}
 
@@ -196,10 +196,72 @@ beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombits?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
-Es folgt hieraus, dass die Generierung dieser Bitfolge
-($s_1,s_2,\dots,s_n$) die zentrale Fragestellung der Verschlüsselungsmethode bildet.
+Das Generieren dieser Bitfolge ($s_1,s_2,\dots,s_n$) bildet die zentrale Fragestellung
+der Verschlüsselungsmethode.
 Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
-Folge von Bits aussehen muss. Im nachfolgenden Abschnitt werden deshalb Zufallszahlen
-diskutiert und wie diese generiert werden können.
+Bitsequenz aussehen muss. Im nächsten Abschnitt soll deshalb das Thema der
+Zufallszahlen diskutiert werden.
 
 \section{Zufallszahlengeneratoren}
+Wie oben beschrieben, ist die Unvorhersehbarkeit des Schlüsselstroms die wesentliche
+Eigenschaft von Stromchiffren. Im Folgenden sollen deshalb einige
+Formen von Zufallszahlengeneratoren (engl. \textit{random number genereators}, RNG) vorgestellt
+werden \parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
+
+\paragraph{Echte Zufallszahlengeneratoren}
+Echte Zufallszahlengeneratoren (engl. \textit{true random number genereators}, TRNGs)
+erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Notiert man
+beispielsweise das Ergebnis von 100 Münzwürfen und erzeugt eine Folge von 100 Bit, ist es quasi
+unmöglich, die selbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit
+das dies passieren würde, beträgt $1/2^{100}$, was verschwindend gering ist.
+Echte Zufallszahlen basieren auf physikalischen Prozessen. Beispiele umfassen Münzwurf, Würfeln,
+radioaktiver Zerfall oder atmosphärisches Rauschen. TRNG werden in der Kryptographie und
+der Schlüsselerzeugung häufig eingesetzt.
+
+\paragraph{Pseudozufallszahlengeneratoren}
+Pseudozufallszahlengeneratoren (engl. \textit{pseudo random number genereators}, PRNGs)
+generieren Zahlenfolgen basierend auf einem Startwert, welcher im Englischen oft als
+\enquote{\textit{seed}} bezeichnet wird. Die Zahlen eines PRNG sind nicht in der Art zufällig, wie man
+es erwarten könnte. Obwohl sie aussehen wie eine wirklich zufällige Folge, werden sie durch
+mathematische Formeln errechnet und sind deterministisch, d.h. die selbe Sequenz
+kann zu einem späteren Zeitpunkt reproduziert werden.
+In der Kryptographie können PRNGs aufgrund dessen nicht ohne weiteres eingesetzt werden.
+Nichtsdestotrotz haben sie außerhalb der Kryptographie weitreichende Anwendungsgebiete,
+beispielsweise in der Simulation oder während dem Testen von Software und Hardware.
+Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
+
+\paragraph{Kryptographisch sichere Pseudozufallszahlengeneratoren}
+Kryptographisch sichere Pseudozufallszahlengeneratoren
+(engl. \textit{cryptographically secure PRNGs}, CSPRNGs) sind PRNGs mit
+einer speziellen zusätzlichen Eigenschaft: CSPRNGs sind unvorhersehbar. Grob gesprochen
+bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombits
+$s_1,s_2,\dots,s_n$, die folgenden Bits $s_{n+1},s_{n+2},\dots,s_{n+m}$ zu berechnen. Außerdem
+soll es zeitlich unmöglich sein, eines der vorherigen Bits $s_{n-1},s_{n-2},\dots,s_{n-m}$ zu
+berechnen.
+
+\section{Das One-Time-Pad}
+Mit den bis hierher eingeführten Ideen zu Stromchiffren und den verschiedenen
+Zufallszahlengeneratoren sind alle Zutaten vorhanden, um ein theoretisch uneingeschränkt
+sicheres Verschlüsselungsverfahren zu bauen. Ein System heißt uneingeschränkt sicher,
+wenn es trotz unendlich vorhandener Rechenleistung nachweislich nicht gebrochen werden kann.
+\citeauthor{BOOK:crypto} haben den Begriff mit folgender Definition
+beschrieben \parencite*[36]{BOOK:crypto}:
+
+\begin{definition}[\textit{Unconditional Security}]
+  \enquote{\textit{A cryptosystem is unconditionally or in\-formation-theoretically
+      secure if it cannot be broken even with infinite computational resources.}}
+\end{definition}
+
+\noindent
+Das One-Time-Pad (OTP) ist ein solches Verschlüsselungsverfahren, welches dieses Kriterium
+erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
+
+\begin{definition}[One-Time-Pad]
+  Eine Stromchiffre für die gilt
+  \begin{enumerate}[itemsep=0pt]
+    \item Der Schüsselstrom $s_1,s_2,\dots,s_n$ wird durch einen TRNG generiert.
+    \item Nur vertrauenswürdige Gesprächspartner kennen den Schüsselstrom.
+    \item Jedes Schlüsselstrombit $s_i$ wird nur einmal verwendet.
+  \end{enumerate}
+  heißt One-Time-Pad. Das One-Time-Pad ist uneingeschränkt sicher.
+\end{definition}
