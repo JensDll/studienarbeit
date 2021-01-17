@@ -285,10 +285,6 @@ Für jedes Geheimtextbit $y_i$ gibt es genau zwei Lösungen mit gleich großer W
 \end{align*}
 In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst
 sollten heutzutage andere Verfahren eingesetzt werden?
-
-\input{kapitel/stromchiffren/tikz/key-generation-stream.tex}
-
-\noindent
 Als erster Punkt ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
 Hardware und ist in der Regel nicht Teil eines Standard Computers.
 Der zweite und wahrscheinlich größte Nachteil ist die Handhabung des Schlüsselstroms:
@@ -301,7 +297,12 @@ jedoch müssen für den praktischen Gebrauch einige Modifikationen vorgenommen w
 Es wird versucht, den Schüsselstrom, welcher aus einer echt zufälligen Quelle stammt,
 durch die Ausgabe eines \ac{csprng} zu ersetzen, wobei der Schlüssel $k$
 den Startwert des \ac{prng} bildet. Das Prinzip dieser Idee ist in
-\autoref{fig:stream-key-gen} zu sehen. Zu nächst ist wichtig festzuhalten, dass
+\autoref{fig:stream-key-gen} zu sehen.
+\newpage
+\input{kapitel/stromchiffren/tikz/key-generation-stream.tex}
+
+\noindent
+Zu nächst ist wichtig festzuhalten, dass
 Stromchiffren nicht beweisbar sicher sind. Es ist allerdings so, dass alle in der
 Praxis verwendeten Algorithmen (Stromchiffren, Blockchiffren, asymmetrische
 Verfahren), keine informationstheoretische Sicherheit aufweisen \parencite[38]{BOOK:crypto}.
@@ -314,3 +315,18 @@ folgendermaßen definiert \parencite*[35]{BOOK:crypto}:
   \enquote{\textit{A crpytosystem is computationally secure if the best
       known algorithm for breaking it requires at least $t$ operations.}}
 \end{definition}
+
+\noindent
+Die Definition besagt, dass ein System berechenbarkeitstheoretisch sicher ist, wenn es
+keinen bekannten Algorithmus gibt, welcher das System effizient brechen kann.
+In anderen Worten ausgedrückt: Es ist nicht effizient möglich den
+Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
+Aussage darüber getroffen werden, ob ein Problem mit bekannten Methoden
+optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
+sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryptosystems
+(bekanntes asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
+berechnet werden kann, durch das Lösen des Faktorisierungsproblems mit großen
+natürlichen Zahlen. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
+ob es andere Verfahren gibt, welche das Problem effizienter lösen können.
+Im Fall von symmetrischen Verfahren nimmt man an, dass es keinen besseren Algorithmus
+gibt als die vollständige Schlüsselsuche.
