@@ -25,12 +25,12 @@
 
 \usepackage[shortcuts]{glossaries}
 \makenoidxglossaries
+\newacronym{des}{DES}{Data Encryption Standard}
+\newacronym{aes}{AES}{Advanced Encryption Standard}
 \newacronym{rng}{RNG}{\textit{random number generator}}
 \newacronym{trng}{TRNG}{\textit{true random number generator}}
 \newacronym{prng}{PRNG}{\textit{pseudo random number generator}}
-\newacronym
-[description={\textit{cryptographically secure \acs{prng}}}]
-{csprng}{CSPRNG}{\textit{cryptographically secure PRNG}}
+\newacronym{csprng}{CSPRNG}{\textit{cryptographically secure pseudo random number generator}}
 \newacronym{otp}{OTP}{One-Time-Pad}
 
 \usepackage[style = authoryear-ibid]{biblatex}
@@ -86,7 +86,6 @@
 \pagenumbering{arabic}
 \include{kapitel/einleitung/index.tex}
 \include{kapitel/stromchiffren/index.tex}
-\include{kapitel/aes/index.tex}
 \include{kapitel/rsa/index.tex}
 
 % Anhänge

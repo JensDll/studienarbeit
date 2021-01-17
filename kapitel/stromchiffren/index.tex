@@ -1,4 +1,4 @@
-\chapter{Stromchiffren}
+\chapter{Stromchiffren und Blockchiffren}
 
 \input{kapitel/stromchiffren/tikz/cryptographie.tex}
 
@@ -6,13 +6,14 @@
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
 der Kryptographie, stellen wir fest: Das Gebiet
 der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Strom- und Blockchiffren.
-In diesem Kapitel soll die Funktionsweise von Stromchiffren untersucht und der Unterschied zu
-den Blockchiffren erläutert werden. Außerdem wird gezeigt welche
-Rolle hierbei die Zufallszahlengeneratoren spielen.
+In diesem Kapitel sollen anhand von Stromchiffren einige Definition eingeführt
+und der Unterschied zu den Blockchiffren erläutert werden.
+Außerdem wird gezeigt welche Rolle hierbei die Zufallszahlengeneratoren spielen.
 
-\section{Stromchiffren und Blockchiffren}
+\section{Ein Vergleich der Verfahren}
 Die symmetrischen Verschlüsselungsverfahren sind unterteilt in Strom- und Blockchiffren.
-Während beide Verfahren das Ziel haben Informationen zu verschlüsseln, ist die jeweilige
+Während beide Verfahren das gleiche Ziel verfolgen Informationen zu verschlüsseln,
+ist die jeweilige
 Methode eine unterschiedliche. Stromchiffren verschlüsseln jedes Bit im Klartext einzeln,
 während Blockchiffren pro Durchlauf mehrere Bits verschlüsseln können.
 \autoref{fig:stream-vs-block-cipher} zeigt diesen prinzipiellen Unterschied, für den Fall, dass
@@ -23,9 +24,28 @@ $n$ Bits verschlüsselt werden sollen.
 \noindent
 Blockchiffren arbeiten mit Datenblöcken fester Länge, wobei ein Großteil der
 relevanten Algorithmen eine Eingangsweite von 64 oder 128 Bits besitzen.
-Prominente Beispiele sind Verfahren wie der Data Encryption Standard
-(DES, Blocklänge 64 Bit, \cite[55-58]{BOOK:crypto}) oder der Advanced Encryption Standard
-(AES, Blocklänge 128 Bit, \cite[87-90]{BOOK:crypto}).
+Prominente Beispiele sind Verfahren wie der \acl{des}
+(\acs{des}, Blocklänge 64 Bit, \cite[55-58]{BOOK:crypto}) oder der \acl{aes}
+(\acs{des}, Blocklänge 128 Bit, \cite[87-90]{BOOK:crypto}).
+Eine grundlegende Idee für das Entwerfen starker Blockchiffren, ist das Prinzip
+der Konfusion (engl. \textit{confusion}) und
+Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
+\begin{enumerate}[itemsep = 0pt]
+  \item \textbf{Konfusion} ist eine Verschlüsselungsoperation mit der Aufgabe den
+        Zusammenhang von Schlüssel und Geheimtext unklar zu machen. Eine
+        beliebte Methode ist die Bitsubstitution, welche sowohl in \acs{des} als auch
+        \acs{aes} verwendet wird.
+  \item \textbf{Diffusion} ist eine Verschlüsselungsoperation mit der Aufgabe den Einfluss
+        an einer Stelle des Klartextes, über den gesamten Geheimtext zu verteilen, mit dem Ziel
+        statistische Eigenschafen zu verstecken. Das Ändern von einer Stelle im Klartext,
+        soll im Durchschnitt eine Änderung des halben Geheimtextes bewirken. Eine einfache
+        Operation für Diffusion ist die Bitpermutation, welche häufig in \acs{des} eingesetzt wird.
+        \acs{aes} verwendet eine komplexere MixColumn-Transformation.
+\end{enumerate}
+Chiffren welche nur eine der beiden Operationen anwenden, wie die alleinige Konfusion bei der
+Cäsar-Chiffre (\autoref{sec:shift-cipher}), sind nicht sicher. Die heutigen Blockchiffren
+arbeiten iterativ in aufeinanderfolgenden Runden, die gleich aufgebaut sind. In jeder Runde wird eine
+Rundenfunktion angewandt, welche sowohl Konfusion als auch Diffusion durchführt.
 Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOOK:crypto}:
 
 \begin{enumerate}[itemsep = 0pt]
@@ -43,7 +63,6 @@ Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOO
         können sowohl in Hardware als auch Software sehr effizient implementiert werden.
 \end{enumerate}
 
-\newpage
 \section{Die Ver- und Entschlüsselung mit Stromchiffren}
 Wie oben erwähnt, verschlüsseln Stromchiffren jedes Bit im Klartext einzeln. Hierfür
 wird durch einen Schlüssel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
@@ -111,22 +130,8 @@ Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptographischen Verfahr
 Es besitzt besondere Eigenschafen, welche es von anderen Logikgattern
 unterscheidet, diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
-des XOR-Gatters befindet man sich demnach in der ersten oder zweiten Zeile:
-
-\begin{table}[h]
-  \centering
-  \caption{Wahrheitstabelle der Exklusiv-Oder-Verknüpfung}
-  \begin{tabular}{cc|c}
-    $x_i$      & $s_i$      & $y_i = x_i \oplus s_i$ \\ \hline
-    \textbf{0} & \textbf{0} & \textbf{0}             \\
-    \textbf{0} & \textbf{1} & \textbf{1}             \\
-    1          & 0          & 1                      \\
-    1          & 1          & 0                      \\
-  \end{tabular}
-  \label{tab:truth-table-xor}
-\end{table}
-
-\noindent
+\ref{tab:truth-table-xor} des XOR-Gatters befindet
+man sich demnach in der ersten oder zweiten Zeile.
 Je nach Schlüsselbit $s_i$ ist das Geheimtextbit $y_i$ gegeben als
 $y_i = 0 \oplus 0 \vee 0 \oplus 1 = 0 \vee 1$.
 Verhalten sich die Schlüsselbit unvorhersehbar , d.h. sie sind mit genau 50 prozentiger
@@ -135,10 +140,22 @@ den Klartext zu schließen. Zu jedem Zeitpunkt hat ein Angreifer nur eine
 50 prozentige Chance den richtigen Klartext zu erraten.
 Gleichermaßen kann argumentiert werden, sei $x_i = 1$.
 Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern, zusätzlich ist es die einzige
-Verknüpfung welche durch doppeltes Anwenden invertierbar ist.
+Verknüpfung, welche durch doppeltes Anwenden invertierbar ist.
 \autoref{fig:enc-dec-stream-cipher} zeigt den Ver- und Entschlüsselungsprozess
 bei Stromchiffren.
-\newpage
+
+\begin{table}
+  \centering
+  \caption{Wahrheitstabelle der Exklusiv-Oder-Verknüpfung}
+  \begin{tabular}{cc|c}
+    $x_i$ & $s_i$ & $y_i = x_i \oplus s_i$ \\ \hline
+    0     & 0     & 0                      \\
+    0     & 1     & 1                      \\ \hline
+    1     & 0     & 1                      \\
+    1     & 1     & 0                      \\
+  \end{tabular}
+  \label{tab:truth-table-xor}
+\end{table}
 
 \input{kapitel/stromchiffren/tikz/encryption-stream.tex}
 
@@ -171,6 +188,7 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   wobei dieser zur Verschlüsselung in
   ASCII-Zeichenkodierung angegeben ist $\text{\texttt{P}} = 80_{10} = 01010000_2$. Der
   Schlüsselstrom wird außerdem angegeben, es seien $(s_0,s_1,\dots,s_7) = 00111010_2$.
+  \newpage
 
   \begin{table*}[h]
     \centering
@@ -191,10 +209,9 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
 \end{example}
 
 \noindent
-Stromchiffren erscheinen fast zu gut, um wahr zu sein, doch wie gewohnt sind die Dinge in
-der Realität nicht immer so einfach. Es bleibt die Letzte der drei Fragestellungen zu
-beantworten.
-\newpage
+Stromchiffren erscheinen fast zu gut, um wahr zu sein, doch wie später gezeigt wird,
+gibt es aus auch hier gewisse Nachteile, welche in der Praxis entstehen.
+Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombits?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
@@ -239,11 +256,11 @@ Kryptographisch sichere Pseudozufallszahlengeneratoren
 (engl. \acp{csprng}) sind \acp{prng} mit
 einer speziellen zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesprochen
 bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombits
-$s_1,s_2,\dots,s_n$, die folgenden Bits $s_{n+1},s_{n+2},\dots,s_{n+m}$ zu berechnen. Außerdem
+$s_1,s_2,\dots,s_n$, die folgenden Bits $s_{n+1},\\s_{n+2},\dots,s_{n+m}$ zu berechnen. Außerdem
 soll es zeitlich unmöglich sein, eines der vorherigen Bits $s_{n-1},s_{n-2},\dots,s_{n-m}$ zu
 berechnen.
 
-\section{Das One-Time-Pad und praktische Stromchiffren}
+\section{Das One-Time-Pad}
 Mit den bis hierher eingeführten Ideen zu Stromchiffren und den verschiedenen
 Zufallszahlengeneratoren sind alle Teile vorhanden, um ein beweisbar
 sicheres Verschlüsselungsver\-fahren zu bauen. Ein System heißt beweisbar sicher,
@@ -283,6 +300,8 @@ Für jedes Geheimtextbit $y_i$ gibt es genau zwei Lösungen mit gleich großer W
   y = 0 & \equiv 1_x + 1_s \equiv 0_x + 0_s \mod{2} \\
   y = 1 & \equiv 1_x + 0_s \equiv 0_x + 1_s \mod{2}
 \end{align*}
+
+\section{Die praktischen Stromchiffren}
 In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst
 sollten heutzutage andere Verfahren eingesetzt werden?
 Als erster Punkt ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
@@ -298,7 +317,7 @@ Es wird versucht, den Schüsselstrom, welcher aus einer echt zufälligen Quelle 
 durch die Ausgabe eines \ac{csprng} zu ersetzen, wobei der Schlüssel $k$
 den Startwert des \ac{prng} bildet. Das Prinzip dieser Idee ist in
 \autoref{fig:stream-key-gen} zu sehen.
-\newpage
+
 \input{kapitel/stromchiffren/tikz/key-generation-stream.tex}
 
 \noindent
@@ -319,9 +338,9 @@ folgendermaßen definiert \parencite*[35]{BOOK:crypto}:
 \noindent
 Die Definition besagt, dass ein System berechenbarkeitstheoretisch sicher ist, wenn es
 keinen bekannten Algorithmus gibt, welcher das System effizient brechen kann.
-In anderen Worten ausgedrückt: Es ist nicht effizient möglich den
+In anderen Worten ausgedrückt: Es ist nicht effizient möglich, den
 Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
-Aussage darüber getroffen werden, ob ein Problem mit bekannten Methoden
+Aussage darüber getroffen werden, ob ein Problem mit bekannten Verfahren
 optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
 sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryptosystems
 (bekanntes asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
