@@ -4,7 +4,7 @@
     \node[XOR, scale=2] (xor-e) {};
     \node[above=of xor-e] (s1) {$s_i$};
 
-    \node[draw, align=center, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse, right=1.5cm of xor-e]
+    \node[unsecure channel, right=1.5cm of xor-e]
     (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
 
     \node[XOR, scale=2, right=1.5cm of K] (xor-d) {};

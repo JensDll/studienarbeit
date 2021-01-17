@@ -108,8 +108,8 @@ Die Addition modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ei
 
 \noindent
 Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptographischen Verfahren.
-Was es so besonders macht und es von anderen Logikgattern
-wie beispielsweise der Und-Verknüpfung unterscheidet, soll jetzt untersucht werden.
+Es besitzt besondere Eigenschafen, welche es von anderen Logikgattern
+unterscheidet, diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
 des XOR-Gatters befindet man sich demnach in der ersten oder zweiten Zeile:
 
@@ -131,9 +131,11 @@ Je nach Schlüsselbit $s_i$ ist das Geheimtextbit $y_i$ gegeben als
 $y_i = 0 \oplus 0 \vee 0 \oplus 1 = 0 \vee 1$.
 Verhalten sich die Schlüsselbit unvorhersehbar , d.h. sie sind mit genau 50 prozentiger
 Wahrscheinlichkeit entweder null oder eins, ist es nur durch das Chiffrat nicht möglich auf
-den Klartext zu schließen. Gleichermaßen kann argumentiert werden, sei $x_i = 1$.
-Zu jedem Zeitpunkt hat ein Angreifer nur eine 50 prozentige Chance den richtigen Klartext zu erraten.
-Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern.
+den Klartext zu schließen. Zu jedem Zeitpunkt hat ein Angreifer nur eine
+50 prozentige Chance den richtigen Klartext zu erraten.
+Gleichermaßen kann argumentiert werden, sei $x_i = 1$.
+Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern, zusätzlich ist es die einzige
+Verknüpfung welche durch doppeltes Anwenden invertierbar ist.
 \autoref{fig:enc-dec-stream-cipher} zeigt den Ver- und Entschlüsselungsprozess
 bei Stromchiffren.
 \newpage
@@ -205,44 +207,46 @@ Zufallszahlen diskutiert werden.
 \section{Zufallszahlengeneratoren}
 Wie oben beschrieben, ist die Unvorhersehbarkeit des Schlüsselstroms die wesentliche
 Eigenschaft von Stromchiffren. Im Folgenden sollen deshalb einige
-Formen von Zufallszahlengeneratoren (engl. \textit{random number genereators}, RNG) vorgestellt
+Formen von Zufallszahlengeneratoren (engl. \acp{rng}) vorgestellt
 werden \parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
 
 \paragraph{Echte Zufallszahlengeneratoren}
-Echte Zufallszahlengeneratoren (engl. \textit{true random number genereators}, TRNGs)
+Echte Zufallszahlengeneratoren (engl. \acp{trng})
 erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Notiert man
 beispielsweise das Ergebnis von 100 Münzwürfen und erzeugt eine Folge von 100 Bit, ist es quasi
 unmöglich, die selbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit
 das dies passieren würde, beträgt $1/2^{100}$, was verschwindend gering ist.
 Echte Zufallszahlen basieren auf physikalischen Prozessen. Beispiele umfassen Münzwurf, Würfeln,
-radioaktiver Zerfall oder atmosphärisches Rauschen. TRNG werden in der Kryptographie und
+radioaktiver Zerfall oder atmosphärisches Rauschen. \acp{trng} werden in der Kryptographie und
 der Schlüsselerzeugung häufig eingesetzt.
 
 \paragraph{Pseudozufallszahlengeneratoren}
-Pseudozufallszahlengeneratoren (engl. \textit{pseudo random number genereators}, PRNGs)
+Pseudozufallszahlengeneratoren (engl. \acp{prng})
 generieren Zahlenfolgen basierend auf einem Startwert, welcher im Englischen oft als
-\enquote{\textit{seed}} bezeichnet wird. Die Zahlen eines PRNG sind nicht in der Art zufällig, wie man
-es erwarten könnte. Obwohl sie aussehen wie eine wirklich zufällige Folge, werden sie durch
+\enquote{\textit{seed}} bezeichnet wird. Die Zahlen eines \ac{prng} sind nicht in der Art zufällig,
+wie man es erwarten könnte.
+Obwohl sie aussehen wie eine wirklich zufällige Folge, werden sie durch
 mathematische Formeln errechnet und sind deterministisch, d.h. die selbe Sequenz
 kann zu einem späteren Zeitpunkt reproduziert werden.
-In der Kryptographie können PRNGs aufgrund dessen nicht ohne weiteres eingesetzt werden.
-Nichtsdestotrotz haben sie außerhalb der Kryptographie weitreichende Anwendungsgebiete,
+In der Kryptographie können \acp{prng} aufgrund dieser Eigenschaf
+nicht ohne weiteres eingesetzt werden.
+Dennoch haben sie außerhalb der Kryptographie weitreichende Anwendungsgebiete,
 beispielsweise in der Simulation oder während dem Testen von Software und Hardware.
 Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
 
 \paragraph{Kryptographisch sichere Pseudozufallszahlengeneratoren}
 Kryptographisch sichere Pseudozufallszahlengeneratoren
-(engl. \textit{cryptographically secure PRNGs}, CSPRNGs) sind PRNGs mit
-einer speziellen zusätzlichen Eigenschaft: CSPRNGs sind unvorhersehbar. Grob gesprochen
+(engl. \acp{csprng}) sind \acp{prng} mit
+einer speziellen zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesprochen
 bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombits
 $s_1,s_2,\dots,s_n$, die folgenden Bits $s_{n+1},s_{n+2},\dots,s_{n+m}$ zu berechnen. Außerdem
 soll es zeitlich unmöglich sein, eines der vorherigen Bits $s_{n-1},s_{n-2},\dots,s_{n-m}$ zu
 berechnen.
 
-\section{Das One-Time-Pad}
+\section{Das One-Time-Pad und praktische Stromchiffren}
 Mit den bis hierher eingeführten Ideen zu Stromchiffren und den verschiedenen
-Zufallszahlengeneratoren sind alle Zutaten vorhanden, um ein theoretisch uneingeschränkt
-sicheres Verschlüsselungsverfahren zu bauen. Ein System heißt uneingeschränkt sicher,
+Zufallszahlengeneratoren sind alle Teile vorhanden, um ein beweisbar
+sicheres Verschlüsselungsver\-fahren zu bauen. Ein System heißt beweisbar sicher,
 wenn es trotz unendlich vorhandener Rechenleistung nachweislich nicht gebrochen werden kann.
 \citeauthor{BOOK:crypto} haben den Begriff mit folgender Definition
 beschrieben \parencite*[36]{BOOK:crypto}:
@@ -253,15 +257,60 @@ beschrieben \parencite*[36]{BOOK:crypto}:
 \end{definition}
 
 \noindent
-Das One-Time-Pad (OTP) ist ein solches Verschlüsselungsverfahren, welches dieses Kriterium
+Das \ac{otp} ist ein solches Verschlüsselungsverfahren, welches dieses Kriterium
 erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
 
 \begin{definition}[One-Time-Pad]
-  Eine Stromchiffre für die gilt
+  Eine Stromchiffre heißt One-Time-Pad, wenn die folgenden Kriterien eingehalten werden:
   \begin{enumerate}[itemsep=0pt]
-    \item Der Schüsselstrom $s_1,s_2,\dots,s_n$ wird durch einen TRNG generiert.
+    \item Der Schüsselstrom $s_1,s_2,\dots,s_n$ wird durch einen \ac{trng} generiert.
     \item Nur vertrauenswürdige Gesprächspartner kennen den Schüsselstrom.
     \item Jedes Schlüsselstrombit $s_i$ wird nur einmal verwendet.
   \end{enumerate}
-  heißt One-Time-Pad. Das One-Time-Pad ist uneingeschränkt sicher.
+  Das One-Time-Pad ist beweisbar sicher.
+\end{definition}
+\noindent
+Zu jedem Bit im Geheimtext gibt es eine Gleichung der Form:
+\begin{align*}
+  y_0   \equiv x_0 & + s_0 \mod{2} \\
+  y_1   \equiv x_1 & + s_1 \mod{2} \\
+  \vdots           &
+\end{align*}
+\noindent
+Stammt der Schlüsselstrom von einem \ac{trng} können diese Gleichungen nicht gelöst werden.
+Für jedes Geheimtextbit $y_i$ gibt es genau zwei Lösungen mit gleich großer Wahrscheinlichkeit:
+\begin{align*}
+  y = 0 & \equiv 1_x + 1_s \equiv 0_x + 0_s \mod{2} \\
+  y = 1 & \equiv 1_x + 0_s \equiv 0_x + 1_s \mod{2}
+\end{align*}
+In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst
+sollten heutzutage andere Verfahren eingesetzt werden?
+
+\input{kapitel/stromchiffren/tikz/key-generation-stream.tex}
+
+\noindent
+Als erster Punkt ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
+Hardware und ist in der Regel nicht Teil eines Standard Computers.
+Der zweite und wahrscheinlich größte Nachteil ist die Handhabung des Schlüsselstroms:
+Jedes Schlüsselstrombit $s_i$ wird nur einmal verwendet.
+Das One-Time-Pad benötigt somit einen Schlüssel, welcher genauso lang ist
+wie die Nachricht selbst. Es wird klar, warum diese Anforderung
+selbst bei mittelgroßen Nachrichten problematisch wird, zusätzlich muss nach jeder
+Übertragung ein neuer Schlüssel ausgetauscht werden. Die Idee von \ac{otp} ist gut,
+jedoch müssen für den praktischen Gebrauch einige Modifikationen vorgenommen werden.
+Es wird versucht, den Schüsselstrom, welcher aus einer echt zufälligen Quelle stammt,
+durch die Ausgabe eines \ac{csprng} zu ersetzen, wobei der Schlüssel $k$
+den Startwert des \ac{prng} bildet. Das Prinzip dieser Idee ist in
+\autoref{fig:stream-key-gen} zu sehen. Zu nächst ist wichtig festzuhalten, dass
+Stromchiffren nicht beweisbar sicher sind. Es ist allerdings so, dass alle in der
+Praxis verwendeten Algorithmen (Stromchiffren, Blockchiffren, asymmetrische
+Verfahren), keine informationstheoretische Sicherheit aufweisen \parencite[38]{BOOK:crypto}.
+Um den Sicherheitsbegriff realistischer zu gestallten, wird der Angreifer in seiner
+Rechenleistung beschränkt, man hofft also, dass ein Verfahren berechenbarkeitstheoretisch
+sicher ist. Diese Eigenschaft ist von \citeauthor{BOOK:crypto}
+folgendermaßen definiert \parencite*[35]{BOOK:crypto}:
+
+\begin{definition}[\textit{Computational Security}]
+  \enquote{\textit{A crpytosystem is computationally secure if the best
+      known algorithm for breaking it requires at least $t$ operations.}}
 \end{definition}

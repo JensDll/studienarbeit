@@ -5,13 +5,12 @@
 ]{report}
 
 \usepackage[utf8]{inputenc}
-\usepackage[english, german]{babel}
+\usepackage[german]{babel}
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
 \usepackage{graphicx}
 \usepackage{csquotes}
 \usepackage{setspace}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{hyperref}
 \usepackage{enumitem}
 \usepackage{caption}
 
@@ -24,12 +23,23 @@
   citecolor = Cyan
 }
 
+\usepackage[shortcuts]{glossaries}
+\makenoidxglossaries
+\newacronym{rng}{RNG}{\textit{random number generator}}
+\newacronym{trng}{TRNG}{\textit{true random number generator}}
+\newacronym{prng}{PRNG}{\textit{pseudo random number generator}}
+\newacronym
+[description={\textit{cryptographically secure \acs{prng}}}]
+{csprng}{CSPRNG}{\textit{cryptographically secure PRNG}}
+\newacronym{otp}{OTP}{One-Time-Pad}
+
 \usepackage[style = authoryear-ibid]{biblatex}
 \addbibresource{sonstiges/main.bib}
 
 \usepackage{tikz}
 \usetikzlibrary{positioning, calc, arrows, shapes}
 \tikzset{>=triangle 45}
+% https://tex.stackexchange.com/questions/75836/creating-a-seamless-xor-symbol-as-node
 \tikzset{XOR/.style={draw,circle,append after command={
           [shorten >=\pgflinewidth, shorten <=\pgflinewidth,]
           (\tikzlastnode.north) edge (\tikzlastnode.south)
@@ -38,6 +48,7 @@
     }
 }
 \tikzset{xor/.style={draw, circle, font=\large}}
+\tikzset{unsecure channel/.style={draw, align=center, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse}}
 
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -68,6 +79,7 @@
 \tableofcontents
 \listoftables
 \listoffigures
+\printnoidxglossaries
 
 % Kapitel
 \newpage

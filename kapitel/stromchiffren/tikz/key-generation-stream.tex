@@ -1,0 +1,47 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \node[unsecure channel, font=\small] (channel) {unsicherer Kanal \\ (z.B. Internet)};
+
+    \node[above=of channel] (oscar) {Oscar};
+
+    \node[align=center, above=2cm of oscar, inner xsep=-0.7cm, yshift=-0.5cm] (init-key)
+    {Initialer Schlüssel \\ (kurz)};
+
+    \node[XOR, scale=2, left=1.5cm of channel] (xor-e) {};
+    \node[XOR, scale=2, right=1.5cm of channel] (xor-d) {};
+
+    \node[draw, align=center, above=of xor-e] (key-gen-l) {Schlüsselstrom-\\generator};
+    \node[draw, align=center, above=of xor-d] (key-gen-r) {Schlüsselstrom-\\generator};
+
+    \node[above=of key-gen-l, inner sep=5pt] (k-l) {$k$};
+    \node[above=of key-gen-r, inner sep=5pt] (k-r) {$k$};
+
+    \coordinate[left=2.5cm of xor-e] (p-left);
+    \coordinate[right=2.5cm of xor-d] (p-right);
+
+    \node[above=2cm of p-left] (alice) {Alice};
+    \node[above=2cm of p-right] (bob) {Bob};
+
+    \draw [->] (k-l) to (key-gen-l);
+    \draw [<-] (xor-e) to node[right] {$s_i$} (key-gen-l);
+    \draw [<-] (xor-e.west) to node[pos=1, above] {$x_0,x_1,\dots,x_n$} (p-left);
+    \draw [->] (xor-e) to node[above] {$y_i$} (channel);
+
+    \draw [<->] (oscar) to (channel);
+
+    \draw [->] (k-r) to (key-gen-r);
+    \draw [<-] (xor-d) to node[right] {$s_i$} (key-gen-r);
+    \draw [->] (xor-d.east) to node[pos=1, above] {$x_0,x_1,\dots,x_n$} (p-right);
+    \draw [<-] (xor-d) to node[above] {$y_i$} (channel);
+
+    \draw [->, shorten >=0.6cm] (alice) to (p-left);
+    \draw [->, shorten >=0.6cm] (bob) to (p-right);
+
+    \draw (init-key)
+    edge [->, dashed] (k-l)
+    edge [->, dashed] (k-r);
+  \end{tikzpicture}
+  \caption{Praktische Stromchiffre mit Schlüsselstromerzeugung \parencite[38]{BOOK:crypto}}
+  \label{fig:stream-key-gen}
+\end{figure}

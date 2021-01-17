@@ -5,7 +5,7 @@
     [box/.style={draw, align=center},
       rounded/.style={rounded corners=2mm}]
 
-    \node[box, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse]
+    \node[unsecure channel]
     (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
 
     \node[left=of K, box] (E) {\small Verschlüsselung \\ \small $e(x)$};
