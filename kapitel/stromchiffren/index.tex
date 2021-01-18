@@ -6,7 +6,7 @@
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
 der Kryptographie, stellen wir fest: Das Gebiet
 der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Strom- und Blockchiffren.
-In diesem Kapitel sollen anhand von Stromchiffren einige Definition eingeführt
+In diesem Kapitel sollen anhand von Stromchiffren einige Definitionen eingeführt
 und der Unterschied zu den Blockchiffren erläutert werden.
 Außerdem wird gezeigt welche Rolle hierbei die Zufallszahlengeneratoren spielen.
 
@@ -31,12 +31,13 @@ Eine grundlegende Idee für das Entwerfen starker Blockchiffren, ist das Prinzip
 der Konfusion (engl. \textit{confusion}) und
 Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
 \begin{enumerate}[itemsep = 0pt]
-  \item \textbf{Konfusion} ist eine Verschlüsselungsoperation mit der Aufgabe den
-        Zusammenhang von Schlüssel und Geheimtext unklar zu machen. Eine
-        beliebte Methode ist die Bitsubstitution, welche sowohl in \acs{des} als auch
+  \item \textbf{Konfusion} hat die Aufgabe den
+        Zusammenhang von Schlüssel und Geheimtext unklar zu machen. Ein
+        beliebtes Vorgehen ist die Bitsubstitution, welche sowohl in \acs{des} als auch
         \acs{aes} verwendet wird.
-  \item \textbf{Diffusion} ist eine Verschlüsselungsoperation mit der Aufgabe den Einfluss
-        an einer Stelle des Klartextes, über den gesamten Geheimtext zu verteilen, mit dem Ziel
+  \item \textbf{Diffusion} hat die Aufgabe den Einfluss
+        an einer Stelle des Klartextes, über den gesamten Geheimtext zu verteilen. Es wird
+        das Ziel verfolgt
         statistische Eigenschafen zu verstecken. Das Ändern von einer Stelle im Klartext,
         soll im Durchschnitt eine Änderung des halben Geheimtextes bewirken. Eine einfache
         Operation für Diffusion ist die Bitpermutation, welche häufig in \acs{des} eingesetzt wird.
