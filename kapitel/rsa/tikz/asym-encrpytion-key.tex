@@ -1,0 +1,26 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \node at (0,0) {\textbf{Alice}};
+    \node[align=center] at (0,-2) {
+      Zufälligen Schlüssel $k$ wählen \\
+      $y = e_{\keypub}(k)$
+    };
+    \node[align=center] at (0,-4) {
+      Nachricht $x$ verschlüsseln \\
+      $z = AES_k(x)$
+    };
+
+    \node at (10,0) {\textbf{Bob}};
+    \node at (10,-1) {$(\keypub,\keypr) = k$};
+    \node at (10,-3) {$k = d_{\keypr}(y)$};
+    \node at (10,-5) {$x = AES_k^{-1}(z)$};
+
+    \path [->]
+    (7,-1) edge node[above] {$\keypub{}$} (3,-1)
+    (3,-3) edge node[above] {$y$} (7,-3)
+    (3,-5) edge node[above] {$z$} (7,-5);
+  \end{tikzpicture}
+  \caption{Schlüsselaustausch mit asymmetrischer Verschlüsselung}
+  \label{fig:asym-encr-key-exchange}
+\end{figure}

@@ -1,0 +1,17 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    \node at (0,0) {\textbf{Alice}};
+    \node at (0,-2) {$y = e_{\keypub{}}(x)$};
+
+    \node at (8,0) {\textbf{Bob}};
+    \node at (8,-1) {$(\keypub{},\keypr{}) = k$};
+    \node at (8,-3) {$x = d_{\keypr{}}(y)$};
+
+    \path [->]
+    (6,-1) edge node[above] {$\keypub{}$} (2,-1)
+    (2,-3) edge node[above] {$y$} (6,-3);
+  \end{tikzpicture}
+  \caption{Das Prinzip der asymmetrischen Verschlüsselung}
+  \label{fig:asym-encr}
+\end{figure}

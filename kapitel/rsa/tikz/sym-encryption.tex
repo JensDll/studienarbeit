@@ -1,0 +1,19 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    [my rectangle/.style={draw, minimum width = 2cm, minimum height = 1cm}]
+    \node[my rectangle] (e) {$e$};
+    \node[my rectangle, right=4cm of e] (d) {$e^{-1}$};
+    \node[below=of e] {$k$} edge [->] (e);
+    \node[below=of d] {$k$} edge [->] (d);
+
+    \draw [->] (e) to node[above] {$y$} (d);
+
+    \draw [<-] (e.west) to
+    node[pos=1, above, align=center] {Alice \\\\ $x$} +(-1.5cm,0);
+    \draw [->] (d.east) to
+    node[pos=1, above, align=center] {Bob \\\\ $x$} +(1.5cm, 0);
+  \end{tikzpicture}
+  \caption{Das Prinzip der symmetrischen Verschlüsselung}
+  \label{fig:sym-encryption-revisit}
+\end{figure}

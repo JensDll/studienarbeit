@@ -4,6 +4,9 @@
   12pt
 ]{report}
 
+\newcommand{\keypub}{k_{pub}}
+\newcommand{\keypr}{k_{pr}}
+
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
@@ -47,7 +50,6 @@
         }
     }
 }
-\tikzset{xor/.style={draw, circle, font=\large}}
 \tikzset{unsecure channel/.style={draw, align=center, inner xsep=-0.1cm, inner ysep=0.3cm, ellipse}}
 
 \usepackage{amssymb}
@@ -67,7 +69,7 @@
 \theoremstyle{remark}
 \newtheorem{remark}{Bemerkung}[section]
 
-
+\newcommand{\ggt}[2]{ggT(#1,#2)}
 
 \begin{document}
 \pagenumbering{Roman}
