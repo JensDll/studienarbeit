@@ -14,8 +14,20 @@
 \usepackage{csquotes}
 \usepackage{setspace}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{enumitem}
 \usepackage{caption}
+
+\usepackage{listings}
+\lstset{
+  columns = fullflexible,
+  language = C,
+  mathescape = true,
+  escapechar = \§
+}
+\renewcommand{\lstlistingname}{Quelltext}
+\renewcommand{\lstlistlistingname}{Quelltextverzeichnis}
+
+\usepackage{enumitem}
+\setlist{itemsep=0pt}
 
 \usepackage{hyperref}
 \hypersetup{
@@ -70,6 +82,7 @@
 \newtheorem{remark}{Bemerkung}[section]
 
 \newcommand{\ggt}[2]{ggT(#1,#2)}
+\newcommand{\numeq}[1]{\stackrel{#1}{=}}
 
 \begin{document}
 \pagenumbering{Roman}

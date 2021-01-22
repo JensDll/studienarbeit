@@ -84,7 +84,7 @@ eine zufällige Folge von Bits.
 Die Variablen $x, y$ und $k$ aus \autoref{fig:sym-encryption} haben in der
 Kryptographie eine besondere Bedeutung:
 
-\begin{itemize}[itemsep = 0pt]
+\begin{itemize}
   \item $x$ ist der Klartext (engl. \textit{plaintext}).
   \item $y$ ist das Chiffrat oder der Geheimtext (engl. \textit{ciphertext}).
   \item $k$ ist der Schlüssel (engl. \textit{key}).
@@ -108,7 +108,7 @@ zu können.
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
   Folgende Aussagen über drei ganze Zahlen $a$, $b$, $m$, wobei $m > 0$, sind äquivalent:
-  \begin{enumerate}[label=\roman*), itemsep = 0pt]
+  \begin{enumerate}[label=\roman*)]
     \item $a$ und $b$ lassen bei Division mit Rest durch $m$ denselben Rest.
     \item Die Differenz $a - b$ ist durch $m$ teilbar.
   \end{enumerate}
@@ -134,7 +134,7 @@ zu können.
     \Leftrightarrow m & | (q_1m + r_1) - (q_2m + r_2) \\
     \Leftrightarrow m & | (q_1 - q_2)m + (r_1 - r_2)
   \end{align*}
-  $m|(q_1 - q_2)m + (r_1 - r_2)$ und $m|(q_1 - q_2)m$, weshalb gelten muss: $m|(r_1 - r_2)$.
+  Aus $m|(q_1 - q_2)m + (r_1 - r_2)$ und $m|(q_1 - q_2)m \Rightarrow m|(r_1 - r_2)$.
   \footnote{Aus $a|b$ und $a|c$ folgt $a|(xb + yc)$,
     $\forall \, x,y \in \mathbb{Z}$ \parencite[23]{BOOK:numberTheory}. \\
     Also mit konkreten Werten $m|(q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \Leftrightarrow m|(r_1 - r_2)$.} \\
@@ -194,11 +194,10 @@ wie es in der Kryptographie oft der Fall ist.
   zwei Formen der modularen Exponentiation gezeigt werden. Es soll das Ergebnis der
   Berechnung $3^8 \mod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
   ausgerechnet, und im zweiten Beispiel wird zwischen den Restklassen gewechselt:
-  \begin{enumerate}[itemsep = 0pt]
+  \begin{enumerate}
     \item $3^8 = 6561 \equiv 2 \mod{7}$, weil $6561 = 937 \cdot 7 + 2$ \\
           Wir erhalten das relative große Zwischenergebnis 6561 obwohl wir wissen,
           dass das Ergebnis im Bereich $[0, 6]$ liegen muss.
-
     \item Es ist $3^3 = 27 \equiv -1 \mod{7}$. Man schreibt:
           \begin{equation*}
             3^8 = (3^3)^2 \cdot 3^2 \equiv (-1)^2 \cdot 9 \equiv 2 \mod{7}
@@ -230,11 +229,11 @@ besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ def
 \begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste modulo $m$]
   % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
   \leavevmode
-  \begin{enumerate}[itemsep = 0pt]
+  \begin{enumerate}
     \item Der Ring $\mathbb{Z}_m$ mit $m \in \mathbb{N}$ und $m > 1$ ist
           definiert als die Menge $\mathbb{Z}_m = \{0,1,\dots,m - 1\}$
     \item Zu je zwei Elementen $a,b \in \mathbb{Z}_m$ existiert eindeutig in $\mathbb{Z}_m$
-          \begin{enumerate}[itemsep = 0pt, topsep=0pt]
+          \begin{enumerate}[topsep=0pt]
             \item Eine Summe $a + b \mod{m}$
             \item Ein Produkt $a \cdot b \mod{m}$
           \end{enumerate}
@@ -275,7 +274,7 @@ Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
 
 \begin{definition}[Cäsar-Chiffre]
   Es seien $x,y,k \in \mathbb{Z}_{26}$. Dann gilt:
-  \begin{description}[itemsep = 0pt]
+  \begin{description}
     \item[Verschlüsselung:] $y = e_k(x) \equiv x + k \mod{26}$
     \item[Entschlüsselung:] $x = d_k(y) \equiv y - k \mod{26}$
   \end{description}

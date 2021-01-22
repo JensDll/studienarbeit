@@ -30,7 +30,7 @@ Prominente Beispiele sind Verfahren wie der \acl{des}
 Eine grundlegende Idee für das Entwerfen starker Blockchiffren, ist das Prinzip
 der Konfusion (engl. \textit{confusion}) und
 Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
-\begin{enumerate}[itemsep = 0pt]
+\begin{enumerate}
   \item \textbf{Konfusion} hat die Aufgabe den
         Zusammenhang von Schlüssel und Geheimtext unklar zu machen. Ein
         beliebtes Vorgehen ist die Bitsubstitution, welche sowohl in \acs{des} als auch
@@ -49,7 +49,7 @@ arbeiten iterativ in aufeinanderfolgenden Runden, die gleich aufgebaut sind. In 
 Rundenfunktion angewandt, welche sowohl Konfusion als auch Diffusion durchführt.
 Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOOK:crypto}:
 
-\begin{enumerate}[itemsep = 0pt]
+\begin{enumerate}
   \item Blockchiffren werden in der Praxis, vor allem für die Verschlüsselung im Internet,
         häufiger eingesetzt als Stromchiffren.
   \item Stromchiffren sind oft klein und schnell und deshalb attraktiv für Anwendungen,
@@ -73,7 +73,7 @@ sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 \begin{definition}[{Ver- und Entschlüsselung mit Stromchiffren, \cite[31]{BOOK:crypto}}]
   Es seien $x_i,y_i,s_i \in \{0,1\}$ die einzelnen Bits aus Klartext, Geheimtext und Schlüs\-selstrom.
   Es gilt:
-  \begin{description}[itemsep = 0pt]
+  \begin{description}
     \item[Verschlüsselung:] $y_i = e_{s_i}(x_i) \equiv x_i + s_i \mod{2}$
     \item[Entschlüsselung:] $x_i = d_{s_i}(y_i) \equiv y_i + s_i \mod{2}$
   \end{description}
@@ -83,7 +83,7 @@ sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 Betrachtet man die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf welche
 besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 
-\begin{enumerate}[itemsep = 0pt]
+\begin{enumerate}
   \item Warum ist Verschlüsselung und Entschlüsselung die selbe Funktion?
   \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
   \item Was sind die Eigenschaften der Schlüsselstrombits $s_i$?
@@ -280,7 +280,7 @@ erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
 
 \begin{definition}[One-Time-Pad]
   Eine Stromchiffre heißt One-Time-Pad, wenn die folgenden Kriterien eingehalten werden:
-  \begin{enumerate}[itemsep=0pt]
+  \begin{enumerate}
     \item Der Schüsselstrom $s_1,s_2,\dots,s_n$ wird durch einen \ac{trng} generiert.
     \item Nur vertrauenswürdige Gesprächspartner kennen den Schüsselstrom.
     \item Jedes Schlüsselstrombit $s_i$ wird nur einmal verwendet.
