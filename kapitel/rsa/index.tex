@@ -217,40 +217,21 @@ In allgemeiner Form können die eben gezeigten Schritte folgendermaßen beschrie
     b_{i+1} & = r_i = a_i - q_i \cdot b_i
   \end{split}
 \end{equation}
-Eine formale Beschreibung des Algorithmus ist in \autoref{lst:euklid} zu sehen.
-% \begin{lstlisting}[ caption=Der Euklidische Algorithmus, label=lst:euklid]
-% int ggt(int a, int b)
-% {
-%   while (true)
-%   {
-%     int r = a % b;
-
-%     if (r == 0)
-%     {
-%       return b;
-%     }
-
-%     a = b;// $a_{i+1} = b_i$
-%     b = r;
-%   }
-% }
-% \end{lstlisting}
-\begin{lstlisting}[caption=Der Euklidische Algorithmus, label=lst:euklid]
-§
-\textbf{Eingabe:}\quad $a_0,b_0 \in \mathbb{N}$ mit $a_0 > b_0$\\
-\textbf{Ausgabe:}\quad $\ggt{a_0}{b_0}$\\
-\textbf{Initialisierung:}\quad $i = -1$\\
-\textbf{Algorithmus:}
-§
-
-do
-  $i = i + 1$
-  $r_i = a_i \mod{b_i}$
-  $a_{i+1} = b_i$
-  $b_{i+1} = r_i$
-while $r_i \neq 0$
-return
-  $\ggt{a_0}{b_0} = r_{i-1}$
+Eine rekursive Implementierung des Euklidischen Algorithmus ist in \autoref{lst:gcd}
+zu sehen (engl. \textit{greatest common divisor} (gcd)).
+Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde.
+\begin{lstlisting}[caption=Euklidischer Algorithmus, label=lst:gcd]
+int gcd(int a, int b)
+{
+  int r = a % b;
+  
+  if (r == 0)
+  {
+    return b;
+  }
+  
+  return gcd(b, r);
+}
 \end{lstlisting}
 
 \subsection{Der erweiterte Euklidische Algorithmus}
@@ -395,3 +376,24 @@ mit $y$ bestimmt wurde.
     17 \cdot 21 = 357 \equiv 1 \mod{89}
   \end{equation*}
 \end{example}
+
+\noindent
+Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
+\autoref{lst:gcd-ext} zu sehen.
+Wie zuvor terminiert das Verfahren nachdem das erste
+Mal ein Rest von null berechnet wurde.
+\begin{lstlisting}[caption=Erweiterter Euklidischer Algorithmus, label=lst:gcd-ext]
+(int x, int y, int gcd) gcdExtended(int a, int b)
+{
+  int q = Math.DivRem(a, b, out int r);
+
+  if (r == 0)
+  {
+    return (x: 0, y: 1, gcd: b);
+  }
+
+  (int x, int y, int gcd) = gcdExtended(b, r);
+
+  return (x: y, y: x - y * q, gcd: gcd);
+}
+\end{lstlisting}
