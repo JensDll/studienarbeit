@@ -221,11 +221,16 @@ wie es in der Kryptographie oft der Fall ist.
     $a \equiv b \pod{m}$ eine Lösung für die Gleichung \\ $a \mod{m} = r = b$.}
   Mathematisch macht es jedoch keinen Unterschied.
 \end{remark}
-
 \noindent
+Wir vereinbaren für den folgenden Text, dass auch die Null eine natürliche Zahl ist,
+also $\mathbb{N} := \{0,1,2,\dots, 1000, 1001, \dots\}$. Da häufig die Menge
+$\{1,2,3,\dots\}$ aller von 0 verschiedenen natürlichen Zahlen betrachtet wird, ist
+es sinnvoll, auch für diese Menge ein Symbol einzuführen. Wir vereinbaren folgende
+Bezeichnung: $\mathbb{N}^\times := \{1,2,3,\dots\}$.
+Es gilt also: $\mathbb{N} := \{0\} \cup \mathbb{N}^\times$.
 Um das bekannte Verschlüsselungsverfahren, die Cäsar-Chiffre, im nächsten Abschnitt
 besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ definiert:
-\newpage
+
 \begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste modulo $m$]
   % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
   \leavevmode
