@@ -573,7 +573,7 @@ gestaltet sich sehr einfach:
 \end{definition}
 
 \noindent
-Bevor die Richtigkeit von RSA bewiesen wird, schreiben wir einen Satz auf, welcher im
+Bevor die Korrektheit von RSA bewiesen wird, schreiben wir einen Satz auf, welcher im
 Beweis verwendet werden kann:
 
 \begin{satz}
@@ -601,55 +601,66 @@ Beweis verwendet werden kann:
 \end{proof}
 
 \noindent
-Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert.
+Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
 
 \begin{proof}
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
   \begin{equation}
     \label{eq:proof-rsa-3.5}
-    x = d_{\keypr}(e_{\keypub}(x)) \equiv x^{e^d} \equiv x^{e \cdot d} \mod{N}
+    x = d_{\keypr}(e_{\keypub}(x)) \equiv x^{e^d} \equiv x^{e \cdot d} \pod{N}
   \end{equation}
-  Wir wissen per Definition:
+  Wir wissen per Definition, wobei $t$ irgendeine ganze Zahl ist:
   \begin{align}
-    e \cdot d                 & \equiv 1 \mod{\phif{N}} \notag \\
+    e \cdot d                 & \equiv 1 \pod{\phif{N}} \notag \\
     \label{eq:proof-rsa-3.6}
     \Leftrightarrow e \cdot d & = t \cdot \phif{N} + 1
   \end{align}
-  Wobei  $t$ irgendeine ganze Zahl ist. Einsetzen von \eqref{eq:proof-rsa-3.6} in
-  \eqref{eq:proof-rsa-3.5} ergibt:
-  \begin{equation*}
-    x \equiv x^{t \cdot \phif{N} + 1} \equiv x^{t \cdot \phif{N}} \cdot x \equiv
-    (x^{\phif{N}})^t \cdot x \mod{N}
-  \end{equation*}
-  Unter der Annahme, dass $x \perp N$, kann jetzt der Satz von Euler angewandt werden.
-  \begin{equation*}
-    x \equiv 1^t \cdot x \equiv x \mod{N}
-  \end{equation*}
-  Es bleibt zu beweisen, was passiert wenn $x \mid N$ gilt, der Satz von Euler kann
-  aufgrund der Bedingung nicht mehr verwendet werden. Wegen $N = p \cdot q$ reicht es
-  nach \autoref{satz:composite-mod} die Faktoren einzeln zu betrachten.
+  Um $x \equiv x^{ed} \pod{pq}$ zu zeigen, reicht es nach \autoref{satz:composite-mod}
+  die Faktoren einzeln zu betrachten.
   \begin{enumerate}
-    \item Überlegung für $p$:
+    \item Um $x \equiv x^{ed} \pod{p}$ zu beweisen, betrachten wir zwei Fälle:
           \begin{enumerate}[topsep=0pt]
             \item $p \mid x$ und man kann schreiben:
-                  $x \equiv 0 \mod{p} \Rightarrow x^{e \cdot d} \equiv 0 \equiv x \mod{p}$
-            \item $p \perp x$ und man kann erneut umformen:
+                  $x \equiv 0 \pod{p} \Rightarrow x^{ed} \equiv 0 \equiv x \pod{p}$
+            \item $p \perp x$ einsetzen von \eqref{eq:proof-rsa-3.6} in \eqref{eq:proof-rsa-3.5}
+                  und umformen:
                   \begin{equation*}
-                    x^{e \cdot d} \equiv x^{t \cdot \phif{N} + 1} \equiv
-                    x^{t \cdot \phif{N}} \cdot x \equiv
-                    x^{t \cdot (p - 1) \cdot (q - 1)} \cdot x \equiv
-                    (x^{p - 1})^{t \cdot (q - 1)} \cdot x \mod{p}
+                    x^{ed} \equiv x^{t\phif{N} + 1} \equiv
+                    x^{t\phif{N}} \cdot x \equiv
+                    x^{t(p - 1)(q - 1)} \cdot x \equiv
+                    (x^{p - 1})^{t(q - 1)} \cdot x \pod{p}
                   \end{equation*}
                   Nach dem Kleinen Satz von Fermat ist jetzt zu sehen:
                   \begin{equation*}
-                    x \equiv (x^{p - 1})^{t \cdot (q - 1)} \cdot x \equiv
-                    1^{t \cdot (q - 1)} \cdot x \equiv x \mod{p}
+                    x \equiv (x^{p - 1})^{t(q - 1)} \cdot x \equiv
+                    1^{t(q - 1)} \cdot x \equiv x \pod{p}
                   \end{equation*}
           \end{enumerate}
     \item Die Überlegung für $q$ kann analog durchgeführt werden.
   \end{enumerate}
 \end{proof}
 
-\begin{example}
-
+\begin{example}\mbox{}
+  \begin{enumerate}
+    \item Wähle $p = 3$ und $q = 11$.
+    \item Berechne $N = 33$.
+    \item Berechne $\phif{33} = (3 - 1) \cdot (11 - 1) = 20$.
+    \item Wähle $e = 3$.
+    \item Berechne $d$ mit dem erweiterten Euklidischen Algorithmus:
+          \begin{center}
+            \begin{tabular}{|l|l|l|l|l|l|}
+              \hline
+              $a$ & $b$ & $q$ & $r$ & $x$ & $y$                     \\ \hline
+              20  & 3   & 6   & 2   & -1  & $1 + 1 \cdot 6 = 7 = d$ \\ \hline
+              3   & 2   & 1   & 1   & 1   & $0 - 1 \cdot 1 = -1$    \\ \hline
+              2   & 1   & 2   & 0   & 0   & 1                       \\ \hline
+            \end{tabular}
+          \end{center}
+          Kontrolle $d$ ist das Inverse von $e$, da gilt $3 \cdot 7 = 21 \equiv 1 \pod{20}$.
+    \item Alice kennt den öffentlichen Schlüssel $\keypub = (33,3)$ und kann eine
+          Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pod{33}$
+    \item Bob kennt den privaten Schlüssel $\keypr = (33,7)$ und kann die Nachricht
+          entschlüsseln mit $y^d = 31^7 \equiv (-2)^7 \equiv (-2)^5 \cdot 2^2 \equiv
+            1 \cdot 4 \equiv 4 = x \pod{33}$.
+  \end{enumerate}
 \end{example}
