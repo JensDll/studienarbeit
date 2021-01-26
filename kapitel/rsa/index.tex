@@ -117,7 +117,7 @@ faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
 Das Lösen diskreter Logarithmen ist schwierig, das gesamte Verfahren
 hat jedoch keine so intuitive Beschreibung.
 
-\section{Zahlentheoretische Grundlagen für RSA}
+\section{Zahlentheoretische Grundlagen}
 In diesem Abschnitt sollen die zahlentheoretischen Grundlagen beschrieben werden,
 welche im RSA-Kryptosystem zum Einsatz kommen.
 
@@ -249,7 +249,7 @@ einer Zahl $a \in \mathbb{Z}_m$ gegeben durch die folgende Beziehung:
 Das multiplikative Inverse existiert nicht für alle Elemente. Es kann aber eine Aussage
 darüber getroffen werden, wann es existiert. Ein Element
 $a \in \mathbb{Z}_m$ besitzt genau dann ein Inverses, wenn gilt $\ggt{a}{m} = 1$.
-Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder
+Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder auch
 relativ Prim (engl. \textit{relatively prime} oder \textit{coprime}).
 Der Erweiterte Euklidische Algorithmus berechnet eine Linearkombination der folgenden Form,
 welche auch als diophantische Gleichung
@@ -296,7 +296,7 @@ man verschiedene Gleichungen der folgenden Form:
   \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                 \\
   \ggt{a}{b} & = x_{i+1} \cdot a_{i+1} + y_{i+1} \cdot b_{i+1}
 \end{align*}
-Außerdem kennen wir die Gleichungen aus \ref{eq:euklid}:
+Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
 \begin{align*}
   a_i                      & = q_i \cdot b_i + r_i             \\
   a_{i+1}                  & = q_{i+1} \cdot b_{i+1} + r_{i+1} \\
@@ -339,7 +339,7 @@ einfach und schnell durchführbar ist:
 \noindent
 Es soll nun gezeigt werden, wie der erweiterte Euklidischen Algorithmus verwendet werden kann
 um multiplikative Inverse zu berechnen. Es soll das Inverse $a \mod{m}$ bestimmt werden, wobei
-$m > a$. Das Inverse existiert genau dann, wenn \ggt{m}{a} = 1, dies bedeutet es gibt
+$m > a$. Das Inverse existiert genau dann, wenn $\ggt{m}{a} = 1$, dies bedeutet es gibt
 eine Gleichung der Form $x \cdot m + y \cdot a = 1$. Stellt man diese Gleichung
 als Kongruenzrelation modulo $m$ dar, erhalten wir:
 \begin{align*}
@@ -348,7 +348,7 @@ als Kongruenzrelation modulo $m$ dar, erhalten wir:
   x \cdot 0 + y \cdot a & \equiv 1 \mod{m} \\
   a \cdot y             & \equiv 1 \mod{m}
 \end{align*}
-Die letzte Zeile ist genau die Definition des Inversen (\ref{eq:inverse}), welches
+Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welches
 mit $y$ bestimmt wurde.
 \begin{example}
   Es soll das Inverse $21^{-1} \mod{89}$ bestimmt werden. Die Zahlen 21 und 89 sind
@@ -399,8 +399,8 @@ Mal ein Rest von null berechnet wurde.
 \end{lstlisting}
 
 \subsection{Die Eulersche Phi-Funktion}
-Die Eulersche Phi-Funktion befasst sich mit den auf den ersten Blick seltsamen
-Problem, die Anzahl an teilerfremden Zahlen in einer Menge zu finden. Die Regeln
+Die Eulersche Phi-Funktion befasst sich mit dem auf den ersten Blick seltsamen
+Problem, die Anzahl von teilerfremden Zahlen in einer Menge zu finden. Die Regeln
 und Sätze welche von der zahlentheoretischen Funktion abgeleitet werden können, sind jedoch sehr
 hilfreich in der asymmetrischen Verschlüsselung und insbesondere für das
 RSA-Verfahren. Die Eulersche Phi-Funktion ist folgendermaßen definiert
@@ -429,7 +429,7 @@ größten gemeinsamen Teiler zu bestimmen, ist sehr langsam und für große Zahl
 in der asymmetrischen Verschlüsselung verwendet werden, nicht möglich. Es existiert jedoch
 eine Beziehung, mit welcher $\phif{m}$ bestimmt werden kann, unter der
 Bedingung, dass die Primfaktorzerlegung von $m$ bekannt ist. Diese lässt sich aus
-den folgenden Sätzen herleiten, welche hier im einzelnen nicht noch einmal bewiesen werden
+den folgenden Sätzen ableiten, welche hier im einzelnen nicht noch einmal bewiesen werden
 sollen \parencite{SITE:phi-euler-fermat}:
 \begin{enumerate}[ref=(\arabic*)]
   \item Es sei $p \in \mathbb{P}$, dann gilt: $\phif{p} = p - 1$. \label{enum:phi1}
@@ -443,8 +443,8 @@ sollen \parencite{SITE:phi-euler-fermat}:
   \begin{equation*}
     n = p_1^{m_1} \cdot p_2^{m_2} \cdot \ldots \cdot p_r^{m_r} = \prod_{i=1}^{r} p_i^{m_i}
   \end{equation*}
-  die Primfaktorzerlegung einer natürlichen Zahl mit $p_1 < p_2 < \ldots < p_r$ und
-  Exponenten $m_1 \geq 1,\ldots, m_r \geq 1$. Dann ist:
+  die Primfaktorzerlegung einer natürlichen Zahl mit $p_i$ unterschiedlichen Primzahlen
+  und Exponenten $m_1 \geq 1,\ldots, m_r \geq 1$. Dann ist:
   \begin{equation*}
     \phif{n} = \prod_{i=1}^{r} p_i^{m_i} - p_i^{m_i - 1} =
     n \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i}
@@ -473,10 +473,183 @@ sollen \parencite{SITE:phi-euler-fermat}:
   \end{align*}
 \end{example}
 \subsection{Satz von Euler und Fermat}
-
+Es werden im Folgenden zwei Sätze vorgestellt von Euler und Fermat, welche
+in der asymmetrischen Verschlüsselung sehr hilfreich sind.
 \begin{satz}[Der Satz von Euler]
-  Es seien $a,m \in \mathbb{N}$ mit $\ggt{a}{m} = 1$, dann gilt:
+  Es seien $a,m \in \mathbb{N}^\times$ mit $a \perp m$, dann gilt:
   \begin{equation*}
     a^{\phif{m}} \equiv 1 \mod{m}
   \end{equation*}
 \end{satz}
+\begin{proof}
+  Aus der Vorlesung zur Zahlentheorie \parencite{SITE:phi-euler-fermat} und in
+  abgewandelter Form \parencite[187-188]{BOOK:numberTheory}. \\
+  Es ist $n = \phif{m}$. Seien $x_1,x_2,\ldots,x_n$ die $n$ verschiedenen zu
+  $m$ teilerfremden Zahlen aus der Menge $\{1,2,\ldots,m\}$. Mit einer vorgegeben Zahl
+  $a \in \mathbb{N}^\times$ bilden wir die Produkte $ax_1,ax_2,\ldots,ax_n$.
+  Da $a \perp m$ und $x_i \perp m$ ist auch das Produkt $ax_i$ teilerfremd zu $m$.
+  Es kann nun die wahre Aussage aufgestellt
+  \begin{equation*}
+    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \equiv
+    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \mod{m}
+  \end{equation*}
+  und die folgende Beobachtung gemacht werden:
+  \begin{equation*}
+    \label{eq:euler-satz-beweis}
+    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \equiv
+    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \mod{m} \tag{$\ast$}
+  \end{equation*}
+  Um dies zu verifizieren betrachten wir zuerst ein Beispiel (es wird in $\mathbb{Z}_8$ gerechnet):
+  \begin{align*}
+    \phif{8}            & = 4       \\
+    x_1,x_2,x_3,x_4     & = 1,3,5,7 \\
+    3x_1,3x_2,3x_3,3x_4 & = 3,1,7,5
+  \end{align*}
+  Die Multiplikation von $a$ in $Z_m$ verändert nicht die Menge $\{x_1,x_2,\ldots,x_n\}$,
+  für $i \neq j$ muss also gelten:
+  \begin{equation*}
+    ax_i \not\equiv ax_j \mod{m}
+  \end{equation*}
+  Diese Vermutung kann bestätigt werden. Angenommen
+  $ax_i \equiv ax_j \pod{m}$, da $a \perp m$ folgt nach der Kürzungsregel
+  $x_i \equiv x_j \pod{m}$, was nicht sein kann.
+  Es folgt nun aus der Beobachtung \eqref{eq:euler-satz-beweis}:
+  Wegen $x_1,x_2,\ldots,x_n \perp m$ liefert die Kürzungsregel, wenn man noch
+  $n = \phif{m}$ beachtet, die ursprüngliche Behauptung:
+  \begin{align*}
+    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n & \equiv
+    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \mod{m}              \\
+    a^{\phif{m}}                            & \equiv 1 \mod{m}
+  \end{align*}
+\end{proof}
+
+\noindent
+Der Kleine Satz von Fermat kann jetzt als Spezialform des Satzes von Euler (mit $m = p$) direkt
+aufgeschrieben werden:
+
+\begin{satz}[Kleiner Satz von Fermat]
+  Es seien $a \in \mathbb{N}^\times$ und $p \in \mathbb{P}$ mit $a \perp p$, dann gilt:
+  \begin{equation*}
+    a^{p-1} \equiv 1 \mod{p}
+  \end{equation*}
+\end{satz}
+
+\noindent
+Der Kleine Satz von Fermat wird in der Kryptographie unter anderem dafür verwendet,
+um Primzahltests durchzuführen.
+
+\section{RSA}
+Das RSA-Verfahren basiert auf der Annahme, dass die Berechnung der Primfaktorzerlegung
+einer natürlichen Zahl, ein schwieriges Problem ist.
+Die Generierung des privaten und öffentlichen Schlüssels kann in die
+folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
+
+\begin{definition}[RSA Schlüsselgenerierung]\mbox{}
+  \begin{enumerate}
+    \item Wähle zwei sehr große Primzahlen $p$ und $q$, beispielsweise mit einer Länge
+          von 512 oder 1024 Bit.
+    \item Berechne $N = p \cdot q$.
+    \item Berechne $\phif{N} = \phif{p \cdot q} = \phif{p} \cdot \phif{q} = (p-1) \cdot (q-1)$.
+    \item Wähle eine Zahl $e$ mit $1 < e < N$ und $\ggt{e}{\phif{N}} = 1$. Jetzt bilden
+          $(N,e)$ den öffentlichen Schlüssel $(\keypub)$.
+    \item Berechne $d$ mit $e \cdot d \equiv 1 \mod{\phif{N}}$ und dem erweiterten
+          Euklidischen Algorithmus. Das Inverse existiert, da $e \perp \phif{N}$ gilt. Jetzt bilden
+          $(N,d)$ den privaten Schlüssel $(\keypr)$.
+  \end{enumerate}
+\end{definition}
+
+\noindent
+Sind $p$ und $q$ entsprechend groß, ist es nicht in annehmbarer Zeit möglich, die Faktorisieren
+von $N$ zu bestimmen und damit auch $\phif{N}$. Die Ver- und Entschlüsselung mit RSA
+gestaltet sich sehr einfach:
+
+\begin{definition}[Ver- und Entschlüsselung RSA]
+  Es seien der öffentliche und private Schlüssel gegeben mit
+  $\keypub = (N,e)$ und $\keypr = (N,d)$. Dann gilt:
+  \begin{description}
+    \item[Verschlüsselung:] $y = e_{\keypub}(x) \equiv x^e \mod{N}$
+    \item[Entschlüsselung:] $x = d_{\keypr}(y) \equiv y^d \mod{N}$
+  \end{description}
+\end{definition}
+
+\noindent
+Bevor die Richtigkeit von RSA bewiesen wird, schreiben wir einen Satz auf, welcher im
+Beweis verwendet werden kann:
+
+\begin{satz}
+  \label{satz:composite-mod}
+  $m$ ist eine zusammengesetzte Zahl der Form $m = p_1^{m_1} \cdot \ldots \cdot p_r^{m_r}$, dann
+  ist $a \equiv b \pod{m}$, wenn gilt:
+  \begin{equation*}
+    a \equiv b \pod{p_1^{m_1}} \quad\ldots\quad a \equiv b \pod{p_r^{m_r}}
+  \end{equation*}
+\end{satz}
+\begin{proof}
+  Die eben gezeigten Kongruenzen lassen sich als Gleichungen ausdrücken:
+  \begin{align*}
+    a - b & = t_0 \cdot m         \\
+    a - b & = t_1 \cdot p_1^{m_1} \\
+    \vdots                        \\
+    a - b & = t_r \cdot p_r^{m_r}
+  \end{align*}
+  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Angenommen $a \not\equiv b \pod{m}$ dann ist
+  $a - b \neq t_0 \cdot m$ und es lässt sich schreiben:
+  \begin{equation*}
+    t_0 \cdot m \neq t_1 \cdot p_1^{m_1} = \ldots = t_r \cdot p_r^{m_r}
+  \end{equation*}
+  Dies führt zum Wiederspruch, da mit den richtigen $t_i$ immer eine Lösung gefunden werden kann.
+\end{proof}
+
+\noindent
+Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert.
+
+\begin{proof}
+  Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
+  \begin{equation}
+    \label{eq:proof-rsa-3.5}
+    x = d_{\keypr}(e_{\keypub}(x)) \equiv x^{e^d} \equiv x^{e \cdot d} \mod{N}
+  \end{equation}
+  Wir wissen per Definition:
+  \begin{align}
+    e \cdot d                 & \equiv 1 \mod{\phif{N}} \notag \\
+    \label{eq:proof-rsa-3.6}
+    \Leftrightarrow e \cdot d & = t \cdot \phif{N} + 1
+  \end{align}
+  Wobei  $t$ irgendeine ganze Zahl ist. Einsetzen von \eqref{eq:proof-rsa-3.6} in
+  \eqref{eq:proof-rsa-3.5} ergibt:
+  \begin{equation*}
+    x \equiv x^{t \cdot \phif{N} + 1} \equiv x^{t \cdot \phif{N}} \cdot x \equiv
+    (x^{\phif{N}})^t \cdot x \mod{N}
+  \end{equation*}
+  Unter der Annahme, dass $x \perp N$, kann jetzt der Satz von Euler angewandt werden.
+  \begin{equation*}
+    x \equiv 1^t \cdot x \equiv x \mod{N}
+  \end{equation*}
+  Es bleibt zu beweisen, was passiert wenn $x \mid N$ gilt, der Satz von Euler kann
+  aufgrund der Bedingung nicht mehr verwendet werden. Wegen $N = p \cdot q$ reicht es
+  nach \autoref{satz:composite-mod} die Faktoren einzeln zu betrachten.
+  \begin{enumerate}
+    \item Überlegung für $p$:
+          \begin{enumerate}[topsep=0pt]
+            \item $p \mid x$ und man kann schreiben:
+                  $x \equiv 0 \mod{p} \Rightarrow x^{e \cdot d} \equiv 0 \equiv x \mod{p}$
+            \item $p \perp x$ und man kann erneut umformen:
+                  \begin{equation*}
+                    x^{e \cdot d} \equiv x^{t \cdot \phif{N} + 1} \equiv
+                    x^{t \cdot \phif{N}} \cdot x \equiv
+                    x^{t \cdot (p - 1) \cdot (q - 1)} \cdot x \equiv
+                    (x^{p - 1})^{t \cdot (q - 1)} \cdot x \mod{p}
+                  \end{equation*}
+                  Nach dem Kleinen Satz von Fermat ist jetzt zu sehen:
+                  \begin{equation*}
+                    x \equiv (x^{p - 1})^{t \cdot (q - 1)} \cdot x \equiv
+                    1^{t \cdot (q - 1)} \cdot x \equiv x \mod{p}
+                  \end{equation*}
+          \end{enumerate}
+    \item Die Überlegung für $q$ kann analog durchgeführt werden.
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+
+\end{example}
