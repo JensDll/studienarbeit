@@ -187,7 +187,7 @@ Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
 \noindent
 Es ist zu sehen, dass sich Rechenregel \ref{enum:ggT5} iterativ anwenden lässt:
 \begin{equation*}
-  \ggt{a}{b} = \ggt{a-b}{a} = \ggt{a-2b}{b} = \dots = \ggt{a-mb}{b}
+  \ggt{a}{b} = \ggt{a-b}{b} = \ggt{a-2b}{b} = \dots = \ggt{a-mb}{b}
 \end{equation*}
 Wird ein maximales $m$ gewählt, mit der Bedingung $(a-mb) > 0$, kann der Algorithmus
 in minimalen Schritten durchgeführt werden. Dies ist der Fall für die Division mit Rest:
@@ -250,7 +250,7 @@ Das multiplikative Inverse existiert nicht für alle Elemente. Es kann aber eine
 darüber getroffen werden, wann es existiert. Ein Element
 $a \in \mathbb{Z}_m$ besitzt genau dann ein Inverses, wenn gilt $\ggt{a}{m} = 1$.
 Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder auch
-relativ Prim (engl. \textit{relatively prime} oder \textit{coprime}).
+relativ Prim (Symbol $a \perp b$, engl. \textit{relatively prime} oder \textit{coprime}).
 Der Erweiterte Euklidische Algorithmus berechnet eine Linearkombination der folgenden Form,
 welche auch als diophantische Gleichung
 bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
@@ -487,7 +487,7 @@ in der asymmetrischen Verschlüsselung sehr hilfreich sind.
   Es ist $n = \phif{m}$. Seien $x_1,x_2,\ldots,x_n$ die $n$ verschiedenen zu
   $m$ teilerfremden Zahlen aus der Menge $\{1,2,\ldots,m\}$. Mit einer vorgegeben Zahl
   $a \in \mathbb{N}^\times$ bilden wir die Produkte $ax_1,ax_2,\ldots,ax_n$.
-  Da $a \perp m$ und $x_i \perp m$ ist auch das Produkt $ax_i$ teilerfremd zu $m$.
+  Es gilt $a \perp m$ und $x_i \perp m$, weshalb auch das Produkt $ax_i$ teilerfremd zu $m$.
   Es kann nun die wahre Aussage aufgestellt
   \begin{equation*}
     ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \equiv
@@ -538,7 +538,7 @@ aufgeschrieben werden:
 Der Kleine Satz von Fermat wird in der Kryptographie unter anderem dafür verwendet,
 um Primzahltests durchzuführen.
 
-\section{RSA}
+\section{Das RSA-Verfahren}
 Das RSA-Verfahren basiert auf der Annahme, dass die Berechnung der Primfaktorzerlegung
 einer natürlichen Zahl, ein schwieriges Problem ist.
 Die Generierung des privaten und öffentlichen Schlüssels kann in die
@@ -573,31 +573,34 @@ gestaltet sich sehr einfach:
 \end{definition}
 
 \noindent
-Bevor die Korrektheit von RSA bewiesen wird, schreiben wir einen Satz auf, welcher im
+Bevor die Korrektheit von RSA bewiesen wird, schreiben wir noch einen Satz auf, welcher im
 Beweis verwendet werden kann:
 
 \begin{satz}
   \label{satz:composite-mod}
-  $m$ ist eine zusammengesetzte Zahl der Form $m = p_1^{m_1} \cdot \ldots \cdot p_r^{m_r}$, dann
+  $m$ ist eine zusammengesetzte Zahl der Form $m = k_1 \cdot k_2 \cdot \ldots \cdot k_n$, dann
   ist $a \equiv b \pod{m}$, wenn gilt:
   \begin{equation*}
-    a \equiv b \pod{p_1^{m_1}} \quad\ldots\quad a \equiv b \pod{p_r^{m_r}}
+    a \equiv b \pod{k_1} \quad\ldots\quad a \equiv b \pod{k_n}
   \end{equation*}
 \end{satz}
 \begin{proof}
-  Die eben gezeigten Kongruenzen lassen sich als Gleichungen ausdrücken:
+  Die eben gezeigten Kongruenzen lassen sich als Gleichungen schreiben:
   \begin{align*}
-    a - b & = t_0 \cdot m         \\
-    a - b & = t_1 \cdot p_1^{m_1} \\
-    \vdots                        \\
-    a - b & = t_r \cdot p_r^{m_r}
+    a - b & = t_0 \cdot m   \\
+    a - b & = t_1 \cdot k_1 \\
+    \vdots                  \\
+    a - b & = t_r \cdot k_r
   \end{align*}
-  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Angenommen $a \not\equiv b \pod{m}$ dann ist
-  $a - b \neq t_0 \cdot m$ und es lässt sich schreiben:
+  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Es lässt sich schreiben:
   \begin{equation*}
-    t_0 \cdot m \neq t_1 \cdot p_1^{m_1} = \ldots = t_r \cdot p_r^{m_r}
+    t_0 \cdot m = t_1 \cdot k_1 = \ldots = t_r \cdot k_n
   \end{equation*}
-  Dies führt zum Wiederspruch, da mit den richtigen $t_i$ immer eine Lösung gefunden werden kann.
+  Man wählt jetzt
+  \begin{equation*}
+    t_1 = \frac{t_0m}{k_1} \quad\ldots\quad t_r = \frac{t_0m}{k_n}
+  \end{equation*}
+  und findet immer eine Lösung.
 \end{proof}
 
 \noindent
@@ -620,9 +623,10 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
   \begin{enumerate}
     \item Um $x \equiv x^{ed} \pod{p}$ zu beweisen, betrachten wir zwei Fälle:
           \begin{enumerate}[topsep=0pt]
-            \item $p \mid x$ und man kann schreiben:
+            \item Es gilt $p \mid x$ und man kann schreiben:
                   $x \equiv 0 \pod{p} \Rightarrow x^{ed} \equiv 0 \equiv x \pod{p}$
-            \item $p \perp x$ einsetzen von \eqref{eq:proof-rsa-3.6} in \eqref{eq:proof-rsa-3.5}
+            \item Es gilt $p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
+                  \eqref{eq:proof-rsa-3.5}
                   und umformen:
                   \begin{equation*}
                     x^{ed} \equiv x^{t\phif{N} + 1} \equiv
@@ -656,7 +660,7 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
               2   & 1   & 2   & 0   & 0   & 1                       \\ \hline
             \end{tabular}
           \end{center}
-          Kontrolle $d$ ist das Inverse von $e$, da gilt $3 \cdot 7 = 21 \equiv 1 \pod{20}$.
+          Kontrolle: $d$ ist das Inverse von $e$, da gilt $3 \cdot 7 = 21 \equiv 1 \pod{20}$.
     \item Alice kennt den öffentlichen Schlüssel $\keypub = (33,3)$ und kann eine
           Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pod{33}$
     \item Bob kennt den privaten Schlüssel $\keypr = (33,7)$ und kann die Nachricht
