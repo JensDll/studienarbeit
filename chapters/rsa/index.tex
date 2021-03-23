@@ -13,7 +13,7 @@ Um die Idee der asymmetrischen Verschlüsselung besser zu verstehen,
 ist es hilfreich auf das Prinzip der symmetrischen Verfahren zurückzukommen
 (\autoref{fig:sym-encryption-revisit}).
 
-\input{kapitel/rsa/tikz/sym-encryption.tex}
+\input{chapters/rsa/tikz/sym-encryption.tex}
 
 \noindent
 Ein solches System hat zwei symmetrische Eigenschaften:
@@ -75,7 +75,7 @@ welche mit Bob's öffentlichen Schlüssel verschlüsselt wurde, nur auch mit Bob
 Schlüssel wieder entschlüsselt werden kann. Ein einfaches Protokoll
 welches nach diesem Prinzip arbeitet ist in \autoref{fig:asym-encr} zu sehen.
 
-\input{kapitel/rsa/tikz/asym-encryption.tex}
+\input{chapters/rsa/tikz/asym-encryption.tex}
 
 \noindent
 Ein Nachrichtenaustausch ist somit ohne sicheren Kanal möglich. Der oben beschriebene
@@ -89,7 +89,7 @@ zu verschlüsseln, da dies im Gegensatz zu dem symmetrischen Gegenstück sehr vi
 rechenintensiver ist.
 \newpage
 
-\input{kapitel/rsa/tikz/asym-encrpytion-key.tex}
+\input{chapters/rsa/tikz/asym-encrpytion-key.tex}
 
 \noindent
 Asymmetrische Verfahren basieren alle auf einem zugrundeliegenden Prinzip:
@@ -653,7 +653,7 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
               2   & 1   & 2   & 0   & 0   & 1                       \\ \hline
             \end{tabular}
           \end{center}
-          Kontrolle: $d$ ist das Inverse von $e$, da gilt $3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
+          Die Ergebnis stimmt, denn es gilt $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
     \item Alice kennt den öffentlichen Schlüssel $\keypub = (33,3)$ und kann eine
           Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$
     \item Bob kennt den privaten Schlüssel $\keypr = (33,7)$ und kann die Nachricht

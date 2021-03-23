@@ -10,11 +10,13 @@
 \usepackage[utf8]{inputenc}
 \usepackage[german]{babel}
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
-\usepackage{graphicx}
 \usepackage{csquotes}
 \usepackage{setspace}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{caption}
+
+\usepackage{graphicx}
+\graphicspath{{./images}}
 
 \usepackage{listings}
 \lstset{
@@ -49,7 +51,7 @@
 \newacronym{otp}{OTP}{One-Time-Pad}
 
 \usepackage[style = authoryear-ibid]{biblatex}
-\addbibresource{sonstiges/main.bib}
+\addbibresource{others/main.bib}
 
 \usepackage{tikz}
 \usetikzlibrary{positioning, calc, arrows, shapes}
@@ -89,7 +91,7 @@
 
 \begin{document}
 \pagenumbering{Roman}
-\include{sonstiges/titlepage}
+\include{others/titlepage}
 
 \onehalfspacing
 
@@ -103,10 +105,10 @@
 % Kapitel
 \newpage
 \pagenumbering{arabic}
-\include{kapitel/einleitung/index.tex}
-\include{kapitel/stromchiffren/index.tex}
-\include{kapitel/rsa/index.tex}
-\include{kapitel/steganographie/index.tex}
+\include{chapters/einleitung/index.tex}
+\include{chapters/stromchiffren/index.tex}
+\include{chapters/rsa/index.tex}
+\include{chapters/steganografie/index.tex}
 
 % Anhänge
 \printbibliography[title = Literaturverzeichnis]

@@ -1,6 +1,6 @@
 \chapter{Stromchiffren und Blockchiffren}
 
-\input{kapitel/stromchiffren/tikz/cryptographie.tex}
+\input{chapters/stromchiffren/tikz/cryptographie.tex}
 
 \noindent
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
@@ -19,7 +19,7 @@ während Blockchiffren pro Durchlauf mehrere Bits verschlüsseln können.
 \autoref{fig:stream-vs-block-cipher} zeigt diesen prinzipiellen Unterschied, für den Fall, dass
 $n$ Bits verschlüsselt werden sollen.
 
-\input{kapitel/stromchiffren/tikz/principle-encryption-stream.tex}
+\input{chapters/stromchiffren/tikz/principle-encryption-stream.tex}
 
 \noindent
 Blockchiffren arbeiten mit Datenblöcken fester Länge, wobei ein Großteil der
@@ -158,7 +158,7 @@ bei Stromchiffren.
   \label{tab:truth-table-xor}
 \end{table}
 
-\input{kapitel/stromchiffren/tikz/encryption-stream.tex}
+\input{chapters/stromchiffren/tikz/encryption-stream.tex}
 
 \noindent
 In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert werden:
@@ -319,7 +319,7 @@ durch die Ausgabe eines \ac{csprng} zu ersetzen, wobei der Schlüssel $k$
 den Startwert des \ac{prng} bildet. Das Prinzip dieser Idee ist in
 \autoref{fig:stream-key-gen} zu sehen.
 
-\input{kapitel/stromchiffren/tikz/key-generation-stream.tex}
+\input{chapters/stromchiffren/tikz/key-generation-stream.tex}
 
 \noindent
 Zu nächst ist wichtig festzuhalten, dass
