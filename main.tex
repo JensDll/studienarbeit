@@ -13,7 +13,7 @@
 \usepackage{csquotes}
 \usepackage{setspace}
 \usepackage[dvipsnames]{xcolor}
-\usepackage{caption}
+\usepackage{caption} % http://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/caption/caption-eng.pdf
 
 \usepackage{graphicx}
 \graphicspath{{./images}}
@@ -49,6 +49,7 @@
 \newacronym{prng}{PRNG}{\textit{pseudo random number generator}}
 \newacronym{csprng}{CSPRNG}{\textit{cryptographically secure pseudo random number generator}}
 \newacronym{otp}{OTP}{One-Time-Pad}
+\newacronym{lsb}{LSB}{\textit{least significant bit}}
 
 \usepackage[style = authoryear-ibid]{biblatex}
 \addbibresource{others/main.bib}
@@ -89,6 +90,15 @@
 \newcommand{\numeq}[1]{\stackrel{#1}{=}}
 \newcommand{\phif}[1]{\ensuremath{\varphi(#1)}}
 
+\usepackage[boxruled, algochapter, longend]{algorithm2e} % http://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
+\SetAlgoCaptionLayout{centerline}
+\SetKw{GoTo}{goto}
+\SetKwProg{Marker}{}{:}{}
+
+\makeatletter
+% \renewcommand{\@algocf@capt@boxed}{above}
+\makeatother
+
 \begin{document}
 \pagenumbering{Roman}
 \include{others/titlepage}
@@ -100,7 +110,6 @@
 \listoftables
 \listoffigures
 \lstlistoflistings
-\printnoidxglossaries
 
 % Kapitel
 \newpage
@@ -112,4 +121,5 @@
 
 % Anhänge
 \printbibliography[title = Literaturverzeichnis]
+\printnoidxglossaries
 \end{document}
