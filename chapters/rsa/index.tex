@@ -217,19 +217,24 @@ In allgemeiner Form können die eben gezeigten Schritte folgendermaßen beschrie
     b_{i+1} & = r_i = a_i - q_i \cdot b_i
   \end{split}
 \end{equation}
-Eine rekursive Implementierung des Euklidischen Algorithmus ist in \autoref{lst:gcd}
+Eine rekursive Implementierung des Euklidischen Algorithmus ist in \autoref{alg:ggt}
 zu sehen (engl. \textit{greatest common divisor} (gcd)).
 Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde.
-\begin{lstlisting}[caption=Euklidischer Algorithmus, label=lst:gcd]
-def gcd(a, b):
-    r = a % b
+\begin{algorithm}
+  \DontPrintSemicolon
+  \KwIn{zwei ganze Zahlen $a$ und $b$}
+  \KwOut{$\ggt{a}{b}$}
+  \Begin(){
+    $r \leftarrow a \mod{b}$\;
+    \If(){$r = 0$}{
+      \Return{$b$}
+    }
 
-    if r == 0:
-        return b
-
-    return gcd(b, r)
-\end{lstlisting}
-
+    \Return{$\ggt{a}{b}$}
+  }
+  \caption{Euklidischer Algorithmus}
+  \label{alg:ggt}
+\end{algorithm}
 \subsection{Der erweiterte Euklidische Algorithmus}
 Es wurde gezeigt, dass der größte gemeinsame Teiler zweier Zahlen durch
 das Reduzieren der Operanden ermittelt werden kann. In der Kryptographie ist
@@ -375,21 +380,27 @@ mit $y$ bestimmt wurde.
 
 \noindent
 Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
-\autoref{lst:gcd-ext} zu sehen.
+\autoref{alg:ggt-e} zu sehen, das Symbol $\div$ bezeichnet die Ganzzahldivision
+zweier Zahlen $a$ und $b$.
 Wie zuvor terminiert das Verfahren nachdem das erste
 Mal ein Rest von null berechnet wurde.
-\begin{lstlisting}[caption=Erweiterter Euklidischer Algorithmus, label=lst:gcd-ext]
-def gcd_extended(a, b):
-    q, r = divmod(a, b)
+\begin{algorithm}
+  \DontPrintSemicolon
+  \KwIn{zwei ganze Zahlen $a$ und $b$}
+  \KwOut{$\ggt{a}{b}$ als auch $x$ und $y$, sodass $\ggt{a}{b} = x \cdot a + y \cdot b$}
+  \Begin(){
+    $r \leftarrow a \mod{b}$\;
+    $q \leftarrow a \div b$\;
+    \If(){$r = 0$}{
+      \Return{$(0,1,b)$}
+    }
+    $x,y,ggt = ggT_e(b,r)$\;
 
-    if r == 0:
-        return (0, 1, b)
-
-    x, y, gcd = gcd_extended(b, r)
-
-    return (y, x - y * q, gcd)
-\end{lstlisting}
-
+    \Return{$(y,x - y \cdot q, ggt)$}
+  }
+  \caption{Erweiterter Euklidischer Algorithmus}
+  \label{alg:ggt-e}
+\end{algorithm}
 \subsection{Die Eulersche Phi-Funktion}
 Die Eulersche Phi-Funktion befasst sich mit dem auf den ersten Blick seltsamen
 Problem, die Anzahl von teilerfremden Zahlen in einer Menge zu finden. Die Regeln

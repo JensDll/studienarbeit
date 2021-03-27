@@ -1,0 +1,56 @@
+\begin{figure}[h]
+  \centering
+  \begin{tikzpicture}
+    [node distance=0.5cm,
+      op/.style={draw=blue, inner xsep=0.5em, fill=blue!10 }]
+
+    \coordinate (user) at (0,-1);
+    \coordinate (api) at (6,-1);
+    \coordinate (auth) at (12,-1);
+
+    \draw[dashed] (user) -- (0,-12);
+    \draw[dashed] (api) -- (6,-12);
+    \draw[dashed] (auth) -- (12,-12);
+
+    \node[above= of user]{\textbf{Benutzer}};
+
+    \node[above= of api]{\textbf{API}};
+
+    \node[below=3cm of api, op, inner ysep=4em] (endpoint-1) {};
+    \draw[<-] ([yshift=-1.5em]$(endpoint-1.north west)$) --
+    node[above, font=\scriptsize] {Anfrage + Token} ++($(-6,0) + (0.5em,0)$);
+    \draw[->] ([yshift=-2.5em]$(endpoint-1.north west)$) --
+    node[below, font=\scriptsize] {2xx} ++($(-6,0) + (0.5em,0)$);
+    \draw[<-] ([yshift=2.5em]$(endpoint-1.south west)$) --
+    node[above, font=\scriptsize] {Anfrage + Abgelaufener Token} ++($(-6,0) + (0.5em,0)$);
+    \draw[->] ([yshift=1.5em]$(endpoint-1.south west)$) --
+    node[below, font=\scriptsize] {401} ++($(-6,0) + (0.5em,0)$);
+
+    \begin{scope}
+      \clip (5,-12.1) rectangle (7,-10);
+      \node[op, inner ysep=3em] (endpoint-2) at (6,-12) {};
+    \end{scope}
+    \draw[<-] ([yshift=-1.5em]$(endpoint-2.north west)$) --
+    node[above, font=\scriptsize] {Anfrage + Token} ++($(-6,0) + (0.5em,0)$);
+
+    \node[above= of auth, align=center] {\textbf{Auhtentifizierungs} \\ \textbf{Server}};
+
+    \node[below= of auth, op, inner ysep=2em] (login) {};
+    \draw[<-] ([yshift=0.5em]$(login.west)$) --
+    node[above, near end, font=\scriptsize] {Login/Register} ++($(-12,0) + (0.5em,0)$);
+    \draw[->] ([yshift=-0.5em]$(login.west)$) --
+    node[below, near start, font=\scriptsize] {(Token, RefreshToken)} ++($(-12,0) + (0.5em,0)$);
+
+    \node[below=7cm of auth, op, inner ysep=2em] (refresh) {};
+    \draw[<-] ([yshift=0.5em]$(refresh.west)$) --
+    node[above, near end, font=\scriptsize] {(Abgelaufener Token, RefreshToken)} ++($(-12,0) + (0.5em,0)$);
+    \draw[->] ([yshift=-0.5em]$(refresh.west)$) --
+    node[below, near start, font=\scriptsize] {(Token, RefreshToken)} ++($(-12,0) + (0.5em,0)$);
+
+    \node[cylinder, draw, rotate=90, minimum width=1cm, minimum height=1cm,
+      label={[font=\scriptsize]180:Benutzer Datenbank}] at (9,-4.5) {}
+    edge[<->, shorten >= 0.5em, shorten <= 0.5em] (login.south west);
+  \end{tikzpicture}
+  \caption{Sequenzdiagramm JWT Authentifizierung}
+  \label{fig:jwt-auth}
+\end{figure}

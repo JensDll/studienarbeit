@@ -18,15 +18,10 @@
 \usepackage{graphicx}
 \graphicspath{{./images}}
 
-\usepackage{listings}
-\lstset{
-  columns = fullflexible,
-  language = Python,
-  mathescape = true,
-  escapechar = \§
-}
-\renewcommand{\lstlistingname}{Quelltext}
-\renewcommand{\lstlistlistingname}{Quelltextverzeichnis}
+\usepackage[boxruled, algochapter, longend]{algorithm2e} % http://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
+\SetAlgoCaptionLayout{centerline}
+\SetKw{GoTo}{goto}
+\SetKwProg{Marker}{}{:}{}
 
 \usepackage{enumitem}
 \setlist{itemsep=0pt}
@@ -90,15 +85,6 @@
 \newcommand{\numeq}[1]{\stackrel{#1}{=}}
 \newcommand{\phif}[1]{\ensuremath{\varphi(#1)}}
 
-\usepackage[boxruled, algochapter, longend]{algorithm2e} % http://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/algorithm2e/doc/algorithm2e.pdf
-\SetAlgoCaptionLayout{centerline}
-\SetKw{GoTo}{goto}
-\SetKwProg{Marker}{}{:}{}
-
-\makeatletter
-% \renewcommand{\@algocf@capt@boxed}{above}
-\makeatother
-
 \begin{document}
 \pagenumbering{Roman}
 \include{others/titlepage}
@@ -109,7 +95,7 @@
 \tableofcontents
 \listoftables
 \listoffigures
-\lstlistoflistings
+\listofalgorithms
 
 % Kapitel
 \newpage
@@ -120,6 +106,9 @@
 \include{chapters/steganografie/index.tex}
 
 % Anhänge
+\pagenumbering{Alph}
 \printbibliography[title = Literaturverzeichnis]
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \printnoidxglossaries
+\addcontentsline{toc}{chapter}{Glossar}
 \end{document}

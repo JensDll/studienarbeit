@@ -126,78 +126,102 @@ zufällig mit den des Bilds überstimmen oder vorherige Fehler
 durch weitere Teile der Nachricht wieder ausgeglichen werden.
 
 \section{Beschreibung eines Algorithmus}
-Die Möglichkeiten von \acs{lsb}-Verfahren wurden im vorherige Abschnitt gezeigt,
+Im vorherige Abschnitt wurden die Möglichkeiten von \acs{lsb}-Verfahren untersucht,
 es kann jetzt eine mehr formale Beschreibung gegeben werden,
-wie ein solches Verfahren umgesetzt werden kann.
+wie ein solcher Algorithmus umgesetzt werden kann.
 Da ein steganografisches Verfahren die Vertraulichkeit einer Nachricht
 nur indirekt sichert, ist es sinnvoll, diese vor dem Verwenden mit einem
-als sicher geltenden Algorithmus zu verschlüsseln.
+kryptographischen Algorithmus zu verschlüsseln.
 
 \begin{definition}[\acs{lsb}-Verfahren]
-  Es sei $p_{x,y} = (r,g,b)$ ein Pixel und $\mathbf{B} = p^{m \times n}$ ein Bild
-  mit $y \in [0, m-1]$ und $x \in [0, n-1]$. Es sei $P$ die Menge aller Pixel von $\mathbf{B}$
-  und $f$ eine
-  Funktion mit $f: P \setminus \{p_{0,0},p_{m-1,n-1}\} \leftarrow f(\mathbf{B})$.
-
+  Es sei $p_{xy} = (r,g,b)$ ein Pixel und $\mathbf{B} = p^{m \times n}$ ein Bild
+  mit $y \in [1, m]$ und $x \in [1, n]$. Es sei $P$ die Menge aller Pixel von $\mathbf{B}$
+  und $v$ eine Funktion mit $v: P \setminus \{p_{1,1},p_{mn}\} \leftarrow v(\mathbf{B})$.
+  \autoref{alg:lsb-enkodierung} und \ref{alg:lsb-dekodierung} zeigen ein Verfahren für das
+  Schreiben und Lesen einer Nachricht in $\mathbf{B}$.
   \begin{algorithm}
     \DontPrintSemicolon
-    \KwIn{image $\mathbf{B}$ and plaintext message $x$}
-    \KwOut{image $\mathbf{B}$ with hidden message $y$}
+    \KwIn{$\mathbf{B}$ und Nachricht $x$}
+    \KwOut{$\mathbf{B}$ mit versteckter Nachricht $y$}
     \Begin(){
       $y \leftarrow e_k(x)$\;
       $n \leftarrow 1$\;
-      write message length of $y$ to $p_{0,0}$ and $p_{m-1,n-1}$\;
+      schreibe Nachrichtenlänge von $y$ nach $p_{11}$ und $p_{mn}$\;
       \While(){true}{
-        \lIf(){$n = 9$}{message is to long}
-        $P' \leftarrow f(\mathbf{B})$\;
-        \For{$p \in P'$}{
-          \For(\tcc*[f]{color values r,g,b}){$c \in p$}{
-            $b \leftarrow$ read next bit of $y$\;
-            write $b$ at position $n$ of $c$\;
-            \lIf(){message done}{\Return{}}
+        \lIf(){$n = 9$}{$y$ ist zu lang}
+        \For{$p \in v(\mathbf{B})$}{
+          \For(\tcc*[f]{Farbwerte r,g,b}){$c \in p$}{
+            $b \leftarrow$ lese nächstes Bit von $y$\;
+            schreibe $b$ nach Position $n$ von $c$\;
+            \lIf(){$y$ bearbeitet}{\Return{}}
           }
         }
         $n \leftarrow n + 1$\;
       }
     }
-    \caption{\acs{lsb}-Verfahren Enkodierung}
+    \caption{\acs{lsb}-Verfahren Schreiben}
+    \label{alg:lsb-enkodierung}
   \end{algorithm}
+
   \begin{algorithm}[H]
     \DontPrintSemicolon
-    \KwIn{image $\mathbf{B}$ with hidden message $y$.}
-    \KwOut{plaintext message $x$.}
+    \KwIn{$\mathbf{B}$ mit versteckter Nachricht $y$}
+    \KwOut{Nachricht $x$}
     \Begin(){
       $n \leftarrow 1$\;
       $y \leftarrow \emptyset$\;
-      $l \leftarrow$ read message length at $p_{0,0}$ and $p_{m-1,n-1}$\;
+      $l \leftarrow$ lese Nachrichtenlänge bei $p_{11}$ und $p_{mn}$\;
       \While(){$l \neq 0$}{
-        $P' \leftarrow f(\mathbf{B})$\;
-        \For(){$p \in P'$}{
-          \For(\tcc*[f]{color values r,g,b}){$c \in p$}{
-            $b \leftarrow$ read bit at position $n$ of $c$\;
+        \For(){$p \in v(\mathbf{B})$}{
+          \For(\tcc*[f]{Farbwerte r,g,b}){$c \in p$}{
+            $b \leftarrow$ lese Bit bei Position $n$ von $c$\;
             $y \leftarrow y \cup \{b\}$\;
             \lIf(){$l = 0$} {
-              \GoTo{done}
+              \Return{$d_k(y)$}
             }
             \lElse(){$l \leftarrow l - 1$}
           }
         }
         $n \leftarrow n + 1$\;
       }
-      \Marker{done}{
-        \Return{$d_k(y)$}
-      }
     }
-    \caption{\acs{lsb}-Verfahren Dekodierung}
+    \caption{\acs{lsb}-Verfahren Lesen}
+    \label{alg:lsb-dekodierung}
   \end{algorithm}
 \end{definition}
+
 Damit eine Nachricht im Bild möglichst wenig auffällt, macht es Sinn, Pixel
-so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $f$ hat genau diese
+so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$ hat genau diese
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
 $a = 0,1,\ldots,mn - 1$ betrachtet. Durch wiederholtes halbieren von $a$ und
 speichern der entstehenden Hälften in einer Warteschlange, kann die Folge nach
 dem Prinzip der Breitensuche abgearbeitet werden und es entstehen relativ gleichmäßig
 verteile Koordinaten.
+\begin{example}
+  Ein wird ein $3 \times 3$ großes Bild betrachtet und die Zahlenfolge ist
+  $a = 0,1,2,3,4,5,6,7,8$. Die nachfolgende Tabelle zeigt den Verlauf des Algorithmus:
+  \begin{center}
+    \begin{tabular}{cccc}
+      \multicolumn{1}{c}{Warteschlange} & Mitte & Umformung           & Koordinate \\
+      $[0,8]$                           & $m$   & $m = y \cdot 3 + x$ & $(x,y)$    \\
+      $[5,8],[0,3]$                     & 4     & $4 = 1 \cdot 3 + 1$ & $(1,1)$    \\
+      $[2,3],[0,0],[5,8]$               & 1     & $1 = 0 \cdot 3 + 1$ & $(1,0)$    \\
+      $[7,8],[5,5],[2,3],[0,0]$         & 6     & $6 = 2 \cdot 3 + 0$ & $(0,2)$    \\
+      $[7,8],[5,5],[2,3]$               & 0     & $0 = 0 \cdot 3 + 0$ & $(0,0)$    \\
+      $[3,3][2,2],[7,8],[5,5]$          & -     & -                   & -          \\
+      $[3,3][2,2],[7,8]$                & 5     & $5 = 1 \cdot 3 + 2$ & $(2,1)$    \\
+      $[8,8],[7,7],[3,3],[2,2]$         & -     & -                   & -          \\
+      $[8,8],[7,7],[3,3]$               & 2     & $2 = 0 \cdot 3 + 2$ & $(2,0)$    \\
+      $[8,8],[7,7]$                     & 3     & $3 = 1 \cdot 3 + 0$ & $(0,1)$    \\
+      $[8,8]$                           & 7     & $7 = 2 \cdot 3 + 1$ & $(1,2)$    \\
+      $\emptyset$                       & 8     & $8 = 2 \cdot 3 + 2$ & $(2,2)$
+    \end{tabular}
+  \end{center}
+\end{example}
+Werden nicht null indizierte Koordinaten benötigt, können diese entsprechend skaliert werden.
+\autoref{fig:punkt-verteilung} zeigt die Koordinatenverteilung für Nachrichten unterschiedlicher
+Längen auf einem $500 \times 500$ Farbbild mit schwarzen Hintergrund. Die durch den Algorithmus
+errechneten Koordinaten sind weiß eingefärbt.
 \begin{figure}
   \centering
   \begin{minipage}[t]{0.45\textwidth}
@@ -219,4 +243,10 @@ verteile Koordinaten.
     \includegraphics[width=1\textwidth]{black-32400.png}
     \caption*{32400 Byte}
   \end{minipage}
+  \caption{Koordinatenverteilung auf einem $500 \times 500$ Pixel Schwarzbild für Nachrichtenlängen von 1200, 3600, 10800 und 32400 Byte.}
+  \label{fig:punkt-verteilung}
 \end{figure}
+
+\newpage
+\section{Benutzer und Verschlüsselung}
+\input{chapters/steganografie/tikz/authentication.tex}
