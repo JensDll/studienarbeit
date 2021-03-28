@@ -14,7 +14,7 @@
 
     \node[above= of user]{\textbf{Benutzer}};
 
-    \node[above= of api]{\textbf{API}};
+    \node[above= of api, align=center]{\textbf{API} \\ \textbf{(Ressourcen Server)}};
 
     \node[below=3cm of api, op, inner ysep=4em] (endpoint-1) {};
     \draw[<-] ([yshift=-1.5em]$(endpoint-1.north west)$) --
@@ -33,24 +33,24 @@
     \draw[<-] ([yshift=-1.5em]$(endpoint-2.north west)$) --
     node[above, font=\scriptsize] {Anfrage + Token} ++($(-6,0) + (0.5em,0)$);
 
-    \node[above= of auth, align=center] {\textbf{Auhtentifizierungs} \\ \textbf{Server}};
+    \node[above= of auth, align=center]{\textbf{Autorisierungs-} \\ \textbf{server}};
 
     \node[below= of auth, op, inner ysep=2em] (login) {};
     \draw[<-] ([yshift=0.5em]$(login.west)$) --
     node[above, near end, font=\scriptsize] {Login/Register} ++($(-12,0) + (0.5em,0)$);
     \draw[->] ([yshift=-0.5em]$(login.west)$) --
-    node[below, near start, font=\scriptsize] {(Token, RefreshToken)} ++($(-12,0) + (0.5em,0)$);
+    node[below, near start, font=\scriptsize] {(Token, Erneuerungstoken)} ++($(-12,0) + (0.5em,0)$);
 
     \node[below=7cm of auth, op, inner ysep=2em] (refresh) {};
     \draw[<-] ([yshift=0.5em]$(refresh.west)$) --
-    node[above, near end, font=\scriptsize] {(Abgelaufener Token, RefreshToken)} ++($(-12,0) + (0.5em,0)$);
+    node[above, near end, font=\scriptsize] {(Abgelaufener Token, Erneuerungstoken)} ++($(-12,0) + (0.5em,0)$);
     \draw[->] ([yshift=-0.5em]$(refresh.west)$) --
-    node[below, near start, font=\scriptsize] {(Token, RefreshToken)} ++($(-12,0) + (0.5em,0)$);
+    node[below, near start, font=\scriptsize] {(Token, Erneuerungstoken)} ++($(-12,0) + (0.5em,0)$);
 
     \node[cylinder, draw, rotate=90, minimum width=1cm, minimum height=1cm,
       label={[font=\scriptsize]180:Benutzer Datenbank}] at (9,-4.5) {}
     edge[<->, shorten >= 0.5em, shorten <= 0.5em] (login.south west);
   \end{tikzpicture}
-  \caption{Sequenzdiagramm JWT Authentifizierung}
+  \caption{Sequenzdiagramm \acs{jwt} Autorisierung}
   \label{fig:jwt-auth}
 \end{figure}

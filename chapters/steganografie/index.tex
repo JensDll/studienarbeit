@@ -1,17 +1,20 @@
-\chapter{Steganografie}
+\chapter{Ein Steganografischer Algorihtmus}
 Die Steganografie bezeichnet eine weitere Methode die Vertraulichkeit eines
-Nachrichtenaustausches zu gewährleisten.
+Informationsaustausches zu gewährleisten.
 Es wird das Ziel verfolgt, eine Nachricht in einer für den Computer
 zugänglichen Trägerdatei (engl. \textit{cover media}) zu verstecken, sodass eine
 weitere Person die Existenz
-einer geheimen Botschaft gar nicht erst vermuten würde. Eine Trägerdatei, unempfindlich
-gegenüber kleinen Änderungen in den Daten eignet sich besonders gut für die
+einer geheimen Botschaft gar nicht erst vermuten würde. Trägerdateien, unempfindlich
+gegenüber kleinen Änderungen in den Daten, eignen sich besonders gut für die
 Anwendung steganografischer Verfahren. Digitale Bilddateien sowie Audio- und Videodateien
-sind sehr geeignete Trägermedien,
+sind sehr gute Trägermedien,
 da ihre Daten ein ganz natürliches Rauschen aufweisen.
 In diesem Kapital soll ein Algorithmus vorgestellt werden, welcher
 eine beliebig lange Nachricht in einem Bild versteckt und versucht,
 die visuelle Qualität des Urbilds zu bewahren.
+Zusätzlich wird auf eine Anwendung eingegangen, welche die beschriebenen
+Ideen umgesetzt und einen Nachrichtenaustausch über
+in Bildern versteckten Informationen ermöglicht.
 
 \section{Modifikation von Bilddateien}
 Eine digitale Bilddatei besteht aus einer zweidimensionalen Anordnung von Pixel, wobei
@@ -31,13 +34,13 @@ Potenzial, wenn es darum geht, unentdeckt Information zu verbergen. Ein
 einfaches und effektives Verfahren ist das Überschreiben der niederwertigsten
 Bit (engl. \ac{lsb}) im Farbkanal
 durch das zu versteckende Signal. Das Anpassen
-der niederen Stellenwerte verändert den Farbwert nur minimal und
+des \acs{lsb} verändert den Farbwert nur minimal und
 die kleinen Abweichungen werden nur durch betrachten des veränderten Bilds
 nicht zu erkennen sein.
 
-\section{Wie stark kann ein Bild angepasst werden?}
-Es soll nun abgeschätzt werden, wie stark eine gegebenes Bild verändert
-werden kann, ohne dass die Qualität des Resultats sichtbar beeinflusst
+\paragraph{Wie stark kann ein Bild angepasst werden?}
+Es soll nun abgeschätzt werden, wie stark ein Bild verändert
+werden kann, ohne dass die Qualität des Ergebnisses sichtbar beeinflusst
 wird. Es seien $b_7\,b_6\, \ldots \,b_0$ die acht Bit eines Farbkanals, es soll für
 jeden Kanal der maximale Fehler betrachtet werden, welcher entstehen kann,
 wenn die $n$ niederwertigsten Bit durch eine Nachricht ersetzt werden.
@@ -53,14 +56,6 @@ Der neue Farbwert inklusiv Fehler wird nach \eqref{eq:bit-max-error} in Bezug au
   \end{cases}
   \label{eq:bit-max-error}
 \end{equation}
-
-\begin{example}
-  Es werden die letzten vier Bit betrachtet ($n = 4$):
-  \begin{align*}
-    b_7\,b_6\, \ldots \, b_0 & = 10010110 & b_{7,4}\,b_{6,4}\, \ldots \, b_{0,4} & = 10011111 \\
-    b_7\,b_6\, \ldots \, b_0 & = 10011110 & b_{7,4}\,b_{6,4}\, \ldots \, b_{0,4} & = 10010000
-  \end{align*}
-\end{example}
 
 \noindent
 \autoref{fig:peppers} zeigt die Auswirkung der Veränderung auf die Bildqualität
@@ -115,7 +110,7 @@ ohne Vergleich mit der Originaldatei wahrscheinlich nicht erkannt werden würden
     \includegraphics[width=1\textwidth]{peppers-8.png}
     \caption*{$n = 8$}
   \end{minipage}
-  \caption{Farbbild Paprika veränderten durch maximalen Fehler für alle $n \in [0,8]$.}
+  \caption{Farbbild Paprika verändert durch maximalen Fehler für $n \in [0,8]$.}
   \label{fig:peppers}
 \end{figure}
 \noindent
@@ -190,6 +185,7 @@ kryptographischen Algorithmus zu verschlüsseln.
   \end{algorithm}
 \end{definition}
 
+\noindent
 Damit eine Nachricht im Bild möglichst wenig auffällt, macht es Sinn, Pixel
 so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$ hat genau diese
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
@@ -218,6 +214,8 @@ verteile Koordinaten.
     \end{tabular}
   \end{center}
 \end{example}
+
+\noindent
 Werden nicht null indizierte Koordinaten benötigt, können diese entsprechend skaliert werden.
 \autoref{fig:punkt-verteilung} zeigt die Koordinatenverteilung für Nachrichten unterschiedlicher
 Längen auf einem $500 \times 500$ Farbbild mit schwarzen Hintergrund. Die durch den Algorithmus
@@ -248,5 +246,90 @@ errechneten Koordinaten sind weiß eingefärbt.
 \end{figure}
 
 \newpage
-\section{Benutzer und Verschlüsselung}
-\input{chapters/steganografie/tikz/authentication.tex}
+\section{Die Architektur der Anwendung}
+Es soll jetzt auf die zu Beginn des Kapitels beschrieben Anwendung
+eingegangen werden, welche im Rahmen dieser Studienarbeit entwickelt wurde.
+Die Anwendung muss verschiedene Benutzer verwalten können und
+einen sicheren Nachrichtenaustausch über in Bildern
+verstecken Informationen gewährleisten.
+Die wichtigsten Sicherheitsaspekte eines
+solchen Systems sind die Folgenden:
+\begin{enumerate}
+  \item \textbf{Vertraulichkeit} einer Nachricht (Geheimhaltung, Verschlüsselung).
+  \item \textbf{Integrität} einer Nachricht (Hashfunktion).
+  \item \textbf{Authentizität} des Empfängers. Es darf nicht passieren der falschen Person
+        unwissentlich eine geheime Nachricht zu senden. Im Rahmen dieser Betrachtung sollte
+        es reichen, nicht zwei Personen mit demselben Benutzernamen zuzulassen.
+  \item \textbf{Authentifizierung} und \textbf{Autorisierung}. Um eine Nachricht, beispielsweise für das Schreiben
+        im Bild, Benutzergebunden zu verschlüsseln,
+        müssen Anfragen immer klar mit einem Benutzer in Verbindung gebracht werden.
+\end{enumerate}
+
+\noindent
+Die verschiedenen Teile der Anwendung können unterteilt werden in die
+drei Bereiche: Präsentation, Schnittstelle und Persistenz.
+Benutzer müssen angemeldet sein, um auf geschützte Bereiche der Schnittstelle zuzugreifen.
+Es wurde eine Token basierte Autorisierung gewählt, welche mithilfe von \acp{jwt}
+implementiert ist. \ac{jwt} ist ein Internet Standard (RFC 7519, \cite{SITE:jwt}) und ein
+weit verbreitetes Verfahren für die Autorisierung im Web und \textit{Single Sign-On} Anwendungen.
+\autoref{fig:jwt-auth} zeigt einen typischen Anfrageablauf zwischen Anwender und einer Anwendung
+mit \acs{jwt} Autorisierung.
+\newpage
+
+\input{chapters/steganografie/tikz/autorisierung.tex}
+
+\noindent
+Ein Benutzer erhält nach dem Anmelden eine Kombination aus Zugriffstoken
+(engl. \textit{access token}) und Erneuerungstoken (engl. \textit{refresh token}),
+welche Clientseitig gespeichert werden.
+Wird versucht auf einen geschützten Bereich der API zuzugreifen, muss die Anfrage
+einen gültigen Token enthalten, welcher als Teil des HTTP-Header im
+Autorisierungsfeld versandt wird.
+Ist im Header der Anfrage kein oder ein
+abgelaufener Token vorhanden, wird diese mit einem HTTP-Statuscode 401 \enquote{Unautorisiert}
+abgelehnt. Ist ein Token abgelaufen, kann dieser beim Autorisierungsserver
+zusammen mit dem Erneuerungstoken aktualisiert werden.
+
+\section{Sicherheitsanalyse}
+Es soll nun die Architektur der Anwendung näher betrachtet werden, mit dem Ziel
+potenzielle Sicherheitslücken aufzudecken und Lösungen zu diskutieren.
+Anschließend wird die steganografische Qualität des Algorithmus näher
+untersucht und einige Beispiele gezeigt.
+
+\subsection{Risiken der Token basierten Autorisierung}
+Besondere Vorsicht muss geboten werden, wenn es um die Handhabung
+der Zugriffstoken geht. Zugriffstoken werden Clientseitig gespeichert, über eine
+Clientumgebung (wie beispielsweise dem Webbrowser) besteht in den meisten
+Fällen keine 100-prozentige Kontrolle, weshalb die volle Sicherheit hier nicht
+garantiert werden kann. Sicherheitsmaßnahem sollten jedoch getroffen werden, um
+das Risiko eines Missbrauchs zu verringern.
+Um den Zeitraum von Angriffsmöglichkeiten kurz zu halten, sollte
+ein Zugriffstoken nur so lange gültig sein wie nötig
+(z. B. nicht länger als fünf Minuten).
+Es existieren zwei wesentliche Angriffstypen, welche das Prinzip der Token Autorisierung
+versuchen auszunutzen. Die Folgende Überlegung ist beschränkt auf die Domäne
+der Webanwendungen:
+
+\paragraph{Cross-Site-Scripting (XSS)}
+Schafft es ein Angreifer auf einer Webseite an der richtigen Stelle
+ein Stück JavaScript auszuführen,
+kann er mit den richtigen Befehlen den Zugriffstoken ganz einfach auslesen.
+Webseiten sollten an bestimmten Stellen wie Benutzereingaben vorsichtig sein und diese
+beispielsweise nie direkt als Teil des HTML anzeigen lassen.
+
+\paragraph{Cross-Site-Request-Forgery (CSRF)}
+CSRF-Angriffe zielen darauf ab, HTTP-An\-fragen im
+Namen anderer Benutzer durchzuführen. Sie machen dabei Gebrauch von
+aktiven Sitzungen oder im Falle der Token Autorisierung von Zugriffstoken,
+welche pro Anfrage automatisch (z. B. per Cookie) mitgeschickt werden.
+Zugriffstoken sollten deshalb nie direkt als Cookie gespeichert werden, besser
+ist eine Sitzung indirekt über Erneuerungstoken aufrechtzuerhalten oder
+in extremen Fällen gar keine Sitzungsinformationen zu speichern.\\
+
+\noindent
+Die Zugriffstoken der hier beschriebenen Anwendung haben eine Gültigkeitsdauer
+von 30 Sekunden und es werden keine Sitzungsinformationen gespeichert.
+
+\subsection{Kryptographische Qualität}
+
+\subsection{Steganografische Qualität}
