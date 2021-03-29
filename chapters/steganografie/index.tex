@@ -145,7 +145,7 @@ kryptographischen Algorithmus zu verschlüsseln.
       \While(){true}{
         \lIf(){$n = 9$}{$y$ ist zu lang}
         \For{$p \in v(\mathbf{B})$}{
-          \For(\tcc*[f]{Farbwerte r,g,b}){$c \in p$}{
+          \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
             $b \leftarrow$ lese nächstes Bit von $y$\;
             schreibe $b$ nach Position $n$ von $c$\;
             \lIf(){$y$ bearbeitet}{\Return{}}
@@ -168,7 +168,7 @@ kryptographischen Algorithmus zu verschlüsseln.
       $l \leftarrow$ lese Nachrichtenlänge bei $p_{11}$ und $p_{mn}$\;
       \While(){$l \neq 0$}{
         \For(){$p \in v(\mathbf{B})$}{
-          \For(\tcc*[f]{Farbwerte r,g,b}){$c \in p$}{
+          \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
             $b \leftarrow$ lese Bit bei Position $n$ von $c$\;
             $y \leftarrow y \cup \{b\}$\;
             \lIf(){$l = 0$} {
@@ -256,7 +256,7 @@ Die wichtigsten Sicherheitsaspekte eines
 solchen Systems sind die Folgenden:
 \begin{enumerate}
   \item \textbf{Vertraulichkeit} einer Nachricht (Geheimhaltung, Verschlüsselung).
-  \item \textbf{Integrität} einer Nachricht (Hashfunktion).
+  \item \textbf{Integrität} einer Nachricht (Hashfunktion, MAC).
   \item \textbf{Authentizität} des Empfängers. Es darf nicht passieren der falschen Person
         unwissentlich eine geheime Nachricht zu senden. Im Rahmen dieser Betrachtung sollte
         es reichen, nicht zwei Personen mit demselben Benutzernamen zuzulassen.
@@ -291,20 +291,24 @@ abgelehnt. Ist ein Token abgelaufen, kann dieser beim Autorisierungsserver
 zusammen mit dem Erneuerungstoken aktualisiert werden.
 
 \section{Sicherheitsanalyse}
-Es soll nun die Architektur der Anwendung näher betrachtet werden, mit dem Ziel
-potenzielle Sicherheitslücken aufzudecken und Lösungen zu diskutieren.
-Anschließend wird die steganografische Qualität des Algorithmus näher
+Es soll nun weiter auf die eben beschriebene Architektur eingegangen werden,
+mit dem Ziel potenzielle Sicherheitsrisiken aufzudecken und Lösungen zu diskutieren.
+Anschließend wird die steganografische Qualität des Algorithmus
 untersucht und einige Beispiele gezeigt.
 
 \subsection{Risiken der Token basierten Autorisierung}
 Besondere Vorsicht muss geboten werden, wenn es um die Handhabung
-der Zugriffstoken geht. Zugriffstoken werden Clientseitig gespeichert, über eine
+der Zugriffstoken geht.
+Erlangt ein Angreifer Besitzt eines Tokens, kann dieser
+im Namen des Opfers beliebig Anfragen durchführen, d. h. geheime Nachrichten
+lesen und auch Nachrichten schreiben.
+Zugriffstoken werden Clientseitig gespeichert. Über eine
 Clientumgebung (wie beispielsweise dem Webbrowser) besteht in den meisten
 Fällen keine 100-prozentige Kontrolle, weshalb die volle Sicherheit hier nicht
-garantiert werden kann. Sicherheitsmaßnahem sollten jedoch getroffen werden, um
+garantiert sein kann. Dennoch sollten Sicherheitsmaßnahem getroffen werden, um
 das Risiko eines Missbrauchs zu verringern.
 Um den Zeitraum von Angriffsmöglichkeiten kurz zu halten, sollte
-ein Zugriffstoken nur so lange gültig sein wie nötig
+ein Token nur so lange gültig sein wie nötig
 (z. B. nicht länger als fünf Minuten).
 Es existieren zwei wesentliche Angriffstypen, welche das Prinzip der Token Autorisierung
 versuchen auszunutzen. Die Folgende Überlegung ist beschränkt auf die Domäne
@@ -314,22 +318,135 @@ der Webanwendungen:
 Schafft es ein Angreifer auf einer Webseite an der richtigen Stelle
 ein Stück JavaScript auszuführen,
 kann er mit den richtigen Befehlen den Zugriffstoken ganz einfach auslesen.
-Webseiten sollten an bestimmten Stellen wie Benutzereingaben vorsichtig sein und diese
+Webseiten sollten daher an Stellen wie Benutzereingaben vorsichtig sein und diese
 beispielsweise nie direkt als Teil des HTML anzeigen lassen.
 
 \paragraph{Cross-Site-Request-Forgery (CSRF)}
 CSRF-Angriffe zielen darauf ab, HTTP-An\-fragen im
 Namen anderer Benutzer durchzuführen. Sie machen dabei Gebrauch von
 aktiven Sitzungen oder im Falle der Token Autorisierung von Zugriffstoken,
-welche pro Anfrage automatisch (z. B. per Cookie) mitgeschickt werden.
-Zugriffstoken sollten deshalb nie direkt als Cookie gespeichert werden, besser
-ist eine Sitzung indirekt über Erneuerungstoken aufrechtzuerhalten oder
-in extremen Fällen gar keine Sitzungsinformationen zu speichern.\\
+welche pro Anfrage automatisch (z. B. per Cookie) versandt werden.
+Zugriffstoken sollten deshalb nie direkt als Cookie gespeichert werden. Besser
+ist es Sitzungen indirekt über Erneuerungstoken aufrechtzuerhalten oder
+in extremen Fällen gar keine Sitzungsinformationen zu speichern.
 
 \noindent
 Die Zugriffstoken der hier beschriebenen Anwendung haben eine Gültigkeitsdauer
 von 30 Sekunden und es werden keine Sitzungsinformationen gespeichert.
 
 \subsection{Kryptographische Qualität}
+Nachrichten werden verschlüsselt, bevor sie in einem Bild versteckt werden.
+Verschlüssel\-ung geschieht durch die \textit{ASP.NET Core Data Protection API}
+, welche als sicher angenommen wird \footnote{https://docs.microsoft.com/en-us/aspnet/core/\\
+  security/data-protection/introduction?view=aspnetcore-5.0}.
+Als Garantie, dass nur der geplante Empfänger eine Nachricht lesen
+kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
+der Ver- und Entschlüsselungsfunktion übergeben wird.
+Der Parameter setzt sich zusammen aus (Datenbank ID $\parallel$ - $\parallel$ Name)
+und ist somit garantiert eindeutig, das Symbol $\parallel$
+beschreibt die Konkatenation. \autoref{alg:data-protect} und \ref{alg:data-unprotect}
+zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
+eine Methode \texttt{CreateProtector} zur Verfügung:
+\begin{algorithm}[h]
+  \DontPrintSemicolon
+  \KwIn{message $x$ and information of the receiver $(id,username)$}
+  \KwOut{protected message $y$}
+  \Begin(){
+    $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
+    \Return{$e_k(x)$}
+  }
+  \caption{\textit{Data Protection Encryption}}
+  \label{alg:data-protect}
+\end{algorithm}
+
+\noindent
+Es ist jetzt zu sehen, warum eine Anfrage in Verbindung mit einem Benutzer
+gebracht werden muss:
+
+\begin{algorithm}[h]
+  \DontPrintSemicolon
+  \KwIn{protected message $y$}
+  \KwOut{message $x$}
+  \Begin(){
+    $(id, username) \leftarrow$ get user information of request\;
+    $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
+    \Return{$d_k(y)$}
+  }
+  \caption{\textit{Data Protection Decryption}}
+  \label{alg:data-unprotect}
+\end{algorithm}
 
 \subsection{Steganografische Qualität}
+Um die Qualität des Algorithmus zu beurteilen, lohnt es sich vor allem einige
+Beispiele anzusehen. Die steganografische Qualität des Verfahrens soll jetzt
+anhand der Folgenden Bilder untersucht werden.
+
+\vspace{2cm}
+\begin{figure}[h!]
+  \centering
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{flowers.png}
+    \caption*{Original}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{flowers-10000000.png}
+    \caption*{10 MB Nachricht}
+  \end{minipage}%
+  \vspace{0.5cm}
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{flowers-20000000.png}
+    \caption*{20 MB Nachricht}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{flowers-30000000.png}
+    \caption*{30 MB Nachricht}
+  \end{minipage}
+  \caption{Blumen. Größe 4272 $\times$ 2848 Pixel. Maximale Kapazität $\approx 36,5$ MB.
+    Gute Bildqualität bis zu 20MB versteckter Nachricht.}
+  \label{fig:example-flowers}
+\end{figure}
+
+\newpage
+
+\begin{figure}[h!]
+  \centering
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{peppers-0.png}
+    \caption*{Original}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{peppers-300000.png}
+    \caption*{300 KB Nachricht}
+  \end{minipage}%
+  \vspace{0.5cm}
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{peppers-500000.png}
+    \caption*{500 KB Nachricht}
+  \end{minipage}
+  \hfill
+  \begin{minipage}[t]{0.45\textwidth}
+    \includegraphics[width=1\textwidth]{peppers-700000.png}
+    \caption*{700 KB Nachricht}
+  \end{minipage}
+  \caption{Paprika. Größe 509 $\times$ 509 Pixel. Maximale Kapazität $\approx 777$ KB.
+    Gute Bildqualität bis zu 300-500 KB versteckter Nachricht.}
+  \label{fig:example-peppers}
+\end{figure}
+
+\newpage
+
+\noindent
+Sind die Seitenverhältnisse eines Bilds Zweierpotenzen, entstehen Streifen,
+welche einfacher erkannt werden können. \autoref{fig:example-white-stripes} zeigt dieses
+Verhalten, die veränderte Pixel sind weiß eingefärbt.
+\vspace{2cm}
+\begin{figure}[h!]
+  \centering
+  \includegraphics{black-white-stripes.png}
+  \caption{Schwarz. Größe 512 $\times$ 512 Pixel. 10 KB Nachricht, veränderte Pixel
+    sind weiß eingefärbt.}
+  \label{fig:example-white-stripes}
+\end{figure}
