@@ -24,14 +24,14 @@
     \node[above=2cm of p-right] (bob) {Bob};
 
     \draw [->] (k-l) to (key-gen-l);
-    \draw [<-] (xor-e) to node[right] {$s_i$} (key-gen-l);
+    \draw [<-] (xor-e) to node[right] {$k_i$} (key-gen-l);
     \draw [<-] (xor-e.west) to node[pos=1, above] {$x_0,x_1,\dots,x_n$} (p-left);
     \draw [->] (xor-e) to node[above] {$y_i$} (channel);
 
     \draw [<->] (oscar) to (channel);
 
     \draw [->] (k-r) to (key-gen-r);
-    \draw [<-] (xor-d) to node[right] {$s_i$} (key-gen-r);
+    \draw [<-] (xor-d) to node[right] {$k_i$} (key-gen-r);
     \draw [->] (xor-d.east) to node[pos=1, above] {$x_0,x_1,\dots,x_n$} (p-right);
     \draw [<-] (xor-d) to node[above] {$y_i$} (channel);
 

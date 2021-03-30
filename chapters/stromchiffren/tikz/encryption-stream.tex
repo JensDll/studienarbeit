@@ -2,13 +2,13 @@
   \centering
   \begin{tikzpicture}
     \node[XOR, scale=2] (xor-e) {};
-    \node[above=of xor-e] (s1) {$s_i$};
+    \node[above=of xor-e] (s1) {$k_i$};
 
     \node[unsecure channel, right=1.5cm of xor-e]
     (K) {\small unsicherer Kanal \\ \small (z.B. Internet)};
 
     \node[XOR, scale=2, right=1.5cm of K] (xor-d) {};
-    \node[above=of xor-d] (s2) {$s_i$};
+    \node[above=of xor-d] (s2) {$k_i$};
 
     \draw[<-] (xor-e.west) to node[pos=1, above] {$x_i$} ++(-1.5cm,0);
     \draw[->] (s1) to (xor-e);

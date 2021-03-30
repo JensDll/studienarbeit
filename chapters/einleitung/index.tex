@@ -1,28 +1,28 @@
 \chapter{Einleitung}
-Redet man heutzutage über das Thema Kryptographie, sind im Gespräch wahrscheinlich
+Redet man heutzutage über das Thema Kryptografie, sind im Gespräch wahrscheinlich
 Themen wie E-Mail-Verschlüsselung, Internetprotokolle oder Anwendungen im
 Bankenwesen. Auch bekannt sind die Angriffe auf kryptographische Systeme,
 wie zum Beispiel die Entzifferung der durch die Enigma-Chiffriermaschine
 verschlüsselten deutschen Funksprüche während des Zweiten Weltkrieges. Es scheint als
-wäre Kryptographie stark mit den modernen elektronischen Kommunikationstechniken
-verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptographie
+wäre Kryptografie stark mit den modernen elektronischen Kommunikationstechniken
+verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptografie
 gehen zurück bis etwa 2000 v. Chr., als bereits im antiken Ägypten neben den
 Standard-Hieroglyphen zusätzlich auch \enquote{geheime} Zeichen
 verwendet wurden \parencite[2]{BOOK:crypto}. Es werden prinzipiell zwei
 unterschiedliche kryptographische Verfahren unterschieden, diese sind
 Symmetrische- und Asymmetrische Algorithmen. Die symmetrische Verschlüsselung ist
-seit langer Zeit ein fester Bestandteil der Kryptographie, mit bekannten historischen
+seit langer Zeit ein fester Bestandteil der Kryptografie, mit bekannten historischen
 Verfahren wie die Cäsar-Chiffre welche bereits im antiken Rom für das Verschlüsseln von
 Nachrichten verwendet wurde. Asymmetrische Verschlüsselung hingegen ist eine gänzlich neue Form
-der Kryptographie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
+der Kryptografie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
 1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:crypto}.
-Eine Übersicht über das Gebiet der Kryptographie ist in \autoref{fig:kryptologie} zu sehen.
-Es ist zu bemerken, dass an oberster Stelle nicht die Kryptographie, sondern
+Eine Übersicht über das Gebiet der Kryptografie ist in \autoref{fig:kryptologie} zu sehen.
+Es ist zu bemerken, dass an oberster Stelle nicht die Kryptografie, sondern
 der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
 
 \input{chapters/einleitung/tikz/cryptology.tex}
 
-\paragraph{Kryptographie}
+\paragraph{Kryptografie}
 Die Wissenschaft eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
 verstanden werden kann, für den sie bestimmt ist.
 
@@ -54,7 +54,7 @@ schnell an die Öffentlichkeit. Es zeigten sich Mängel in der Implementierung,
 welche das Brechen der Verschlüsselung mit sehr geringen Aufwand ermöglichten \parencite{SITE:CSS}.
 
 \section{Symmetrische Verschlüsselung}
-Denkt man an die Teilbereiche der Kryptographie, ist die Symmetrische Verschlüsselung
+Denkt man an die Teilbereiche der Kryptografie, ist die Symmetrische Verschlüsselung
 das wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
 Algorithmus zum Ver- und Entschlüsseln von Nachrichten und haben sich auf einen
 gemeinsamen geheimen Schlüssel geeinigt. Wie es in der Literatur sehr beliebt ist,
@@ -82,7 +82,7 @@ eine zufällige Folge von Bits.
 
 \noindent
 Die Variablen $x, y$ und $k$ aus \autoref{fig:sym-encryption} haben in der
-Kryptographie eine besondere Bedeutung:
+Kryptografie eine besondere Bedeutung:
 
 \begin{itemize}
   \item $x$ ist der Klartext (engl. \textit{plaintext}).
@@ -114,40 +114,41 @@ zu können.
   \end{enumerate}
 \end{lemma}
 \begin{proof}
-  $\exists \, q_1,q_2,r_1,r_2 \in \mathbb{Z}$ \\
   Es seien $a = q_1m + r_1$ und $b = q_2m + r_2$ mit $0 \leq r_1,r_2 < m$,
-  die Gleichungen, die bei Division mit Rest entstehen. \\
+  die Gleichungen, die bei Division mit Rest entstehen. $q_1,q_2,r_1,r_2 \in \mathbb{Z}$. \\
   \textit{i)} $\Rightarrow$ \textit{ii)}: \\
   Es gilt: $r_1 = r_2$. \\
-  Zu zeigen: $m|(a-b)$.
+  Zu zeigen: $m \mid (a-b)$.
   \begin{align*}
-    a - b                 & = q_1m + r_1 - q_2m + r_2  \\
-    a - b                 & = (q_1 - q_2)m + r_1 - r_2 \\
-    \Leftrightarrow a - b & = (q_1 - q_2)m
+    a - b & = q_1m + r_1 - q_2m + r_2  \\
+    a - b & = (q_1 - q_2)m + r_1 - r_2 \\
+    a - b & = (q_1 - q_2)m
   \end{align*}
-  Aus der letzten Gleichung folgt: $m | (a - b)$. \\
+  Aus der letzten Gleichung folgt: $m \mid (a - b)$. \\
   \textit{ii)} $\Rightarrow$ \textit{i)}: \\
-  Es gilt: $m | (a - b)$. \\
+  Es gilt: $m \mid (a - b)$. \\
   Zu zeigen: $r_1 = r_2$.
   \begin{align*}
-    m                 & | (a - b)                     \\
-    \Leftrightarrow m & | (q_1m + r_1) - (q_2m + r_2) \\
-    \Leftrightarrow m & | (q_1 - q_2)m + (r_1 - r_2)
+    m                 & \mid (a - b)                     \\
+    \Leftrightarrow m & \mid (q_1m + r_1) - (q_2m + r_2) \\
+    \Leftrightarrow m & \mid (q_1 - q_2)m + (r_1 - r_2)
   \end{align*}
-  Aus $m|(q_1 - q_2)m + (r_1 - r_2)$ und $m|(q_1 - q_2)m$ folgt $m|(r_1 - r_2)$.
-  \footnote{Aus $a|b$ und $a|c$ folgt $a|(xb + yc)$,
-    $\forall \, x,y \in \mathbb{Z}$ \parencite[23]{BOOK:numberTheory}. \\
-    Also mit konkreten Werten $m|(q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \Leftrightarrow m|(r_1 - r_2)$.} \\
-  Entweder $r_1 - r_2$ ist ein Vielfaches von $m$ oder 0.
-  Da sich $r_1$ und $r_2$ im Bereich
-  $[0,m)$ befinden ist die einzige Lösung $r_1 - r_2 = 0$. Es folgt: $r_1 = r_2$.
+  Teil $m$ zwei Zahlen $a$ und $b$, muss $m$ auch eine Linearkombination dieser Zahlen teilen.
+  \begin{align*}
+    m                 & \mid (q_1 - q_2)m + (r_1 - r_2)                \\
+    m                 & \mid (q_1 - q_2)m                              \\
+    \Leftrightarrow m & \mid (q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \\
+    \Leftrightarrow m & \mid (r_1 - r_2)
+  \end{align*}
+  Aus der letzten Zeile folgt wegen $0 \leq r_1,r_2 < m$ sofort $r_1 - r_2 = 0$.
+  Es folgt: $r_1 = r_2$.
 \end{proof}
 
 \newpage
 \noindent
 Nach Gauß nennt nennt man zwei Zahlen $a, b \in \mathbb{Z}$, die bei der Division durch $m$
-denselben Rest ergeben, \textit{kongruent modulo m}. Anstelle der schwerfälligen
-Teilbarkeitsschreibweise $m|(a - b)$
+denselben Rest ergeben, \textit{kongruent Modulo m}. Anstelle der schwerfälligen
+Teilbarkeitsschreibweise $m \mid (a - b)$
 führte Gauß folgende Schreibweise ein \parencite[180]{BOOK:numberTheory}:
 \begin{equation}
   \label{eq:kongruenz}
@@ -159,7 +160,7 @@ führte Gauß folgende Schreibweise ein \parencite[180]{BOOK:numberTheory}:
   \begin{equation*}
     29 \equiv 5 \pmod{8} \text{\quad oder als Gleichung:\quad} 29 = 3 \cdot 8 + 5
   \end{equation*}
-  und deshalb $8|(29 - 5)$.
+  und deshalb $8 \mid (29 - 5)$.
 \end{example}
 
 \noindent
@@ -167,7 +168,7 @@ Die Gleichung der Modulo Rechnung hat unendlich viele Lösungen. Zu einem gegebe
 beliebig viele Zahlen $a$, welche den selben Rest ergeben.
 \begin{example}
   Die folgenden Zahlen erfüllen die Gleichung $a \pmod{8} = 5$.
-  Sie werden kongruent modulo 8 genannt:
+  Sie werden kongruent Modulo 8 genannt:
   \begin{equation*}
     29 \equiv 21 \equiv 13 \equiv 5 \equiv -3 \equiv -11 \pmod{8}
   \end{equation*}
@@ -186,7 +187,7 @@ beliebig viele Zahlen $a$, welche den selben Rest ergeben.
 Alle Elemente einer Restklasse verhalten sich gleich. Zu einem gegebenen Modulo $m$ spielt es
 keine Rolle, welches Element der Restklasse für eine Berechnung ausgewählt wird.
 Diese Eigenschaft ist von großem Nutzen, vor allem bei Berechnungen mit großen Zahlen,
-wie es in der Kryptographie oft der Fall ist.
+wie es in der Kryptografie oft der Fall ist.
 
 \begin{example}[{\cite[15-16]{BOOK:crypto}}]
   Die Hauptoperation in vielen Asymmetrischen Chiffren ist die Exponentiation der Form
@@ -231,7 +232,7 @@ Es gilt also: $\mathbb{N} := \{0\} \cup \mathbb{N}^\times$.
 Um das bekannte Verschlüsselungsverfahren, die Cäsar-Chiffre, im nächsten Abschnitt
 besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ definiert:
 
-\begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste modulo $m$]
+\begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste Modulo $m$]
   % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
   \leavevmode
   \begin{enumerate}
@@ -273,7 +274,7 @@ lateinische Alphabet ist in \autoref{tab:encode-alph} zu sehen.
 
 \noindent
 Würde ein Buchstabe zu weit verschoben werden, wird von vorne,
-also beim ersten Buchstabe weitergemacht.
+also beim ersten Buchstaben weitergemacht.
 Sowohl Klartext- als auch Geheimtextbuchstaben sind somit Teil des Rings $\mathbb{Z}_{26}$.
 Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
 
@@ -289,7 +290,7 @@ Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
 \noindent
 Das Verschlüsselungsverfahren funktioniert.
 \begin{proof}
-  Die Entschlüsselung der Verschlüsselung ergibt den Klartext. \\
+  Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben. \\
   Zu zeigen: $d_k(e_k(x)) = x$.
   \begin{equation*}
     d_k(e_k(x)) = x \equiv x + k - k \equiv x \pmod{26}
@@ -319,5 +320,5 @@ Wie zu erwarten ist die Cäsar-Chiffre natürlich nicht besonders sicher.
 Es gibt nur 26 verschiedene Schlüssel (wobei $k = 0$ den Klartext nicht verändert),
 welche schnell alle ausprobiert werden können. Zusätzlich
 haben Klartext und Geheimtext die selben statistischen Eigenschaften.
-Klartextbuchstaben werden immer auf die selben Geheimtextbuchstaben abgebildet. Dies
+Klartextbuchstaben werden immer auf die selben Geheimtextbuchstaben abgebildet, dies
 erlaubt es eine Häufigkeitsanalyse der Buchstaben durchzuführen.

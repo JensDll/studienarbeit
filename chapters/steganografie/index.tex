@@ -10,7 +10,7 @@ Anwendung steganografischer Verfahren. Digitale Bilddateien sowie Audio- und Vid
 sind sehr gute Trägermedien,
 da ihre Daten ein ganz natürliches Rauschen aufweisen.
 In diesem Kapital soll ein Algorithmus vorgestellt werden, welcher
-eine beliebig lange Nachricht in einem Bild versteckt und versucht,
+eine beliebig lange Nachricht in einem Bild versteckt und dabei versucht,
 die visuelle Qualität des Urbilds zu bewahren.
 Zusätzlich wird auf eine Anwendung eingegangen, welche die beschriebenen
 Ideen umgesetzt und einen Nachrichtenaustausch über
@@ -26,17 +26,17 @@ nachgebildet werden \parencite[32-40]{BOOK:VC}. In computerorientierten Anwendun
 werden hierfür pro Farbkanal Zahlenwerte zwischen 0 und 255 gespeichert,
 es gilt je größer der Wert desto heller die Farbe. Die Kombinationen
 $(255,0,0)$, $(0,255,0)$ und $(0,0,255)$ beschreiben jeweils die Grundfarben Rot, Grün und Blau.
-Das Mischen aller Farben $(255,255,255)$ ergibt Weiß und das Hinzufügen gar keines
-Lichts $(0,0,0)$ resultiert in Schwarz. Kombinationen mit gleicher Intensität
+Das Mischen aller Farben $(255,255,255)$ ergibt die Farbe Weiß und das Hinzufügen
+gar keines Lichts $(0,0,0)$ resultiert in Schwarz. Kombinationen mit gleicher Intensität
 $(100,100,100)$ werden als Grauton wahrgenommen. Pro Pixel müssen in einem Bild
 also drei Byte an Information gespeichert werden, dies verspricht ein großes
 Potenzial, wenn es darum geht, unentdeckt Information zu verbergen. Ein
 einfaches und effektives Verfahren ist das Überschreiben der niederwertigsten
 Bit (engl. \ac{lsb}) im Farbkanal
 durch das zu versteckende Signal. Das Anpassen
-des \acs{lsb} verändert den Farbwert nur minimal und
-die kleinen Abweichungen werden nur durch betrachten des veränderten Bilds
-nicht zu erkennen sein.
+der \acs{lsb} verändert den Farbwert nur minimal und
+die kleinen Änderungen in den Zahlen werden nur durch das
+Betrachten des veränderten Bilds nicht zu erkennen sein.
 
 \paragraph{Wie stark kann ein Bild angepasst werden?}
 Es soll nun abgeschätzt werden, wie stark ein Bild verändert
@@ -44,7 +44,7 @@ werden kann, ohne dass die Qualität des Ergebnisses sichtbar beeinflusst
 wird. Es seien $b_7\,b_6\, \ldots \,b_0$ die acht Bit eines Farbkanals, es soll für
 jeden Kanal der maximale Fehler betrachtet werden, welcher entstehen kann,
 wenn die $n$ niederwertigsten Bit durch eine Nachricht ersetzt werden.
-Der neue Farbwert inklusiv Fehler wird nach \eqref{eq:bit-max-error} in Bezug auf $n$ bestimmt:
+Der neue Farbwert einschließlich Fehler wird nach \eqref{eq:bit-max-error} in Bezug auf $n$ bestimmt:
 
 \begin{equation}
   a(n) = \sum_{i=0}^{n - 1} b_i \cdot 2^i \qquad
@@ -59,16 +59,17 @@ Der neue Farbwert inklusiv Fehler wird nach \eqref{eq:bit-max-error} in Bezug au
 
 \noindent
 \autoref{fig:peppers} zeigt die Auswirkung der Veränderung auf die Bildqualität
-eines Farbbilds für Fehlerparamter $0 \leq n \leq 8$.
+eines Farbbilds für Fehlerparameter $0 \leq n \leq 8$.
 Es kann die durchaus vielversprechende Beobachtung
 gemacht werden, dass Änderungen bis hin zur vierten Stelle im Farbkanal nur schwer und
 ohne Vergleich mit der Originaldatei wahrscheinlich nicht erkannt werden würden.
+\newpage
 
 \begin{figure}[h!]
   \centering
   \begin{minipage}[t]{0.3\textwidth}
     \includegraphics[width=1\textwidth]{peppers-0.png}
-    \caption*{$n = 0$ (Original)}
+    \caption*{Original ($n = 0$)}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
@@ -121,12 +122,12 @@ zufällig mit den des Bilds überstimmen oder vorherige Fehler
 durch weitere Teile der Nachricht wieder ausgeglichen werden.
 
 \section{Beschreibung eines Algorithmus}
-Im vorherige Abschnitt wurden die Möglichkeiten von \acs{lsb}-Verfahren untersucht,
+Im vorherigen Abschnitt wurden die Möglichkeiten von \acs{lsb}-Verfahren untersucht,
 es kann jetzt eine mehr formale Beschreibung gegeben werden,
 wie ein solcher Algorithmus umgesetzt werden kann.
 Da ein steganografisches Verfahren die Vertraulichkeit einer Nachricht
 nur indirekt sichert, ist es sinnvoll, diese vor dem Verwenden mit einem
-kryptographischen Algorithmus zu verschlüsseln.
+kryptografischen Algorithmus zu verschlüsseln.
 
 \begin{definition}[\acs{lsb}-Verfahren]
   Es sei $p_{xy} = (r,g,b)$ ein Pixel und $\mathbf{B} = p^{m \times n}$ ein Bild
@@ -190,7 +191,7 @@ Damit eine Nachricht im Bild möglichst wenig auffällt, macht es Sinn, Pixel
 so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$ hat genau diese
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
 $a = 0,1,\ldots,mn - 1$ betrachtet. Durch wiederholtes halbieren von $a$ und
-speichern der entstehenden Hälften in einer Warteschlange, kann die Folge nach
+speichern der entstehenden Hälften in einer Warteschlange kann die Folge nach
 dem Prinzip der Breitensuche abgearbeitet werden und es entstehen relativ gleichmäßig
 verteile Koordinaten.
 \begin{example}
@@ -218,7 +219,7 @@ verteile Koordinaten.
 \noindent
 Werden nicht null indizierte Koordinaten benötigt, können diese entsprechend skaliert werden.
 \autoref{fig:punkt-verteilung} zeigt die Koordinatenverteilung für Nachrichten unterschiedlicher
-Längen auf einem $500 \times 500$ Farbbild mit schwarzen Hintergrund. Die durch den Algorithmus
+Längen auf einem $500 \times 500$ Pixel Farbbild mit schwarzen Hintergrund. Die durch den Algorithmus
 errechneten Koordinaten sind weiß eingefärbt.
 \begin{figure}
   \centering
@@ -256,12 +257,12 @@ Die wichtigsten Sicherheitsaspekte eines
 solchen Systems sind die Folgenden:
 \begin{enumerate}
   \item \textbf{Vertraulichkeit} einer Nachricht (Geheimhaltung, Verschlüsselung).
-  \item \textbf{Integrität} einer Nachricht (Hashfunktion, MAC).
+  \item \textbf{Integrität} einer Nachricht (Hashfunktion, \acp{mac}).
   \item \textbf{Authentizität} des Empfängers. Es darf nicht passieren der falschen Person
         unwissentlich eine geheime Nachricht zu senden. Im Rahmen dieser Betrachtung sollte
         es reichen, nicht zwei Personen mit demselben Benutzernamen zuzulassen.
-  \item \textbf{Authentifizierung} und \textbf{Autorisierung}. Um eine Nachricht, beispielsweise für das Schreiben
-        im Bild, Benutzergebunden zu verschlüsseln,
+  \item \textbf{Authentifizierung} und \textbf{Autorisierung}. Um eine Nachricht
+        (z.\,B. für das Schreiben im Bild) benutzergebunden zu verschlüsseln,
         müssen Anfragen immer klar mit einem Benutzer in Verbindung gebracht werden.
 \end{enumerate}
 
@@ -281,9 +282,9 @@ mit \acs{jwt} Autorisierung.
 \noindent
 Ein Benutzer erhält nach dem Anmelden eine Kombination aus Zugriffstoken
 (engl. \textit{access token}) und Erneuerungstoken (engl. \textit{refresh token}),
-welche Clientseitig gespeichert werden.
-Wird versucht auf einen geschützten Bereich der API zuzugreifen, muss die Anfrage
-einen gültigen Token enthalten, welcher als Teil des HTTP-Header im
+welche clientseitig gespeichert werden.
+Wird versucht, auf einen geschützten Bereich der API zuzugreifen, muss die Anfrage
+einen gültigen Token enthalten, welcher als Teil des HTTP-Headers im
 Autorisierungsfeld versandt wird.
 Ist im Header der Anfrage kein oder ein
 abgelaufener Token vorhanden, wird diese mit einem HTTP-Statuscode 401 \enquote{Unautorisiert}
@@ -291,25 +292,25 @@ abgelehnt. Ist ein Token abgelaufen, kann dieser beim Autorisierungsserver
 zusammen mit dem Erneuerungstoken aktualisiert werden.
 
 \section{Sicherheitsanalyse}
-Es soll nun weiter auf die eben beschriebene Architektur eingegangen werden,
-mit dem Ziel potenzielle Sicherheitsrisiken aufzudecken und Lösungen zu diskutieren.
+Es soll nun weiter auf die beschriebene Architektur der Anwendung eingegangen werden,
+mit dem Ziel Sicherheitsbedenken aufzudecken und Lösungen zu diskutieren.
 Anschließend wird die steganografische Qualität des Algorithmus
 untersucht und einige Beispiele gezeigt.
 
 \subsection{Risiken der Token basierten Autorisierung}
 Besondere Vorsicht muss geboten werden, wenn es um die Handhabung
 der Zugriffstoken geht.
-Erlangt ein Angreifer Besitzt eines Tokens, kann dieser
-im Namen des Opfers beliebig Anfragen durchführen, d. h. geheime Nachrichten
-lesen und auch Nachrichten schreiben.
-Zugriffstoken werden Clientseitig gespeichert. Über eine
-Clientumgebung (wie beispielsweise dem Webbrowser) besteht in den meisten
-Fällen keine 100-prozentige Kontrolle, weshalb die volle Sicherheit hier nicht
-garantiert sein kann. Dennoch sollten Sicherheitsmaßnahem getroffen werden, um
+Fällt ein Token in die Hände des Angreifers, kann dieser
+im Namen des Nutzers beliebig Anfragen durchführen, d.\,h. sowohl geheime Nachrichten
+lesen als auch Nachrichten schreiben.
+Zugriffstoken werden clientseitig gespeichert. Über eine
+Clientumgebung wie beispielsweise dem Webbrowser, besteht in den meisten
+Fällen keine 100-prozentige Kontrolle, weshalb die volle Sicherheit hier leider nicht
+garantiert sein kann. Dennoch sollten Sicherheitsmaßnahmen getroffen werden, um
 das Risiko eines Missbrauchs zu verringern.
 Um den Zeitraum von Angriffsmöglichkeiten kurz zu halten, sollte
 ein Token nur so lange gültig sein wie nötig
-(z. B. nicht länger als fünf Minuten).
+(z.\,B. nicht länger als fünf Minuten).
 Es existieren zwei wesentliche Angriffstypen, welche das Prinzip der Token Autorisierung
 versuchen auszunutzen. Die Folgende Überlegung ist beschränkt auf die Domäne
 der Webanwendungen:
@@ -325,8 +326,8 @@ beispielsweise nie direkt als Teil des HTML anzeigen lassen.
 CSRF-Angriffe zielen darauf ab, HTTP-An\-fragen im
 Namen anderer Benutzer durchzuführen. Sie machen dabei Gebrauch von
 aktiven Sitzungen oder im Falle der Token Autorisierung von Zugriffstoken,
-welche pro Anfrage automatisch (z. B. per Cookie) versandt werden.
-Zugriffstoken sollten deshalb nie direkt als Cookie gespeichert werden. Besser
+welche pro Anfrage automatisch (z.\,B. per Cookie) versandt werden.
+Zugriffstoken sollten somit nie direkt als Cookie gespeichert werden. Besser
 ist es Sitzungen indirekt über Erneuerungstoken aufrechtzuerhalten oder
 in extremen Fällen gar keine Sitzungsinformationen zu speichern.
 
@@ -334,7 +335,7 @@ in extremen Fällen gar keine Sitzungsinformationen zu speichern.
 Die Zugriffstoken der hier beschriebenen Anwendung haben eine Gültigkeitsdauer
 von 30 Sekunden und es werden keine Sitzungsinformationen gespeichert.
 
-\subsection{Kryptographische Qualität}
+\subsection{Kryptografische Qualität}
 Nachrichten werden verschlüsselt, bevor sie in einem Bild versteckt werden.
 Verschlüssel\-ung geschieht durch die \textit{ASP.NET Core Data Protection API}
 , welche als sicher angenommen wird \footnote{https://docs.microsoft.com/en-us/aspnet/core/\\
@@ -343,8 +344,8 @@ Als Garantie, dass nur der geplante Empfänger eine Nachricht lesen
 kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
 der Ver- und Entschlüsselungsfunktion übergeben wird.
 Der Parameter setzt sich zusammen aus (Datenbank ID $\parallel$ - $\parallel$ Name)
-und ist somit garantiert eindeutig, das Symbol $\parallel$
-beschreibt die Konkatenation. \autoref{alg:data-protect} und \ref{alg:data-unprotect}
+und ist somit garantiert eindeutig. Das Symbol $\parallel$
+beschreibt hierbei die Konkatenation. \autoref{alg:data-protect} und \ref{alg:data-unprotect}
 zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
 eine Methode \texttt{CreateProtector} zur Verfügung:
 \begin{algorithm}[h]
@@ -360,8 +361,7 @@ eine Methode \texttt{CreateProtector} zur Verfügung:
 \end{algorithm}
 
 \noindent
-Es ist jetzt zu sehen, warum eine Anfrage in Verbindung mit einem Benutzer
-gebracht werden muss:
+Es ist jetzt zu sehen, warum es wichtig ist, eine Anfragen mit einem Benutzer zu verbinden:
 
 \begin{algorithm}[h]
   \DontPrintSemicolon
@@ -376,12 +376,18 @@ gebracht werden muss:
   \label{alg:data-unprotect}
 \end{algorithm}
 
+\noindent
+Das Funktionspaar $(e_k, d_k)$ der \texttt{CreateProtector} Methode verwendet \acp{mac}
+um die unbemerkte Nachrichtenmanipulation zu verhindern. Wäre die Nachricht während der Übertragung
+verändert worden, würde es während der Entschlüsselung auffallen.
+
 \subsection{Steganografische Qualität}
-Um die Qualität des Algorithmus zu beurteilen, lohnt es sich vor allem einige
+Um die Qualität des Algorithmus zu beurteilen,
+lohnt es sich vor allem einige
 Beispiele anzusehen. Die steganografische Qualität des Verfahrens soll jetzt
 anhand der Folgenden Bilder untersucht werden.
 
-\vspace{2cm}
+\vspace{1cm}
 \begin{figure}[h!]
   \centering
   \begin{minipage}[t]{0.45\textwidth}
@@ -446,7 +452,7 @@ Verhalten, die veränderte Pixel sind weiß eingefärbt.
 \begin{figure}[h!]
   \centering
   \includegraphics{black-white-stripes.png}
-  \caption{Schwarz. Größe 512 $\times$ 512 Pixel. 10 KB Nachricht, veränderte Pixel
-    sind weiß eingefärbt.}
+  \caption{Koordinatenverteilung auf einem $512 \times 512$ Pixel Schwarzbild
+    für eine Nachrichtenlänge von 10 KB.}
   \label{fig:example-white-stripes}
 \end{figure}

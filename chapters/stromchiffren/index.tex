@@ -4,7 +4,7 @@
 
 \noindent
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
-der Kryptographie, stellen wir fest: Das Gebiet
+der Kryptografie, stellen wir fest: Das Gebiet
 der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Strom- und Blockchiffren.
 In diesem Kapitel sollen anhand von Stromchiffren einige Definitionen eingeführt
 und der Unterschied zu den Blockchiffren erläutert werden.
@@ -31,11 +31,11 @@ Eine grundlegende Idee für das Entwerfen starker Blockchiffren, ist das Prinzip
 der Konfusion (engl. \textit{confusion}) und
 Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
 \begin{enumerate}
-  \item \textbf{Konfusion} hat die Aufgabe den
+  \item Die \textbf{Konfusion} hat die Aufgabe den
         Zusammenhang von Schlüssel und Geheimtext unklar zu machen. Ein
         beliebtes Vorgehen ist die Bitsubstitution, welche sowohl in \acs{des} als auch
         \acs{aes} verwendet wird.
-  \item \textbf{Diffusion} hat die Aufgabe den Einfluss
+  \item Die \textbf{Diffusion} hat die Aufgabe den Einfluss
         an einer Stelle des Klartextes, über den gesamten Geheimtext zu verteilen. Es wird
         das Ziel verfolgt
         statistische Eigenschafen zu verstecken. Das Ändern von einer Stelle im Klartext,
@@ -43,14 +43,14 @@ Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
         Operation für Diffusion ist die Bitpermutation, welche häufig in \acs{des} eingesetzt wird.
         \acs{aes} verwendet eine komplexere MixColumn-Transformation.
 \end{enumerate}
-Chiffren welche nur eine der beiden Operationen anwenden, wie die alleinige Konfusion bei der
-Cäsar-Chiffre (\autoref{sec:shift-cipher}), sind nicht sicher. Die heutigen Blockchiffren
+Chiffren welche nur eine der beiden Operationen anwenden, wie die alleinige Konfusion
+mit der Cäsar-Chiffre, sind nicht sicher. Die heutigen Blockchiffren
 arbeiten iterativ in aufeinanderfolgenden Runden, die gleich aufgebaut sind. In jeder Runde wird eine
 Rundenfunktion angewandt, welche sowohl Konfusion als auch Diffusion durchführt.
 Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOOK:crypto}:
 
 \begin{enumerate}
-  \item Blockchiffren werden in der Praxis, vor allem für die Verschlüsselung im Internet,
+  \item Blockchiffren werden in der Praxis vor allem für die Verschlüsselung im Internet
         häufiger eingesetzt als Stromchiffren.
   \item Stromchiffren sind oft klein und schnell und deshalb attraktiv für Anwendungen,
         bei denen vergleichsweise wenig Rechenleistung zur Verfügung steht, beispielsweise bei
@@ -65,31 +65,31 @@ Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOO
 \end{enumerate}
 
 \section{Die Ver- und Entschlüsselung mit Stromchiffren}
-Wie oben erwähnt, verschlüsseln Stromchiffren jedes Bit im Klartext einzeln. Hierfür
-wird durch einen Schlüssel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
+Stromchiffren verschlüsseln jedes Bit im Klartext einzeln. Hierfür
+wird durch einen Schlüs\-sel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
 des Klartextes kombiniert wird. Die Ver- und Entschlüsselung ist verblüffend einfach, es handelt
 sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 
 \begin{definition}[{Ver- und Entschlüsselung mit Stromchiffren, \cite[31]{BOOK:crypto}}]
-  Es seien $x_i,y_i,s_i \in \{0,1\}$ die einzelnen Bits aus Klartext, Geheimtext und Schlüs\-selstrom.
+  Es seien $x_i,y_i,k_i \in \{0,1\}$ die einzelnen Bit aus Klartext, Geheimtext und Schlüs\-selstrom.
   Es gilt:
   \begin{description}
-    \item[Verschlüsselung:] $y_i = e_{s_i}(x_i) \equiv x_i + s_i \pmod{2}$
-    \item[Entschlüsselung:] $x_i = d_{s_i}(y_i) \equiv y_i + s_i \pmod{2}$
+    \item[Verschlüsselung:] $y_i = e_{k_i}(x_i) \equiv x_i + k_i \pmod{2}$
+    \item[Entschlüsselung:] $x_i = d_{k_i}(y_i) \equiv y_i + k_i \pmod{2}$
   \end{description}
 \end{definition}
 
 \noindent
-Betrachtet man die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf welche
+Betrachteten wir die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf welche
 besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 
 \begin{enumerate}
-  \item Warum ist Verschlüsselung und Entschlüsselung die selbe Funktion?
+  \item Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?
   \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
-  \item Was sind die Eigenschaften der Schlüsselstrombits $s_i$?
+  \item Was sind die Eigenschaften der Schlüsselstrombits $k_i$?
 \end{enumerate}
 
-\paragraph{Warum ist Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
+\paragraph{Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
 Bis auf spezielle Kürzungsregeln erlauben Kongruenzen (ganz analog wie mit Gleichungen)
 das Ausführen der elementaren Rechenoperationen \parencite[181-183]{BOOK:numberTheory}.
 Mit diesem Wissen kann die Verschlüsselungsfunktion durch einfaches Umformen in die
@@ -102,22 +102,23 @@ Entschlüsselungsfunktion überführt werden.
   \end{align*}
 \end{proof}
 \noindent
-Im letzten Schritt wird erneut von dem Wechsel innerhalb der Restklasse Gebrauch gemacht,
-denn es gilt $-1 \equiv 1 \pmod{2}$.
+Im letzten Schritt wird erneut vom Wechsel innerhalb der Restklasse Gebrauch gemacht.
+Es gilt: $-1 \equiv 1 \pmod{2}$.
 
 \paragraph{Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
 Das Rechnen in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
 der Menge $\{0,1\}$. Dieses Verhalten ist sehr hilfreich, denn es ermöglicht das Ausdrücken der
 Arithmetik durch einfache boolesche Algebra.
-Betrachtet man die Wahrheitstabelle \ref{tab:truth-table-addition-mod-2}
+Betrachten wir die Wahrheitstabelle (\ref{tab:truth-table-addition-mod-2})
 der Addition in $\mathbb{Z}_2$, kann sofort eine weitere Beobachtung gemacht werden:
-Die Addition modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ein XOR-Gatter.
+Die Addition Modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ein
+XOR-Gatter:
 
 \begin{table}[h]
   \centering
-  \caption{Wahrheitstabelle der Addition modulo 2}
+  \caption{Wahrheitstabelle der Addition Modulo 2}
   \begin{tabular}{cc|c}
-    $x_i$ & $s_i$ & $y_i \equiv x_i + s_i \pmod{2}$ \\ \hline
+    $x_i$ & $k_i$ & $y_i \equiv x_i + k_i \pmod{2}$ \\ \hline
     0     & 0     & 0                               \\
     0     & 1     & 1                               \\
     1     & 0     & 1                               \\
@@ -129,16 +130,16 @@ Die Addition modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ei
 \noindent
 Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptographischen Verfahren.
 Es besitzt besondere Eigenschafen, welche es von anderen Logikgattern
-unterscheidet und jetzt untersucht werden sollen.
+unterscheidet und diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
-\ref{tab:truth-table-xor} des XOR-Gatters befindet
+(\ref{tab:truth-table-xor}) befindet
 man sich demnach in der ersten oder zweiten Zeile.
-Je nach Schlüsselbit $s_i$ ist das Geheimtextbit $y_i$ gegeben als
+Je nach Schlüsselbit $k_i$ ist das Geheimtextbit $y_i$ gegeben als
 $y_i = 0 \oplus 0 \vee 0 \oplus 1 = 0 \vee 1$.
-Verhalten sich die Schlüsselbit unvorhersehbar , d.h. sie sind mit genau 50 prozentiger
-Wahrscheinlichkeit entweder null oder eins, ist es nur durch das Chiffrat nicht möglich auf
+Verhalten sich die Schlüsselbit unvorhersehbar, d. h. sie sind mit genau 50-prozentiger
+Wahrscheinlichkeit null oder eins, ist es nur durch das Chiffrat nicht möglich, auf
 den Klartext zu schließen. Zu jedem Zeitpunkt hat ein Angreifer nur eine
-50 prozentige Chance den richtigen Klartext zu erraten.
+50-prozentige Chance, den richtigen Klartext zu erraten.
 Gleichermaßen kann argumentiert werden, sei $x_i = 1$.
 Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern, zusätzlich ist es die einzige
 Verknüpfung, welche durch doppeltes Anwenden invertierbar ist.
@@ -149,7 +150,7 @@ bei Stromchiffren.
   \centering
   \caption{Wahrheitstabelle der Exklusiv-Oder-Verknüpfung}
   \begin{tabular}{cc|c}
-    $x_i$ & $s_i$ & $y_i = x_i \oplus s_i$ \\ \hline
+    $x_i$ & $k_i$ & $y_i = x_i \oplus k_i$ \\ \hline
     0     & 0     & 0                      \\
     0     & 1     & 1                      \\ \hline
     1     & 0     & 1                      \\
@@ -167,7 +168,7 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   \begin{aligned}
     x_0,\dots,x_7 = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}  \\
     \oplus                &                                      \\
-    s_0,\dots,s_7 = 00111 & 010_2                                \\
+    k_0,\dots,k_7 = 00111 & 010_2                                \\
     y_0,\dots,y_7 = 01101 & 010_2 = 106_{10} = \text{\texttt{j}}
   \end{aligned}
 }
@@ -176,7 +177,7 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   \begin{aligned}
     y_0,\dots,y_7 = 01101 & 010_2 = 106_{10} = \text{\texttt{j}} \\
     \oplus                &                                      \\
-    s_0,\dots,s_7 = 00111 & 010_2                                \\
+    k_0,\dots,k_7 = 00111 & 010_2                                \\
     x_0,\dots,x_7 = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}
   \end{aligned}
 }
@@ -188,7 +189,8 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   Alice möchte Bob eine Nachricht senden. Sie verschickt den Buchstaben \texttt{P},
   wobei dieser zur Verschlüsselung in
   ASCII-Zeichenkodierung angegeben ist $\text{\texttt{P}} = 80_{10} = 01010000_2$. Der
-  Schlüsselstrom wird außerdem angegeben, es seien $(s_0,s_1,\dots,s_7) = 00111010_2$.
+  Schlüsselstrom wird außerdem angegeben, es seien
+  $(k_0,k_1,\dots,k_7) \allowbreak = 00111010_2$.
   \newpage
 
   \begin{table*}[h]
@@ -216,58 +218,58 @@ Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombits?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
-Das Generieren dieser Bitfolge ($s_1,s_2,\dots,s_n$) bildet die zentrale Fragestellung
-der Verschlüsselungsmethode.
+Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet daher
+die zentrale Fragestellung der Verschlüsselungsmethode.
 Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
-Bitsequenz aussehen muss. Im nächsten Abschnitt soll deshalb das Thema der
+Folge von Bit aussehen muss. Im nächsten Abschnitt soll deshalb das Thema der
 Zufallszahlen diskutiert werden.
 
 \section{Zufallszahlengeneratoren}
-Wie oben beschrieben, ist die Unvorhersehbarkeit des Schlüsselstroms die wesentliche
+Die Unvorhersehbarkeit des Schlüsselstroms ist die wesentliche
 Eigenschaft von Stromchiffren. Im Folgenden sollen deshalb einige
 Formen von Zufallszahlengeneratoren (engl. \acp{rng}) vorgestellt
-werden \parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
+und deren unterschiede beschrieben werden
+\parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
 
 \paragraph{Echte Zufallszahlengeneratoren}
 Echte Zufallszahlengeneratoren (engl. \acp{trng})
 erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Notiert man
 beispielsweise das Ergebnis von 100 Münzwürfen und erzeugt eine Folge von 100 Bit, ist es quasi
 unmöglich, die selbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit
-das dies passieren würde, beträgt $1/2^{100}$, was verschwindend gering ist.
-Echte Zufallszahlen basieren auf physikalischen Prozessen. Beispiele umfassen Münzwurf, Würfeln,
-radioaktiver Zerfall oder atmosphärisches Rauschen. \acp{trng} werden in der Kryptographie und
-der Schlüsselerzeugung häufig eingesetzt.
+das dies passieren würde, beträgt 1 In $2^{100}$, was verschwindend gering ist.
+Echte Zufallszahlen basieren auf physikalischen Prozessen, wie das Werfen einer Münze, Würfeln,
+radioaktiver Zerfall oder atmosphärisches Rauschen. \acp{trng} werden in der Kryptografie und
+Schlüsselerzeugung häufig eingesetzt.
 
 \paragraph{Pseudozufallszahlengeneratoren}
 Pseudozufallszahlengeneratoren (engl. \acp{prng})
 generieren Zahlenfolgen basierend auf einem Startwert, welcher im Englischen oft als
-\enquote{\textit{seed}} bezeichnet wird. Die Zahlen eines \ac{prng} sind nicht in der Art zufällig,
-wie man es erwarten könnte.
-Obwohl sie aussehen wie eine wirklich zufällige Folge, werden sie durch
-mathematische Formeln errechnet und sind deterministisch, d.h. die selbe Sequenz
+\enquote{\textit{seed}} bezeichnet wird. Die Zahlen eines \ac{prng} sind nicht
+in der Art zufällig, wie man es erwarten könnte.
+Obwohl sie aussehen wie echte Zufallszahlen, werden sie durch
+mathematische Formeln errechnet und sind deterministisch, d.\,h. dieselbe Sequenz
 kann zu einem späteren Zeitpunkt reproduziert werden.
-In der Kryptographie können \acp{prng} aufgrund dieser Eigenschaf
-nicht ohne weiteres eingesetzt werden.
-Dennoch haben sie außerhalb der Kryptographie weitreichende Anwendungsgebiete,
+In der Kryptografie können \acp{prng} aufgrund dieser Eigenschaft
+nicht ohne Weiteres eingesetzt werden.
+Dennoch haben sie außerhalb der Kryptografie weitreichende Anwendungsgebiete,
 beispielsweise in der Simulation oder während dem Testen von Software und Hardware.
 Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
 
-\paragraph{Kryptographisch sichere Pseudozufallszahlengeneratoren}
-Kryptographisch sichere Pseudozufallszahlengeneratoren
+\paragraph{Kryptografisch sichere Pseudozufallszahlengeneratoren}
+Kryptografisch sichere Pseudozufallszahlengeneratoren
 (engl. \acp{csprng}) sind \acp{prng} mit
-einer speziellen zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesprochen
-bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombits
-$s_1,s_2,\dots,s_n$, die folgenden Bits $s_{n+1},\\s_{n+2},\dots,s_{n+m}$ zu berechnen. Außerdem
-soll es zeitlich unmöglich sein, eines der vorherigen Bits $s_{n-1},s_{n-2},\dots,s_{n-m}$ zu
+einer zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesprochen
+bedeutet dies, es rechentechnisch nicht möglich, aus $n$ gegeben Schlüsselstrombit
+$k_1,k_2,\dots,k_n$, die folgenden Bit $k_{n+1},k_{n+2},\dots,k_{n+m}$ zu berechnen. Außerdem
+soll es zeitlich unmöglich sein, eines der vorherigen Bit $k_{n-1},k_{n-2},\dots,k_{n-m}$ zu
 berechnen.
 
 \section{Das One-Time-Pad}
-Mit den bis hierher eingeführten Ideen zu Stromchiffren und den verschiedenen
-Zufallszahlengeneratoren sind alle Teile vorhanden, um ein beweisbar
-sicheres Verschlüsselungsver\-fahren zu bauen. Ein System heißt beweisbar sicher,
+Es sind jetzt mit den bis hierher eingeführten Ideen zu Stromchiffren und den verschiedenen
+Zufallszahlengeneratoren alle Bausteine vorhanden, um ein beweisbar
+sicheres Verschlüsselungsverfahren zu bauen. Ein System heißt beweisbar sicher,
 wenn es trotz unendlich vorhandener Rechenleistung nachweislich nicht gebrochen werden kann.
-\citeauthor{BOOK:crypto} haben den Begriff mit folgender Definition
-beschrieben \parencite*[36]{BOOK:crypto}:
+Es kann folgende Definition gegeben werden \parencite[36]{BOOK:crypto}:
 
 \begin{definition}[\textit{Unconditional Security}]
   \enquote{\textit{A cryptosystem is unconditionally or in\-formation-theoretically
@@ -281,36 +283,37 @@ erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
 \begin{definition}[One-Time-Pad]
   Eine Stromchiffre heißt One-Time-Pad, wenn die folgenden Kriterien eingehalten werden:
   \begin{enumerate}
-    \item Der Schüsselstrom $s_1,s_2,\dots,s_n$ wird durch einen \ac{trng} generiert.
+    \item Der Schüsselstrom $k_1,k_2,\dots,k_n$ wird durch einen \ac{trng} generiert.
     \item Nur vertrauenswürdige Gesprächspartner kennen den Schüsselstrom.
-    \item Jedes Schlüsselstrombit $s_i$ wird nur einmal verwendet.
+    \item Jedes Schlüsselstrombit $k_i$ wird nur einmal verwendet.
   \end{enumerate}
   Das One-Time-Pad ist beweisbar sicher.
 \end{definition}
 \noindent
 Zu jedem Bit im Geheimtext gibt es eine Gleichung der Form:
 \begin{align*}
-  y_0   \equiv x_0 & + s_0 \pmod{2} \\
-  y_1   \equiv x_1 & + s_1 \pmod{2} \\
-  \vdots           &
+  y_0   \equiv x_0 & + k_0 \pmod{2} \\
+  y_1   \equiv x_1 & + k_1 \pmod{2} \\
+  \vdots           &                \\
+  y_n   \equiv x_n & + k_n \pmod{2} \\
 \end{align*}
 \noindent
 Stammt der Schlüsselstrom von einem \ac{trng} können diese Gleichungen nicht gelöst werden.
-Für jedes Geheimtextbit $y_i$ gibt es genau zwei Lösungen mit gleich großer Wahrscheinlichkeit:
+Für alle $y_i$ gibt es genau zwei Lösungen mit gleich großer Wahrscheinlichkeit:
 \begin{align*}
-  y = 0 & \equiv 1_x + 1_s \equiv 0_x + 0_s \pmod{2} \\
-  y = 1 & \equiv 1_x + 0_s \equiv 0_x + 1_s \pmod{2}
+  y_i = 0 & \equiv 1 + 1_k \equiv 0 + 0_k \pmod{2} \\
+  y_i = 1 & \equiv 1 + 0_k \equiv 0 + 1_k \pmod{2}
 \end{align*}
 
 \section{Die praktischen Stromchiffren}
 In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst
 sollten heutzutage andere Verfahren eingesetzt werden?
-Als erster Punkt ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
+Der erste Nachteil ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
 Hardware und ist in der Regel nicht Teil eines Standard Computers.
-Der zweite und wahrscheinlich größte Nachteil ist die Handhabung des Schlüsselstroms:
-Jedes Schlüsselstrombit $s_i$ wird nur einmal verwendet.
+Der zweite und wahrscheinlich größere Nachteil ist die Handhabung des Schlüsselstroms:
+Jedes Schlüsselstrombit wird nur einmal verwendet.
 Das One-Time-Pad benötigt somit einen Schlüssel, welcher genauso lang ist
-wie die Nachricht selbst. Es wird klar, warum diese Anforderung
+wie die Nachricht selbst. Es ist klar, warum diese Anforderung
 selbst bei mittelgroßen Nachrichten problematisch wird, zusätzlich muss nach jeder
 Übertragung ein neuer Schlüssel ausgetauscht werden. Die Idee von \ac{otp} ist gut,
 jedoch müssen für den praktischen Gebrauch einige Modifikationen vorgenommen werden.
@@ -326,7 +329,7 @@ Zu nächst ist wichtig festzuhalten, dass
 Stromchiffren nicht beweisbar sicher sind. Es ist allerdings so, dass alle in der
 Praxis verwendeten Algorithmen (Stromchiffren, Blockchiffren, asymmetrische
 Verfahren), keine informationstheoretische Sicherheit aufweisen \parencite[38]{BOOK:crypto}.
-Um den Sicherheitsbegriff realistischer zu gestallten, wird der Angreifer in seiner
+Um den Sicherheitsbegriff realistischer zu gestalten, wird der Angreifer in seiner
 Rechenleistung beschränkt, man hofft also, dass ein Verfahren berechenbarkeitstheoretisch
 sicher ist. Diese Eigenschaft ist von \citeauthor{BOOK:crypto}
 folgendermaßen definiert \parencite*[35]{BOOK:crypto}:
@@ -343,10 +346,10 @@ In anderen Worten ausgedrückt: Es ist nicht effizient möglich, den
 Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
 Aussage darüber getroffen werden, ob ein Problem mit bekannten Verfahren
 optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
-sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryptosystems
-(asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
-berechnet werden kann, durch das Lösen des Faktorisierungsproblems mit großen
-natürlichen Zahlen. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
+sondern nur angenommen werden kann. Ein bekanntes Beispiel ist, dass des RSA-Kryptosystems
+(Asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
+berechnet werden kann, durch das Faktorisieren zweier großer
+natürlicher Zahlen. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
 ob es andere Verfahren gibt, welche das Problem effizienter lösen können.
 Im Fall von symmetrischen Verfahren nimmt man an, dass es keinen besseren Algorithmus
 gibt als die vollständige Schlüsselsuche.

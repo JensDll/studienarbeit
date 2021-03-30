@@ -1,7 +1,7 @@
 \chapter{Das RSA-Kryptosystem}
 Das RSA-Kryptosystem ist eines der bekanntesten und meist
 verbreiteten asymmetrischen Verschlüsselungsverfahren. Es ist benannt nach
-den drei Erfindern Ronald Rivest, Adi Shamir und Leonard Adleman, welche das Verfahren
+seinen drei Erfindern Ronald Rivest, Adi Shamir und Leonard Adleman, welche das Verfahren
 im Jahr 1977 veröffentli\-chten \parencite[173]{BOOK:crypto}. In diesem Kapitel
 sollen die Ideen von asymmetrischer Verschlüsselung
 (engl. \textit{public-key-crpytography} oder \textit{asymmetric crpytography})
@@ -24,7 +24,7 @@ Ein solches System hat zwei symmetrische Eigenschaften:
         (im Fall von \acs{otp} oder \acs{des} sind sie sogar gleich).
 \end{enumerate}
 Symmetrische Verfahren wie \acs{aes} sind sehr sicher und schnell,
-jedoch kommen sie nicht ohne Defizite, wie im Folgenden beschrieben wird.
+jedoch haben auch sie gewisse Beeinträchtigungen, welche im Folgenden beschrieben werden.
 
 \paragraph{Schlüsselverteilungsproblem}
 Da beide Parteien den selben Schlüssel benötigen, muss dieser in
@@ -49,25 +49,28 @@ verschiedene Schlüsselpaare und jeder Teilnehmer muss $n-1$ Schlüssel speicher
 Das Problem ist auch bekannt als das
 $n^2$-Schlüsselverteilungsproblem \parencite[334-335]{BOOK:crypto}.
 
-\paragraph{Schutz vor Betrug von Alice und Bob}
+\paragraph{Verbindlichkeit}
 Es ist nur mit symmetrischer Verschlüsselung nicht möglich, einer dritten Person
 zu beweisen, welcher Gesprächsteilnehmer eine Nachricht erstellt hat.
 Es gibt jedoch viele Bereiche in denen dieser Beweis wichtig ist, beispielsweise
-im Onlinehandel.
+im Onlinehandel:
 \begin{example}
   Alice betreibt einen Onlinehandel, sie muss beweisen können, dass ein
-  Käufer Bob eine Bestellung wirklich getätigt hat, anderenfalls könnte Bob jederzeit behaupten,
+  Käufer Bob eine Bestellung wirklich getätigt hat,
+  denn anderenfalls könnte er jederzeit behaupten,
   Alice hätte seine Bestellung fälschlicherweise erstellt.
 \end{example}
 \noindent
-Der Begriff um dies zu verhindern nennt sich Non-Repudiation \parencite{SITE:nonrepudiation}
-und kann erreicht werden durch digitale Signaturen.
-\par
+Der Problem ist auch bekannt als Non-Repudiation \parencite{SITE:nonrepudiation}
+und kann gelöst werden durch digitale Signaturen.\\
+
+\noindent
 Asymmetrische Verschlüsselungsverfahren bieten mögliche Lösungen zu den eben
 beschriebenen Problemen, um eine Nachricht zu verschlüsseln ist es nicht mehr nötig,
-dass der Absender in Besitz eines geheimen Schlüssels ist. Um solch ein System zu
-realisieren veröffentlicht Bob einen öffentlichen Schlüssel. Dieser steht jedem Netzteilnehmer
-zur Verfügung und kann frei verwendet werden.
+dass der Absender in Besitz von geheimer Information ist. Solch ein System wird
+realisiert, indem Bob einen Schlüssel veröffentlicht,
+welcher jedem Netzteilnehmer
+zur Verfügung steht und frei verwendet werden kann.
 Bob hat außerdem einen privaten Schlüssel, welchen nur er kennt.
 Bob's Schlüssel $k$ besteht also aus einem öffentlichen Teil, $\keypub{}$ (\textit{key public}),
 und einem private Teil, $\keypr{}$ (\textit{key private}). Wichtig ist, dass eine Nachricht
@@ -84,7 +87,7 @@ für \acs{aes}. Alice generiert einen symmetrischen Schlüssel und verschlüssel
 asymmetrischen Verfahren. Bob kann die Nachricht entschlüsseln und ist somit ebenfalls
 im Besitz des Schlüssels. Wie in \autoref{fig:asym-encr-key-exchange} zu sehen ist,
 kann die restliche Kommunikation jetzt mit einem symmetrischen
-Verfahren gesichert werden. Es ist wünschenswert nicht dauerhaft asymmetrisch
+Verfahren gesichert werden. Es ist durchaus wünschenswert, nicht dauerhaft asymmetrisch
 zu verschlüsseln, da dies im Gegensatz zu dem symmetrischen Gegenstück sehr viel
 rechenintensiver ist.
 \newpage
@@ -97,20 +100,20 @@ Der Einwegfunktion oder auch Falltürfunktion genannt. Es kann folgende
 Definition gegeben werden \parencite[153]{BOOK:crypto}:
 
 \begin{definition}[Einwegfunktion]
-  Eine Funktion $f$ ist eine Einwegfunktion, wenn gilt:
+  Eine Funktion $f$ heißt Einwegfunktion, wenn gilt:
   \begin{enumerate}
     \item Der Funktionswert $y = f(x)$ ist komplexitätstheoretisch einfach berechenbar,
-          d.h. die Laufzeit des Algorithmus wächst
+          d.\,h. die Laufzeit des Algorithmus wächst
           nicht stärker als eine Polynomfunktion (Polynomialzeit).
     \item Die Umkehrfunktion $x = f^{-1}(y)$ ist komplexitätstheoretisch schwierig berechenbar,
-          d.h. es gibt keinen bekannten Algorithmus welcher das Problem in angemessener
+          d.\,h. es gibt keinen bekannten Algorithmus welcher das Problem in angemessener
           Zeit lösen kann, zum Beispiel in 1000 Jahren.
   \end{enumerate}
 \end{definition}
 
 \noindent
 Es gibt zwei Einwegfunktionen welche in der Praxis häufig eingesetzt werden.
-Die erste Funktion, welche in RSA verwendet wird,
+Die erste Funktion, welche auch in RSA verwendet wird,
 basiert auf dem Faktorisieren großer natürlicher Zahlen.
 Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig eine Zahl zu
 faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
@@ -122,7 +125,7 @@ In diesem Abschnitt sollen die zahlentheoretischen Grundlagen beschrieben werden
 welche im RSA-Kryptosystem zum Einsatz kommen.
 
 \subsection{Der Euklidische Algorithmus}
-Es wird begonnen mit dem Begriff des größten gemeinsamen Teiler.
+Es wird begonnen mit dem Begriff des größten gemeinsamen Teilers.
 Es seien $a,b \in  \mathbb{N}$, es bezeichnet $T(a)$ die Menge aller Teiler von $a$,
 dann heißt jedes $t \in T(a) \cap T(b)$ gemeinsamer Teiler von $a$ und $b$.
 
@@ -160,14 +163,14 @@ Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
     \item Wegen der Kommutativität der Schnittmenge $T(a) \cap T(b) = T(b)\cap T(a)$.\newpage
     \item Zu zeigen: $\ggt{a}{b} = \ggt{a - b}{b}$ geschrieben als $g = g'$.
           \begin{center}
-            Aus $ g|a$ und $g|b \Rightarrow g|a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
-            $g$ ist wie $g'$ gemeinsamer Teiler von $a-b$ und $b$.
+            Aus $g \mid a$ und $g \mid b \Rightarrow g \mid a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
+            $g$ ist ein Teiler von $a-b$ und $b$.
           \end{center}
           Ist $g$ der größte gemeinsame Teiler?
-          Es sei $g \in T(a-b) \cap T(b)$ und $g > \ggt{a}{b}$:
+          Es sei $h \in T(a-b) \cap T(b)$ und $h > g$:
           \begin{center}
-            Aus $g|a-b$ und $g|b \Rightarrow g|a$.\\
-            $g|a$ und $g|b$ und $g > \ggt{a}{b}$ führt zum Wiederspruch.
+            Aus $h \mid a-b$ und $h \mid b \Rightarrow h \mid a$.\\
+            $h \mid a$ und $h \mid b$ und $h > g$ führt zum Wiederspruch.
           \end{center}
   \end{enumerate}
 \end{proof}
@@ -176,11 +179,13 @@ Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
   Es seien $a=132$ und $b=51$, dann gilt:
   \begin{align*}
     \ggt{132}{51} & \numeq{\ref{enum:ggT5}} \ggt{132 - 51}{51} =
-    \ggt{81}{51} \numeq{\ref{enum:ggT5}} \ggt{30}{51} \numeq{\ref{enum:ggT5}}
-    \ggt{30}{21} \numeq{\ref{enum:ggT5}}                                        \\
-    \ggt{9}{21}   & \numeq{\ref{enum:ggT5}} \ggt{9}{12} \numeq{\ref{enum:ggT5}}
-    \ggt{9}{3} \numeq{\ref{enum:ggT5}} \ggt{6}{3} \numeq{\ref{enum:ggT5}}
-    \ggt{3}{3} \numeq{\ref{enum:ggT1}} 3
+    \ggt{81}{51} \numeq{\ref{enum:ggT5}} \ggt{30}{51} \numeq{\ref{enum:ggT4}}
+    \ggt{51}{30} \numeq{\ref{enum:ggT5}}                                          \\
+    \ggt{21}{30}  & \numeq{\ref{enum:ggT4}}  \ggt{30}{21} \numeq{\ref{enum:ggT5}}
+    \ggt{9}{21} \numeq{\ref{enum:ggT4}}
+    \ggt{21}{9} \numeq{\ref{enum:ggT5}} \ggt{12}{9} \numeq{\ref{enum:ggT5}}       \\
+    \ggt{3}{9}    & \numeq{\ref{enum:ggT4}} \ggt{9}{3} \numeq{\ref{enum:ggT5}}
+    \ggt{6}{3} \numeq{\ref{enum:ggT5}} \ggt{3}{3} \numeq{\ref{enum:ggT1}} 3
   \end{align*}
 \end{example}
 
@@ -192,13 +197,12 @@ Es ist zu sehen, dass sich Rechenregel \ref{enum:ggT5} iterativ anwenden lässt:
 Wird ein maximales $m$ gewählt, mit der Bedingung $(a-mb) > 0$, kann der Algorithmus
 in minimalen Schritten durchgeführt werden. Dies ist der Fall für die Division mit Rest:
 \begin{equation*}
-  \ggt{a}{b} = \ggt{a \pmod{b}}{b}
+  \ggt{a}{b} = \ggt{a \mod{b}}{b} = \ggt{b}{a \mod{b}}
 \end{equation*}
 
 \begin{example}
   Es seien $a=132$ und $b=51$, dann gilt:
   \begin{align*}
-    a   & = q \cdot b + r   &               &                  \\
     132 & = 2 \cdot 51 + 30 & \ggt{132}{51} & = \ggt{51}{30}   \\
     51  & = 1 \cdot 30 + 21 & \ggt{51}{30}  & = \ggt{30}{21}   \\
     30  & = 1 \cdot 21 + 9  & \ggt{30}{21}  & = \ggt{21}{9}    \\
@@ -237,7 +241,7 @@ Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde
 \end{algorithm}
 \subsection{Der erweiterte Euklidische Algorithmus}
 Es wurde gezeigt, dass der größte gemeinsame Teiler zweier Zahlen durch
-das Reduzieren der Operanden ermittelt werden kann. In der Kryptographie ist
+das Reduzieren der Operanden ermittelt werden kann. In der Kryptografie ist
 das Finden dieser Zahl allerdings nicht das Hauptanwendungsgebiet des
 Algorithmus. Es stellt sich heraus, dass eine Erweiterung des Euklidischen Algorithmus
 verwendet werden kann, um multiplikative Inverse modulo $m$ zu ermitteln.
@@ -250,8 +254,8 @@ einer Zahl $a \in \mathbb{Z}_m$ gegeben durch die folgende Beziehung:
 Das multiplikative Inverse existiert nicht für alle Elemente. Es kann aber eine Aussage
 darüber getroffen werden, wann es existiert. Ein Element
 $a \in \mathbb{Z}_m$ besitzt genau dann ein Inverses, wenn gilt $\ggt{a}{m} = 1$.
-Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder auch
-relativ Prim (Symbol $a \perp b$, engl. \textit{relatively prime} oder \textit{coprime}).
+Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder
+relativ Prim (Symbol $a \perp b$)(engl. \textit{relatively prime} oder \textit{coprime}).
 Der Erweiterte Euklidische Algorithmus berechnet eine Linearkombination der folgenden Form,
 welche auch als diophantische Gleichung
 bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
@@ -338,11 +342,11 @@ einfach und schnell durchführbar ist:
 \end{table}
 
 \noindent
-Es soll nun gezeigt werden, wie der erweiterte Euklidischen Algorithmus verwendet werden kann
+Es soll nun gezeigt werden, wie der erweiterte Euklidischen Algorithmus verwendet werden kann,
 um multiplikative Inverse zu berechnen. Es soll das Inverse $a \pmod{m}$ bestimmt werden, wobei
 $m > a$. Das Inverse existiert genau dann, wenn $\ggt{m}{a} = 1$, dies bedeutet es gibt
 eine Gleichung der Form $x \cdot m + y \cdot a = 1$. Stellt man diese Gleichung
-als Kongruenzrelation modulo $m$ dar, erhalten wir:
+als Kongruenzrelation Modulo $m$ dar, erhalten wir:
 \begin{align*}
   x \cdot m + y \cdot a & = 1               \\
   x \cdot m + y \cdot a & \equiv 1 \pmod{m} \\
@@ -353,7 +357,7 @@ Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welch
 mit $y$ bestimmt wurde.
 \begin{example}
   Es soll das Inverse $21^{-1} \pmod{89}$ bestimmt werden. Die Zahlen 21 und 89 sind
-  teilerfremd, d.h. das Inverse existiert und es gilt
+  teilerfremd, d.\,h. das Inverse existiert und es gilt
   $\ggt{89}{21} = 1 = x \cdot 89 + y \cdot 21$. Der Euklidische
   Algorithmus kann tabellarisch durchgeführt werden:
   \begin{center}
@@ -403,7 +407,7 @@ Mal ein Rest von null berechnet wurde.
 \end{algorithm}
 \subsection{Die Eulersche Phi-Funktion}
 Die Eulersche Phi-Funktion befasst sich mit dem auf den ersten Blick seltsamen
-Problem, die Anzahl von teilerfremden Zahlen in einer Menge zu finden. Die Regeln
+Problem, die Anzahl an teilerfremden Zahlen in einer Menge zu finden. Die Regeln
 und Sätze welche von der zahlentheoretischen Funktion abgeleitet werden können, sind jedoch sehr
 hilfreich in der asymmetrischen Verschlüsselung und insbesondere für das
 RSA-Verfahren. Die Eulersche Phi-Funktion ist folgendermaßen definiert
@@ -459,9 +463,9 @@ sollen \parencite{SITE:phi-euler-fermat}:
   und \ref{enum:phi2} geschrieben werden:
   \begin{align*}
     \phif{n} \numeq{\ref{enum:phi3}} \prod_{i=1}^{r} \phif{p_i^{m_i}}
-     & \numeq{\ref{enum:phi2}} \prod_{i=1}^{r} p_i^{m_i} \cdot p_i^{m_i - 1} \\
-     & = \prod_{i=1}^{r} p_i^{m_i} \cdot (1 - \frac{1}{p_i})                 \\
-     & = \prod_{i=1}^{r} p_i^{m_i} \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i}   \\
+     & \numeq{\ref{enum:phi2}} \prod_{i=1}^{r} p_i^{m_i} - p_i^{m_i - 1}   \\
+     & = \prod_{i=1}^{r} p_i^{m_i} \cdot (1 - \frac{1}{p_i})               \\
+     & = \prod_{i=1}^{r} p_i^{m_i} \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i} \\
      & = n \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i}
   \end{align*}
 \end{proof}
@@ -491,12 +495,7 @@ in der asymmetrischen Verschlüsselung sehr hilfreich sind.
   $m$ teilerfremden Zahlen aus der Menge $\{1,2,\ldots,m\}$. Mit einer vorgegeben Zahl
   $a \in \mathbb{N}^\times$ bilden wir die Produkte $ax_1,ax_2,\ldots,ax_n$.
   Es gilt $a \perp m$ und $x_i \perp m$, weshalb auch das Produkt $ax_i$ teilerfremd zu $m$ ist.
-  Es kann nun die wahre Aussage aufgestellt
-  \begin{equation*}
-    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \equiv
-    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \pmod{m}
-  \end{equation*}
-  und die folgende Beobachtung gemacht werden:
+  Es kann nun die folgende Beobachtung gemacht werden:
   \begin{equation*}
     \label{eq:euler-satz-beweis}
     ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \equiv
@@ -538,8 +537,8 @@ aufgeschrieben werden:
 \end{satz}
 
 \noindent
-Der Kleine Satz von Fermat wird in der Kryptographie unter anderem dafür verwendet,
-um Primzahltests durchzuführen.
+Der Kleine Satz von Fermat wird in der Kryptografie unter anderem dafür verwendet,
+Primzahltests durchzuführen.
 
 \section{Das RSA-Verfahren}
 Das RSA-Verfahren basiert auf der Annahme, dass die Berechnung der Primfaktorzerlegung
@@ -556,13 +555,13 @@ folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
     \item Wähle eine Zahl $e$ mit $1 < e < N$ und $\ggt{e}{\phif{N}} = 1$. Jetzt bilden
           $(N,e)$ den öffentlichen Schlüssel $(\keypub)$.
     \item Berechne $d$ mit $e \cdot d \equiv 1 \pmod{\phif{N}}$ und dem erweiterten
-          Euklidischen Algorithmus. Das Inverse existiert, da $e \perp \phif{N}$ gilt. Jetzt bilden
-          $(N,d)$ den privaten Schlüssel $(\keypr)$.
+          Euklidischen Algorithmus. Das Inverse existiert, denn es gilt $e \perp \phif{N}$.
+          Jetzt bilden $(N,d)$ den privaten Schlüssel $(\keypr)$.
   \end{enumerate}
 \end{definition}
 
 \noindent
-Sind $p$ und $q$ entsprechend groß, ist es nicht in annehmbarer Zeit möglich, die Faktorisieren
+Sind $p$ und $q$ entsprechend groß, ist es nicht in annehmbarer Zeit möglich, die Faktorisierung
 von $N$ zu bestimmen und damit auch $\phif{N}$. Die Ver- und Entschlüsselung mit RSA
 gestaltet sich sehr einfach:
 
