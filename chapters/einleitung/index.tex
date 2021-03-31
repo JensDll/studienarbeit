@@ -1,18 +1,18 @@
 \chapter{Einleitung}
 Redet man heutzutage über das Thema Kryptografie, sind im Gespräch wahrscheinlich
 Themen wie E-Mail-Verschlüsselung, Internetprotokolle oder Anwendungen im
-Bankenwesen. Auch bekannt sind die Angriffe auf kryptographische Systeme,
+Bankenwesen. Auch bekannt sind die Angriffe auf kryptografische Systeme,
 wie zum Beispiel die Entzifferung der durch die Enigma-Chiffriermaschine
-verschlüsselten deutschen Funksprüche während des Zweiten Weltkrieges. Es scheint als
+verschlüsselten deutschen Funksprüche während des Zweiten Weltkrieges. Es scheint, als
 wäre Kryptografie stark mit den modernen elektronischen Kommunikationstechniken
 verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptografie
 gehen zurück bis etwa 2000 v. Chr., als bereits im antiken Ägypten neben den
 Standard-Hieroglyphen zusätzlich auch \enquote{geheime} Zeichen
 verwendet wurden \parencite[2]{BOOK:crypto}. Es werden prinzipiell zwei
-unterschiedliche kryptographische Verfahren unterschieden, diese sind
-Symmetrische- und Asymmetrische Algorithmen. Die symmetrische Verschlüsselung ist
-seit langer Zeit ein fester Bestandteil der Kryptografie, mit bekannten historischen
-Verfahren wie die Cäsar-Chiffre welche bereits im antiken Rom für das Verschlüsseln von
+unterschiedliche kryptografische Verfahren unterschieden, diese sind
+symmetrische- und asymmetrische Algorithmen. Die symmetrische Verschlüsselung ist
+seit langer Zeit ein fester Bestandteil der Kryptografie mit bekannten historischen
+Verfahren wie die Cäsar-Chiffre, welche bereits im antiken Rom für das Verschlüsseln von
 Nachrichten verwendet wurde. Asymmetrische Verschlüsselung hingegen ist eine gänzlich neue Form
 der Kryptografie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Idee im Jahr
 1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:crypto}.
@@ -23,13 +23,13 @@ der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Berei
 \input{chapters/einleitung/tikz/cryptology.tex}
 
 \paragraph{Kryptografie}
-Die Wissenschaft eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
+Die Wissenschaft, eine Nachricht so zu verändern, dass ihr Sinn nur von dem Empfänger
 verstanden werden kann, für den sie bestimmt ist.
 
 \paragraph{Kryptanalyse}
-Die Wissenschaft ein kryptographisches System zu analysieren mit dem Ziel mögliche
+Die Wissenschaft, ein kryptografisches System zu analysieren mit dem Ziel, mögliche
 Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil der
-Kryptologie. Ohne Personen welche versuchen ein kryptographisches System zu
+Kryptologie. Ohne Personen, welche versuchen ein kryptografisches System zu
 brechen, wird man nie herausfinden können, ob das System wirklich sicher ist.
 Ein starkes Kryptoverfahren sollte dem \textit{Kerckhoffs's principle} unterliegen, welches
 im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:crypto}
@@ -46,15 +46,15 @@ Auf den ersten Blick scheint das \textit{Kerckhoffs's principle} nicht sonderlic
 Es sei einfach zu glauben, dass ein System
 sicherer sein muss, wenn die Details der Implementierung geheim gehalten werden.
 In der Regel ist dies aber nicht so. Ein Kryptoverfahren bleibt nicht für immer geheim und die
-Vergangenheit hat gezeigt, dass ein System dessen geheimes Design an die Öffentlichkeit
+Vergangenheit hat gezeigt, dass ein System, dessen geheimes Design an die Öffentlichkeit
 gelangt, fast immer unsicher ist. Ein hierfür gutes Beispiel ist das Content Scrambling System (CSS)
-für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Industrie die
+für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Industrie, die
 Funktionsweise von CSS geheim zu halten, gelang das Design durch Reverse Code Engineering
 schnell an die Öffentlichkeit. Es zeigten sich Mängel in der Implementierung,
 welche das Brechen der Verschlüsselung mit sehr geringen Aufwand ermöglichten \parencite{SITE:CSS}.
 
 \section{Symmetrische Verschlüsselung}
-Denkt man an die Teilbereiche der Kryptografie, ist die Symmetrische Verschlüsselung
+Denkt man an die Teilbereiche der Kryptografie, ist die symmetrische Verschlüsselung
 das wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
 Algorithmus zum Ver- und Entschlüsseln von Nachrichten und haben sich auf einen
 gemeinsamen geheimen Schlüssel geeinigt. Wie es in der Literatur sehr beliebt ist,
@@ -62,16 +62,16 @@ wird die Idee der symmetrischen Verschlüsselung
 mit einem einfachen Beispiel eingeführt \parencite[4-6]{BOOK:crypto}:
 Zwei Parteien Alice und Bob möchten über einen unsicheren Kanal Nachrichten untereinander austauschen.
 Ein unsicherer Kanal ist hierbei lediglich die Kommunikationsstrecke,
-z.B. das Internet, die Luftschnittstelle bei WLAN und Mobilfunk
+z.\,B. das Internet, die Luftschnittstelle bei WLAN und Mobilfunk
 oder jedes andere Medium, über das sich digitale Daten übertragen lassen.
 
 \input{chapters/einleitung/tikz/insecure-channel.tex}
 
 \noindent
-Es ist klar warum Alice und Bob gerne geheime Nachrichten austauschen würden. Alice möchte sich an ihrem
+Es ist klar, warum Alice und Bob gerne geheime Nachrichten austauschen würden. Alice möchte sich an ihrem
 Bankkonto anmelden und sendet ihr Passwort zu Bob. Ein potenzieller Angreifer Oscar
 soll die Passwörter von Alice nicht in Klartext mitlesen können.
-In einer solchen Situation bietet die Symmetrische Verschlüsselung eine gute Lösung:
+In einer solchen Situation bietet die symmetrische Verschlüsselung eine gute Lösung:
 Bevor Alice ihr Passwort sendet, verschlüsselt sie es mit einem symmetrischen Algorithmus.
 Bob invertiert die Verschlüsselung und erhält die unverschlüsselte Nachricht. Wurde für
 die Verschlüsselung ein sicherer Algorithmus gewählt, erscheint die Nachricht für Oscar nur wie
@@ -88,22 +88,22 @@ Kryptografie eine besondere Bedeutung:
   \item $x$ ist der Klartext (engl. \textit{plaintext}).
   \item $y$ ist das Chiffrat oder der Geheimtext (engl. \textit{ciphertext}).
   \item $k$ ist der Schlüssel (engl. \textit{key}).
-  \item $e(\cdot)$ ist die Verschlüsselung (engl. \textit{encryption}).
-  \item $d(\cdot)$ ist die Entschlüsselung (engl. \textit{decryption}),
-        d.h. die Umkehrfunktion von $e$.
+  \item $e$ ist die Verschlüsselung (engl. \textit{encryption}).
+  \item $d$ ist die Entschlüsselung (engl. \textit{decryption}),
+        d.\,h. die Umkehrfunktion von $e$.
 \end{itemize}
 
 \noindent
-Für die Symmetrische Verschlüsselung wird der geheime Schlüssel $k$ benötigt. Dieser
+Für die symmetrische Verschlüsselung wird der geheime Schlüssel $k$ benötigt. Dieser
 muss vor der Kommunikation auf einem sicheren Weg zwischen Alice und Bob verteilt werden.
 
 \section{Modulare Arithmetik}
-Fast alle kryptographischen Algorithmen, sowohl Symmetrische als auch Asymmetrische Chiffren,
+Fast alle kryptografischen Algorithmen, sowohl symmetrische als auch asymmetrische Chiffren
 basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13]{BOOK:crypto}.
 Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben)
-in der wir es gewöhnt sind in unendlichen
-Mengen zu rechnen, z.B. die natürlichen Zahlen oder die reellen Zahlen. Die modulare Arithmetik,
-d.h. die Division mit Rest, bietet eine gute Möglichkeit um in diesen begrenzten Mengen rechnen
+in der wir es gewohnt sind in unendlichen
+Mengen zu rechnen, z.\,B. die natürlichen oder die reellen Zahlen. Die modulare Arithmetik,
+d.\,h. die Division mit Rest, bietet eine gute Möglichkeit um in diesen begrenzten Mengen rechnen
 zu können.
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
@@ -133,7 +133,7 @@ zu können.
     \Leftrightarrow m & \mid (q_1m + r_1) - (q_2m + r_2) \\
     \Leftrightarrow m & \mid (q_1 - q_2)m + (r_1 - r_2)
   \end{align*}
-  Teil $m$ zwei Zahlen $a$ und $b$, muss $m$ auch eine Linearkombination dieser Zahlen teilen.
+  Teilt $m$ zwei Zahlen $a$ und $b$, muss $m$ auch eine Linearkombination dieser Zahlen teilen.
   \begin{align*}
     m                 & \mid (q_1 - q_2)m + (r_1 - r_2)                \\
     m                 & \mid (q_1 - q_2)m                              \\
@@ -176,10 +176,10 @@ beliebig viele Zahlen $a$, welche den selben Rest ergeben.
   können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restklasse bezüglich $m$.
   Die acht Restklassen bezüglich 8 sind:
   \begin{gather*}
-    \{\dots,-24,-16,-8,0,8,16,24,\dots\} \\
-    \{\dots,-25,-17,-9,1,9,17,25,\dots\} \\
-    \vdots                               \\
-    \{\dots,-17,-9,-1,7,15,23,31,\dots\}
+    \vert0\vert_8 = \{\dots,-24,-16,-8,0,8,16,24,\dots\}\\
+    \vert1\vert_8 =\{\dots,-25,-17,-9,1,9,17,25,\dots\}\\
+    \vdots\\
+    \vert7\vert_8 =\{\dots,-17,-9,-1,7,15,23,31,\dots\}
   \end{gather*}
 \end{example}
 

@@ -8,11 +8,11 @@ der Kryptografie, stellen wir fest: Das Gebiet
 der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Strom- und Blockchiffren.
 In diesem Kapitel sollen anhand von Stromchiffren einige Definitionen eingeführt
 und der Unterschied zu den Blockchiffren erläutert werden.
-Außerdem wird gezeigt welche Rolle hierbei die Zufallszahlengeneratoren spielen.
+Außerdem wird gezeigt, welche Rolle hierbei die Zufallszahlengeneratoren spielen.
 
 \section{Ein Vergleich der Verfahren}
 Die symmetrischen Verschlüsselungsverfahren sind unterteilt in Strom- und Blockchiffren.
-Während beide Verfahren das gleiche Ziel verfolgen Informationen zu verschlüsseln,
+Während beide Verfahren das gleiche Ziel verfolgen, Informationen zu verschlüsseln,
 ist die jeweilige
 Methode eine unterschiedliche. Stromchiffren verschlüsseln jedes Bit im Klartext einzeln,
 während Blockchiffren pro Durchlauf mehrere Bits verschlüsseln können.
@@ -31,19 +31,19 @@ Eine grundlegende Idee für das Entwerfen starker Blockchiffren, ist das Prinzip
 der Konfusion (engl. \textit{confusion}) und
 Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
 \begin{enumerate}
-  \item Die \textbf{Konfusion} hat die Aufgabe den
+  \item Die \textbf{Konfusion} hat die Aufgabe, den
         Zusammenhang von Schlüssel und Geheimtext unklar zu machen. Ein
         beliebtes Vorgehen ist die Bitsubstitution, welche sowohl in \acs{des} als auch
         \acs{aes} verwendet wird.
-  \item Die \textbf{Diffusion} hat die Aufgabe den Einfluss
+  \item Die \textbf{Diffusion} hat die Aufgabe, den Einfluss
         an einer Stelle des Klartextes, über den gesamten Geheimtext zu verteilen. Es wird
-        das Ziel verfolgt
-        statistische Eigenschafen zu verstecken. Das Ändern von einer Stelle im Klartext,
+        das Ziel verfolgt, statistische Eigenschaften zu verstecken.
+        Das Ändern von einer Stelle im Klartext
         soll im Durchschnitt eine Änderung des halben Geheimtextes bewirken. Eine einfache
         Operation für Diffusion ist die Bitpermutation, welche häufig in \acs{des} eingesetzt wird.
         \acs{aes} verwendet eine komplexere MixColumn-Transformation.
 \end{enumerate}
-Chiffren welche nur eine der beiden Operationen anwenden, wie die alleinige Konfusion
+Chiffren, welche nur eine der beiden Operationen anwenden, wie die alleinige Konfusion
 mit der Cäsar-Chiffre, sind nicht sicher. Die heutigen Blockchiffren
 arbeiten iterativ in aufeinanderfolgenden Runden, die gleich aufgebaut sind. In jeder Runde wird eine
 Rundenfunktion angewandt, welche sowohl Konfusion als auch Diffusion durchführt.
@@ -80,7 +80,7 @@ sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 \end{definition}
 
 \noindent
-Betrachteten wir die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf welche
+Betrachteten wir die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf, welche
 besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 
 \begin{enumerate}
@@ -128,8 +128,8 @@ XOR-Gatter:
 \end{table}
 
 \noindent
-Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptographischen Verfahren.
-Es besitzt besondere Eigenschafen, welche es von anderen Logikgattern
+Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptografischen Verfahren.
+Es besitzt besondere Eigenschaften, welche es von anderen Logikgattern
 unterscheidet und diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
 (\ref{tab:truth-table-xor}) befindet
@@ -228,16 +228,16 @@ Zufallszahlen diskutiert werden.
 Die Unvorhersehbarkeit des Schlüsselstroms ist die wesentliche
 Eigenschaft von Stromchiffren. Im Folgenden sollen deshalb einige
 Formen von Zufallszahlengeneratoren (engl. \acp{rng}) vorgestellt
-und deren unterschiede beschrieben werden
+und deren Unterschiede beschrieben werden
 \parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
 
 \paragraph{Echte Zufallszahlengeneratoren}
 Echte Zufallszahlengeneratoren (engl. \acp{trng})
 erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Notiert man
 beispielsweise das Ergebnis von 100 Münzwürfen und erzeugt eine Folge von 100 Bit, ist es quasi
-unmöglich, die selbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit
-das dies passieren würde, beträgt 1 In $2^{100}$, was verschwindend gering ist.
-Echte Zufallszahlen basieren auf physikalischen Prozessen, wie das Werfen einer Münze, Würfeln,
+unmöglich, dieselbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit,
+dass dies passieren würde, beträgt 1 in $2^{100}$, was verschwindend gering ist.
+Echte Zufallszahlen basieren auf physikalischen Prozessen wie das Werfen einer Münze, Würfeln,
 radioaktiver Zerfall oder atmosphärisches Rauschen. \acp{trng} werden in der Kryptografie und
 Schlüsselerzeugung häufig eingesetzt.
 
@@ -252,7 +252,7 @@ kann zu einem späteren Zeitpunkt reproduziert werden.
 In der Kryptografie können \acp{prng} aufgrund dieser Eigenschaft
 nicht ohne Weiteres eingesetzt werden.
 Dennoch haben sie außerhalb der Kryptografie weitreichende Anwendungsgebiete,
-beispielsweise in der Simulation oder während dem Testen von Software und Hardware.
+beispielsweise in der Simulation oder während des Testens von Software und Hardware.
 Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
 
 \paragraph{Kryptografisch sichere Pseudozufallszahlengeneratoren}
@@ -309,7 +309,7 @@ Für alle $y_i$ gibt es genau zwei Lösungen mit gleich großer Wahrscheinlichke
 In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst
 sollten heutzutage andere Verfahren eingesetzt werden?
 Der erste Nachteil ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
-Hardware und ist in der Regel nicht Teil eines Standard Computers.
+Hardware und ist in der Regel nicht Teil eines Standardcomputers.
 Der zweite und wahrscheinlich größere Nachteil ist die Handhabung des Schlüsselstroms:
 Jedes Schlüsselstrombit wird nur einmal verwendet.
 Das One-Time-Pad benötigt somit einen Schlüssel, welcher genauso lang ist
@@ -325,7 +325,7 @@ den Startwert des \ac{prng} bildet. Das Prinzip dieser Idee ist in
 \input{chapters/stromchiffren/tikz/key-generation-stream.tex}
 
 \noindent
-Zu nächst ist wichtig festzuhalten, dass
+Zunächst ist wichtig festzuhalten, dass
 Stromchiffren nicht beweisbar sicher sind. Es ist allerdings so, dass alle in der
 Praxis verwendeten Algorithmen (Stromchiffren, Blockchiffren, asymmetrische
 Verfahren), keine informationstheoretische Sicherheit aufweisen \parencite[38]{BOOK:crypto}.

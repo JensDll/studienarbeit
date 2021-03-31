@@ -5,7 +5,7 @@ Es wird das Ziel verfolgt, eine Nachricht in einer für den Computer
 zugänglichen Trägerdatei (engl. \textit{cover media}) zu verstecken, sodass eine
 weitere Person die Existenz
 einer geheimen Botschaft gar nicht erst vermuten würde. Trägerdateien, unempfindlich
-gegenüber kleinen Änderungen in den Daten, eignen sich besonders gut für die
+gegenüber kleinen Änderungen in den Daten eignen sich besonders gut für die
 Anwendung steganografischer Verfahren. Digitale Bilddateien sowie Audio- und Videodateien
 sind sehr gute Trägermedien,
 da ihre Daten ein ganz natürliches Rauschen aufweisen.
@@ -190,7 +190,7 @@ kryptografischen Algorithmus zu verschlüsseln.
 Damit eine Nachricht im Bild möglichst wenig auffällt, macht es Sinn, Pixel
 so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$ hat genau diese
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
-$a = 0,1,\ldots,mn - 1$ betrachtet. Durch wiederholtes halbieren von $a$ und
+$a = 0,1,\ldots,mn - 1$ betrachtet. Durch Wiederholtes halbieren von $a$ und
 speichern der entstehenden Hälften in einer Warteschlange kann die Folge nach
 dem Prinzip der Breitensuche abgearbeitet werden und es entstehen relativ gleichmäßig
 verteile Koordinaten.
@@ -252,13 +252,13 @@ Es soll jetzt auf die zu Beginn des Kapitels beschrieben Anwendung
 eingegangen werden, welche im Rahmen dieser Studienarbeit entwickelt wurde.
 Die Anwendung muss verschiedene Benutzer verwalten können und
 einen sicheren Nachrichtenaustausch über in Bildern
-verstecken Informationen gewährleisten.
+versteckten Informationen gewährleisten.
 Die wichtigsten Sicherheitsaspekte eines
 solchen Systems sind die Folgenden:
 \begin{enumerate}
   \item \textbf{Vertraulichkeit} einer Nachricht (Geheimhaltung, Verschlüsselung).
   \item \textbf{Integrität} einer Nachricht (Hashfunktion, \acp{mac}).
-  \item \textbf{Authentizität} des Empfängers. Es darf nicht passieren der falschen Person
+  \item \textbf{Authentizität} des Empfängers. Es darf nicht passieren, der falschen Person
         unwissentlich eine geheime Nachricht zu senden. Im Rahmen dieser Betrachtung sollte
         es reichen, nicht zwei Personen mit demselben Benutzernamen zuzulassen.
   \item \textbf{Authentifizierung} und \textbf{Autorisierung}. Um eine Nachricht
@@ -293,7 +293,7 @@ zusammen mit dem Erneuerungstoken aktualisiert werden.
 
 \section{Sicherheitsanalyse}
 Es soll nun weiter auf die beschriebene Architektur der Anwendung eingegangen werden,
-mit dem Ziel Sicherheitsbedenken aufzudecken und Lösungen zu diskutieren.
+mit dem Ziel, Sicherheitsbedenken aufzudecken und Lösungen zu diskutieren.
 Anschließend wird die steganografische Qualität des Algorithmus
 untersucht und einige Beispiele gezeigt.
 
@@ -312,7 +312,7 @@ Um den Zeitraum von Angriffsmöglichkeiten kurz zu halten, sollte
 ein Token nur so lange gültig sein wie nötig
 (z.\,B. nicht länger als fünf Minuten).
 Es existieren zwei wesentliche Angriffstypen, welche das Prinzip der Token Autorisierung
-versuchen auszunutzen. Die Folgende Überlegung ist beschränkt auf die Domäne
+versuchen auszunutzen. Die folgende Überlegung ist beschränkt auf die Domäne
 der Webanwendungen:
 
 \paragraph{Cross-Site-Scripting (XSS)}
@@ -328,7 +328,7 @@ Namen anderer Benutzer durchzuführen. Sie machen dabei Gebrauch von
 aktiven Sitzungen oder im Falle der Token Autorisierung von Zugriffstoken,
 welche pro Anfrage automatisch (z.\,B. per Cookie) versandt werden.
 Zugriffstoken sollten somit nie direkt als Cookie gespeichert werden. Besser
-ist es Sitzungen indirekt über Erneuerungstoken aufrechtzuerhalten oder
+ist es, Sitzungen indirekt über Erneuerungstoken aufrechtzuerhalten oder
 in extremen Fällen gar keine Sitzungsinformationen zu speichern.
 
 \noindent
@@ -377,7 +377,7 @@ Es ist jetzt zu sehen, warum es wichtig ist, eine Anfragen mit einem Benutzer zu
 \end{algorithm}
 
 \noindent
-Das Funktionspaar $(e_k, d_k)$ der \texttt{CreateProtector} Methode verwendet \acp{mac}
+Das Funktionspaar $(e_k, d_k)$ der \texttt{CreateProtector} Methode verwendet \acp{mac},
 um die unbemerkte Nachrichtenmanipulation zu verhindern. Wäre die Nachricht während der Übertragung
 verändert worden, würde es während der Entschlüsselung auffallen.
 
@@ -385,7 +385,7 @@ verändert worden, würde es während der Entschlüsselung auffallen.
 Um die Qualität des Algorithmus zu beurteilen,
 lohnt es sich vor allem einige
 Beispiele anzusehen. Die steganografische Qualität des Verfahrens soll jetzt
-anhand der Folgenden Bilder untersucht werden.
+anhand der folgenden Bilder untersucht werden.
 
 \vspace{1cm}
 \begin{figure}[h!]

@@ -1,0 +1,283 @@
+\subsection{Der Euklidische Algorithmus}
+Es wird begonnen mit dem Begriff des größten gemeinsamen Teilers.
+Es seien $a,b \in  \mathbb{N}$, es bezeichnet $T(a)$ die Menge aller Teiler von $a$,
+dann heißt jedes $t \in T(a) \cap T(b)$ gemeinsamer Teiler von $a$ und $b$.
+
+\begin{example}
+  \begin{align*}
+    T(6)           & = \{1,2,3,6\} \\
+    T(4)           & = \{1,2,4\}   \\
+    T(6) \cap T(4) & = \{1,2\}
+  \end{align*}
+\end{example}
+
+\begin{definition}[Größter gemeinsamer Teiler]
+  Es seien $a,b \in \mathbb{N}$.\\
+  Es sei $T = T(a) \cap T(b)$.\\
+  Es sei $g \in T$ und es gelte für alle $t \in T$: $t \leq g$. Dann heißt $g$
+  größter gemeinsamer Teiler von $a$ und $b$.
+  Man schreibt auch $g = \ggt{a}{b}$.
+\end{definition}
+
+\paragraph{Rechenregeln für ggT:}
+Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
+\begin{enumerate}[ref=(\arabic*)]
+  \item $\ggt{a}{a} = a$ \label{enum:ggT1}
+  \item $\ggt{a}{1} = 1$ \label{enum:ggT2}
+  \item $\ggt{a}{0} = a$ \label{enum:ggT3}
+  \item $\ggt{a}{b} = \ggt{b}{a}$ \label{enum:ggT4}
+  \item $\ggt{a}{b} = \ggt{a - b}{b}$ \label{enum:ggT5}
+\end{enumerate}
+
+\begin{proof}\mbox{}
+  \begin{enumerate}
+    \item Wegen $T(a) \cap T(a) = T(a)$.
+    \item Wegen $T(1) = \{1\}$ und $T(a) \cap \{1\} = \{1\}$.
+    \item Wegen $T(0) = \mathbb{N}$ und $T(a) \cap \mathbb{N} = T(a)$.
+    \item Wegen der Kommutativität der Schnittmenge $T(a) \cap T(b) = T(b)\cap T(a)$.\newpage
+    \item Zu zeigen: $\ggt{a}{b} = \ggt{a - b}{b}$ geschrieben als $g = g'$.
+          \begin{center}
+            Aus $g \mid a$ und $g \mid b \Rightarrow g \mid a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
+            $g$ ist ein Teiler von $a-b$ und $b$.
+          \end{center}
+          Ist $g$ der größte gemeinsame Teiler?
+          Es sei $h \in T(a-b) \cap T(b)$ und $h > g$:
+          \begin{center}
+            Aus $h \mid a-b$ und $h \mid b \Rightarrow h \mid a$.\\
+            $h \mid a$ und $h \mid b$ und $h > g$ führt zum Wiederspruch.
+          \end{center}
+  \end{enumerate}
+\end{proof}
+
+\begin{example}
+  Es seien $a=132$ und $b=51$, dann gilt:
+  \begin{align*}
+    \ggt{132}{51} & \numeq{\ref{enum:ggT5}} \ggt{132 - 51}{51} =
+    \ggt{81}{51} \numeq{\ref{enum:ggT5}} \ggt{30}{51} \numeq{\ref{enum:ggT4}}
+    \ggt{51}{30} \numeq{\ref{enum:ggT5}}                                          \\
+    \ggt{21}{30}  & \numeq{\ref{enum:ggT4}}  \ggt{30}{21} \numeq{\ref{enum:ggT5}}
+    \ggt{9}{21} \numeq{\ref{enum:ggT4}}
+    \ggt{21}{9} \numeq{\ref{enum:ggT5}} \ggt{12}{9} \numeq{\ref{enum:ggT5}}       \\
+    \ggt{3}{9}    & \numeq{\ref{enum:ggT4}} \ggt{9}{3} \numeq{\ref{enum:ggT5}}
+    \ggt{6}{3} \numeq{\ref{enum:ggT5}} \ggt{3}{3} \numeq{\ref{enum:ggT1}} 3
+  \end{align*}
+\end{example}
+
+\noindent
+Es ist zu sehen, dass sich Rechenregel \ref{enum:ggT5} iterativ anwenden lässt:
+\begin{equation*}
+  \ggt{a}{b} = \ggt{a-b}{b} = \ggt{a-2b}{b} = \dots = \ggt{a-mb}{b}
+\end{equation*}
+Wird ein maximales $m$ gewählt, mit der Bedingung $(a-mb) > 0$, kann der Algorithmus
+in minimalen Schritten durchgeführt werden. Dies ist der Fall für die Division mit Rest:
+\begin{equation*}
+  \ggt{a}{b} = \ggt{a \mod{b}}{b} = \ggt{b}{a \mod{b}}
+\end{equation*}
+
+\begin{example}
+  Es seien $a=132$ und $b=51$, dann gilt:
+  \begin{align*}
+    132 & = 2 \cdot 51 + 30 & \ggt{132}{51} & = \ggt{51}{30}   \\
+    51  & = 1 \cdot 30 + 21 & \ggt{51}{30}  & = \ggt{30}{21}   \\
+    30  & = 1 \cdot 21 + 9  & \ggt{30}{21}  & = \ggt{21}{9}    \\
+    21  & = 2 \cdot 9 + 3   & \ggt{21}{9}   & = \ggt{9}{3}     \\
+    9   & = 3 \cdot 3 + 0   & \ggt{9}{3}    & = \ggt{3}{0} = 3
+  \end{align*}
+\end{example}
+\noindent
+In allgemeiner Form können die eben gezeigten Schritte folgendermaßen beschrieben werden:
+\begin{equation}
+  \label{eq:euklid}
+  \begin{split}
+    a_i     & = q_i \cdot b_i + r_i \\
+    a_{i+1} & = q_{i+1} \cdot b_{i+1} + r_{i+1} \\
+    \text{mit} \quad a_{i+1} & = b_i \\
+    b_{i+1} & = r_i = a_i - q_i \cdot b_i
+  \end{split}
+\end{equation}
+Eine rekursive Implementierung des Euklidischen Algorithmus ist in \autoref{alg:ggt}
+zu sehen (engl. \textit{greatest common divisor} (gcd)).
+Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde.
+\begin{algorithm}
+  \DontPrintSemicolon
+  \KwIn{zwei ganze Zahlen $a$ und $b$}
+  \KwOut{$\ggt{a}{b}$}
+  \BlankLine
+  \Fn(){$\ggt{a}{b}$}{
+    $r \leftarrow a \mod{b}$\;
+    \If(){$r = 0$}{
+      \Return{$b$}
+    }
+    \Return{$\ggt{a}{b}$}
+  }
+  \caption{Euklidischer Algorithmus}
+  \label{alg:ggt}
+\end{algorithm}
+\subsection{Der erweiterte Euklidische Algorithmus}
+Es wurde gezeigt, dass der größte gemeinsame Teiler zweier Zahlen durch
+das Reduzieren der Operanden ermittelt werden kann. In der Kryptografie ist
+das Finden dieser Zahl allerdings nicht das Hauptanwendungsgebiet des
+Algorithmus. Es stellt sich heraus, dass eine Erweiterung des Euklidischen Algorithmus
+verwendet werden kann, um multiplikative Inverse modulo $m$ zu ermitteln.
+Betrachtet man den Ring $\mathbb{Z}_m$, dann ist das Inverse $a^{-1}$
+einer Zahl $a \in \mathbb{Z}_m$ gegeben durch die folgende Beziehung:
+\begin{equation}
+  \label{eq:inverse}
+  a \cdot a^{-1} \equiv 1 \pmod{m}
+\end{equation}
+Das multiplikative Inverse existiert nicht für alle Elemente. Es kann aber eine Aussage
+darüber getroffen werden, wann es existiert. Ein Element
+$a \in \mathbb{Z}_m$ besitzt genau dann ein Inverses, wenn gilt $\ggt{a}{m} = 1$.
+Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder
+relativ Prim (Symbol $a \perp b$)(engl. \textit{relatively prime} oder \textit{coprime}).
+Der Erweiterte Euklidische Algorithmus berechnet eine Linearkombination der folgenden Form,
+welche auch als diophantische Gleichung
+bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
+\begin{equation*}
+  a \cdot x + b \cdot y = \ggt{a}{b}
+\end{equation*}
+
+\begin{example}
+  Es seien erneut $a=132$ und $b=51$, es wird zuerst der $\ggt{132}{51}$ mit dem
+  Euklidischen Algorithmus bestimmt:
+  \begin{align*}
+    132 & = 2 \cdot 51 + 30 \\
+    51  & = 1 \cdot 30 + 21 \\
+    30  & = 1 \cdot 21 + 9  \\
+    21  & = 2 \cdot 9 + 3   \\
+    9   & = 3 \cdot 3 + 0
+  \end{align*}
+  Der $\ggt{132}{51}$ ist mit 3 bestimmt. Es soll nun versucht werden, ein $x$ und $y$
+  zu finden, so dass $3 = 132 \cdot x + 51 \cdot y$. Aus der vorletzten Zeile weiß man:
+  \begin{equation*}
+    3 = 21 - 2 \cdot 9
+  \end{equation*}
+  Wie kam die 9 zustande? Aus der Zeile darüber mit $9 = 30 - 21$.
+  Eingesetzt und zusammengefasst:
+  \begin{equation*}
+    3 = 21 - 2 \cdot (30 - 21) = 21 - 2 \cdot 30 + 2 \cdot 21 = -2 \cdot 30 + 3 \cdot 21
+  \end{equation*}
+  Wie kam die 21 zustande? Erneut aus der Zeile darüber mit $21 = 51 - 30$.
+  Eingesetzt, zusammengefasst und für die letzten beiden Zeilen fortgeführt:
+  \begin{align*}
+    3 & = -2 \cdot 30 + 3 \cdot (51 - 30) =
+    -2 \cdot 30 + 3 \cdot 51 - 3 \cdot 30 = 3 \cdot 51 - 5 \cdot 30                          \\
+    3 & = 3 \cdot 51 - 5 \cdot (132 - 2 \cdot 51) = 3 \cdot 51 - 5 \cdot 132 + 10 \cdot 51 =
+    -5 \cdot 132 + 13 \cdot 51
+  \end{align*}
+  Man erhält die gewünschte Gleichung.
+\end{example}
+
+\noindent
+Das Verfahren kann erneut allgemein betrachtet werden. Durch Rückwärtsarbeiten erhält
+man verschiedene Gleichungen der folgenden Form:
+\begin{align*}
+  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                 \\
+  \ggt{a}{b} & = x_{i+1} \cdot a_{i+1} + y_{i+1} \cdot b_{i+1}
+\end{align*}
+Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
+\begin{align*}
+  a_i                      & = q_i \cdot b_i + r_i             \\
+  a_{i+1}                  & = q_{i+1} \cdot b_{i+1} + r_{i+1} \\
+  \text{mit} \quad a_{i+1} & = b_i                             \\
+  b_{i+1}                  & = r_i = a_i - q_i \cdot b_i
+\end{align*}
+Einsetzen und umformen:
+\begin{align*}
+  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                               \\
+             & = x_i \cdot (q_i \cdot b_i + r_i) + y_i \cdot a_{i+1}         \\
+             & = x_i \cdot (q_i \cdot a_{i+1} + b_{i+1}) + y_i \cdot a_{i+1} \\
+             & = x_i \cdot b_{i+1} + (y_i + x_i \cdot q_i) \cdot a_{i+1}
+\end{align*}
+Es ergeben sich die folgenden Regeln:
+\begin{align}
+  x_i & = y_{i+1} \\
+  \begin{split}
+    y_i + x_i \cdot q_i &= x_{i+1} \\
+    y_i &= x_{i+1} - x_i \cdot q_i \\
+    y_i &= x_{i+1} - y_{i+1} \cdot q_i
+  \end{split}
+\end{align}
+Dies resultiert im erweiterten Euklidischen Algorithmus, welcher in Tabellenform
+einfach und schnell durchführbar ist:
+\newpage
+
+\begin{table}
+  \caption{Erweiterter Euklidischer Algorithmus}
+  \centering
+  \begin{tabular}{|l|l|l|l|l|l|l|l|}
+    \hline
+    $a$ & $b$ & $q$ & $r$ & $x$ & $y$                   & Kontrolle                        \\ \hline
+    132 & 51  & 2   & 30  & -5  & $3 +5 \cdot 2 = 13$   & $3 = -5 \cdot 132 + 13 \cdot 51$ \\ \hline
+    51  & 30  & 1   & 21  & 3   & $-2 - 3 \cdot 1 = -5$ & $3 = 3 \cdot 51 - 5 \cdot 30$    \\ \hline
+    30  & 21  & 1   & 9   & -2  & $1 + 2 \cdot 1 = 3$   & $3 = -2 \cdot 30 + 3 \cdot 21$   \\ \hline
+    21  & 9   & 2   & 3   & 1   & $0 - 1 \cdot 2 = -2$  & $3 = 1 \cdot 21 - 2 \cdot 9$     \\ \hline
+    9   & 3   & 3   & 0   & 0   & 1                     & $3 = 0 \cdot 9 + 1 \cdot 3$      \\ \hline
+  \end{tabular}
+\end{table}
+
+\noindent
+Es soll nun gezeigt werden, wie der erweiterte Euklidischen Algorithmus verwendet werden kann,
+um multiplikative Inverse zu berechnen. Es soll das Inverse $a \pmod{m}$ bestimmt werden, wobei
+$m > a$. Das Inverse existiert genau dann, wenn $\ggt{m}{a} = 1$, dies bedeutet es gibt
+eine Gleichung der Form $x \cdot m + y \cdot a = 1$. Stellt man diese Gleichung
+als Kongruenzrelation Modulo $m$ dar, erhalten wir:
+\begin{align*}
+  x \cdot m + y \cdot a & = 1               \\
+  x \cdot m + y \cdot a & \equiv 1 \pmod{m} \\
+  x \cdot 0 + y \cdot a & \equiv 1 \pmod{m} \\
+  a \cdot y             & \equiv 1 \pmod{m}
+\end{align*}
+Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welches
+mit $y$ bestimmt wurde.
+\begin{example}
+  Es soll das Inverse $21^{-1} \pmod{89}$ bestimmt werden. Die Zahlen 21 und 89 sind
+  teilerfremd, d.\,h. das Inverse existiert und es gilt
+  $\ggt{89}{21} = 1 = x \cdot 89 + y \cdot 21$. Der Euklidische
+  Algorithmus kann tabellarisch durchgeführt werden:
+  \begin{center}
+    \centering
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+      \hline
+      $a$ & $b$ & $q$ & $r$ & $x$ & $y$                  \\ \hline
+      89  & 21  & 4   & 5   & -4  & $1 + 4 \cdot 4 = 17$ \\ \hline
+      21  & 5   & 4   & 1   & 1   & $0 - 1 \cdot 4 = -4$ \\ \hline
+      5   & 1   & 5   & 0   & 0   & 1                    \\ \hline
+    \end{tabular}
+  \end{center}
+  \noindent
+  Wir erhalten den größten gemeinsamen Teiler als Linearkombination:
+  \begin{equation*}
+    -4 \cdot 89 + 17 \cdot 21 = 1
+  \end{equation*}
+  Es folgt hieraus: Das Inverse von 21 in $\mathbb{Z}_{89}$ beträgt 17, dieses Ergebnis kann durch nachrechnen
+  verifiziert werden:
+  \begin{equation*}
+    17 \cdot 21 = 357 \equiv 1 \pmod{89}
+  \end{equation*}
+\end{example}
+
+\noindent
+Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
+\autoref{alg:ggt-e} zu sehen, das Symbol $\div$ bezeichnet die Ganzzahldivision
+zweier Zahlen $a$ und $b$.
+Wie zuvor terminiert das Verfahren nachdem das erste
+Mal ein Rest von null berechnet wurde.
+\begin{algorithm}
+  \DontPrintSemicolon
+  \KwIn{zwei ganze Zahlen $a$ und $b$}
+  \KwOut{$\ggt{a}{b}$ als auch $x$ und $y$, sodass $\ggt{a}{b} = x \cdot a + y \cdot b$}
+  \BlankLine
+  \Fn(){$ggT(a,b)$}{
+    $r \leftarrow a \mod{b}$\;
+    $q \leftarrow a \div b$\;
+    \If(){$r = 0$}{
+      \Return{$(0,1,b)$}
+    }
+    $x,y,ggt \leftarrow ggT(b,r)$\;
+
+    \Return{$(y,x - y \cdot q, ggt)$}
+  }
+  \caption{Erweiterter Euklidischer Algorithmus}
+  \label{alg:ggt-e}
+\end{algorithm}

@@ -18,7 +18,7 @@ ist es hilfreich auf das Prinzip der symmetrischen Verfahren zurückzukommen
 \noindent
 Ein solches System hat zwei symmetrische Eigenschaften:
 \begin{enumerate}
-  \item Der selbe geheime Schlüssel wird sowohl für die
+  \item Derselbe geheime Schlüssel wird sowohl für die
         Verschlüsselung als auch Entschlüsselung verwendet.
   \item Die Ver- und Entschlüsselungsfunktion sind sich sehr ähnlich
         (im Fall von \acs{otp} oder \acs{des} sind sie sogar gleich).
@@ -27,7 +27,7 @@ Symmetrische Verfahren wie \acs{aes} sind sehr sicher und schnell,
 jedoch haben auch sie gewisse Beeinträchtigungen, welche im Folgenden beschrieben werden.
 
 \paragraph{Schlüsselverteilungsproblem}
-Da beide Parteien den selben Schlüssel benötigen, muss dieser in
+Da beide Parteien denselben Schlüssel benötigen, muss dieser in
 irgendeiner Form untereinander verteilt werden.
 Der direkte Austausch über die Schnittstelle ist nicht möglich, denn
 die öffentliche Kommunikationsstrecke (unsicherer Kanal) ist nicht geschützt gegen Abhören.
@@ -52,7 +52,7 @@ $n^2$-Schlüsselverteilungsproblem \parencite[334-335]{BOOK:crypto}.
 \paragraph{Verbindlichkeit}
 Es ist nur mit symmetrischer Verschlüsselung nicht möglich, einer dritten Person
 zu beweisen, welcher Gesprächsteilnehmer eine Nachricht erstellt hat.
-Es gibt jedoch viele Bereiche in denen dieser Beweis wichtig ist, beispielsweise
+Es gibt jedoch viele Bereiche, in denen dieser Beweis wichtig ist, beispielsweise
 im Onlinehandel:
 \begin{example}
   Alice betreibt einen Onlinehandel, sie muss beweisen können, dass ein
@@ -61,21 +61,21 @@ im Onlinehandel:
   Alice hätte seine Bestellung fälschlicherweise erstellt.
 \end{example}
 \noindent
-Der Problem ist auch bekannt als Non-Repudiation \parencite{SITE:nonrepudiation}
+Das Problem ist auch bekannt als Non-Repudiation \parencite{SITE:nonrepudiation}
 und kann gelöst werden durch digitale Signaturen.\\
 
 \noindent
 Asymmetrische Verschlüsselungsverfahren bieten mögliche Lösungen zu den eben
-beschriebenen Problemen, um eine Nachricht zu verschlüsseln ist es nicht mehr nötig,
+beschriebenen Problemen, um eine Nachricht zu verschlüsseln, ist es nicht mehr nötig,
 dass der Absender in Besitz von geheimer Information ist. Solch ein System wird
 realisiert, indem Bob einen Schlüssel veröffentlicht,
 welcher jedem Netzteilnehmer
 zur Verfügung steht und frei verwendet werden kann.
 Bob hat außerdem einen privaten Schlüssel, welchen nur er kennt.
-Bob's Schlüssel $k$ besteht also aus einem öffentlichen Teil, $\keypub{}$ (\textit{key public}),
-und einem private Teil, $\keypr{}$ (\textit{key private}). Wichtig ist, dass eine Nachricht
-welche mit Bob's öffentlichen Schlüssel verschlüsselt wurde, nur auch mit Bob's privaten
-Schlüssel wieder entschlüsselt werden kann. Ein einfaches Protokoll
+Bobs Schlüssel $k$ besteht also aus einem öffentlichen Teil, $\keypub{}$ (\textit{key public}),
+und einem privaten Teil, $\keypr{}$ (\textit{key private}). Wichtig ist, dass eine Nachricht,
+welche mit Bobs öffentlichen Schlüssel verschlüsselt wurde, nur auch mit Bobs privaten
+Schlüssel wieder entschlüsselt werden kann. Ein einfaches Protokoll,
 welches nach diesem Prinzip arbeitet ist in \autoref{fig:asym-encr} zu sehen.
 
 \input{chapters/rsa/tikz/asym-encryption.tex}
@@ -95,7 +95,7 @@ rechenintensiver ist.
 \input{chapters/rsa/tikz/asym-encrpytion-key.tex}
 
 \noindent
-Asymmetrische Verfahren basieren alle auf einem zugrundeliegenden Prinzip:
+Asymmetrische Verfahren basieren alle auf einem zugrunde liegenden Prinzip:
 Der Einwegfunktion oder auch Falltürfunktion genannt. Es kann folgende
 Definition gegeben werden \parencite[153]{BOOK:crypto}:
 
@@ -112,10 +112,10 @@ Definition gegeben werden \parencite[153]{BOOK:crypto}:
 \end{definition}
 
 \noindent
-Es gibt zwei Einwegfunktionen welche in der Praxis häufig eingesetzt werden.
+Es gibt zwei Einwegfunktionen, welche in der Praxis häufig eingesetzt werden.
 Die erste Funktion, welche auch in RSA verwendet wird,
 basiert auf dem Faktorisieren großer natürlicher Zahlen.
-Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig eine Zahl zu
+Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig, eine Zahl zu
 faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
 Das Lösen diskreter Logarithmen ist schwierig, das gesamte Verfahren
 hat jedoch keine so intuitive Beschreibung.
@@ -124,425 +124,16 @@ hat jedoch keine so intuitive Beschreibung.
 In diesem Abschnitt sollen die zahlentheoretischen Grundlagen beschrieben werden,
 welche im RSA-Kryptosystem zum Einsatz kommen.
 
-\subsection{Der Euklidische Algorithmus}
-Es wird begonnen mit dem Begriff des größten gemeinsamen Teilers.
-Es seien $a,b \in  \mathbb{N}$, es bezeichnet $T(a)$ die Menge aller Teiler von $a$,
-dann heißt jedes $t \in T(a) \cap T(b)$ gemeinsamer Teiler von $a$ und $b$.
+\input{chapters/rsa/zahlentheorie/euklid.tex}
 
-\begin{example}
-  \begin{align*}
-    T(6)           & = \{1,2,3,6\} \\
-    T(4)           & = \{1,2,4\}   \\
-    T(6) \cap T(4) & = \{1,2\}
-  \end{align*}
-\end{example}
+\input{chapters/rsa/zahlentheorie/phi-funktion.tex}
 
-\begin{definition}[Größter gemeinsamer Teiler]
-  Es seien $a,b \in \mathbb{N}$.\\
-  Es sei $T = T(a) \cap T(b)$.\\
-  Es sei $g \in T$ und es gelte für alle $t \in T$: $t \leq g$. Dann heißt $g$
-  größter gemeinsamer Teiler von $a$ und $b$.
-  Man schreibt auch $g = \ggt{a}{b}$.
-\end{definition}
-
-\paragraph{Rechenregeln für ggT:}
-Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
-\begin{enumerate}[ref=(\arabic*)]
-  \item $\ggt{a}{a} = a$ \label{enum:ggT1}
-  \item $\ggt{a}{1} = 1$ \label{enum:ggT2}
-  \item $\ggt{a}{0} = a$ \label{enum:ggT3}
-  \item $\ggt{a}{b} = \ggt{b}{a}$ \label{enum:ggT4}
-  \item $\ggt{a}{b} = \ggt{a - b}{b}$ \label{enum:ggT5}
-\end{enumerate}
-
-\begin{proof}\mbox{}
-  \begin{enumerate}
-    \item Wegen $T(a) \cap T(a) = T(a)$.
-    \item Wegen $T(1) = \{1\}$ und $T(a) \cap \{1\} = \{1\}$.
-    \item Wegen $T(0) = \mathbb{N}$ und $T(a) \cap \mathbb{N} = T(a)$.
-    \item Wegen der Kommutativität der Schnittmenge $T(a) \cap T(b) = T(b)\cap T(a)$.\newpage
-    \item Zu zeigen: $\ggt{a}{b} = \ggt{a - b}{b}$ geschrieben als $g = g'$.
-          \begin{center}
-            Aus $g \mid a$ und $g \mid b \Rightarrow g \mid a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
-            $g$ ist ein Teiler von $a-b$ und $b$.
-          \end{center}
-          Ist $g$ der größte gemeinsame Teiler?
-          Es sei $h \in T(a-b) \cap T(b)$ und $h > g$:
-          \begin{center}
-            Aus $h \mid a-b$ und $h \mid b \Rightarrow h \mid a$.\\
-            $h \mid a$ und $h \mid b$ und $h > g$ führt zum Wiederspruch.
-          \end{center}
-  \end{enumerate}
-\end{proof}
-
-\begin{example}
-  Es seien $a=132$ und $b=51$, dann gilt:
-  \begin{align*}
-    \ggt{132}{51} & \numeq{\ref{enum:ggT5}} \ggt{132 - 51}{51} =
-    \ggt{81}{51} \numeq{\ref{enum:ggT5}} \ggt{30}{51} \numeq{\ref{enum:ggT4}}
-    \ggt{51}{30} \numeq{\ref{enum:ggT5}}                                          \\
-    \ggt{21}{30}  & \numeq{\ref{enum:ggT4}}  \ggt{30}{21} \numeq{\ref{enum:ggT5}}
-    \ggt{9}{21} \numeq{\ref{enum:ggT4}}
-    \ggt{21}{9} \numeq{\ref{enum:ggT5}} \ggt{12}{9} \numeq{\ref{enum:ggT5}}       \\
-    \ggt{3}{9}    & \numeq{\ref{enum:ggT4}} \ggt{9}{3} \numeq{\ref{enum:ggT5}}
-    \ggt{6}{3} \numeq{\ref{enum:ggT5}} \ggt{3}{3} \numeq{\ref{enum:ggT1}} 3
-  \end{align*}
-\end{example}
-
-\noindent
-Es ist zu sehen, dass sich Rechenregel \ref{enum:ggT5} iterativ anwenden lässt:
-\begin{equation*}
-  \ggt{a}{b} = \ggt{a-b}{b} = \ggt{a-2b}{b} = \dots = \ggt{a-mb}{b}
-\end{equation*}
-Wird ein maximales $m$ gewählt, mit der Bedingung $(a-mb) > 0$, kann der Algorithmus
-in minimalen Schritten durchgeführt werden. Dies ist der Fall für die Division mit Rest:
-\begin{equation*}
-  \ggt{a}{b} = \ggt{a \mod{b}}{b} = \ggt{b}{a \mod{b}}
-\end{equation*}
-
-\begin{example}
-  Es seien $a=132$ und $b=51$, dann gilt:
-  \begin{align*}
-    132 & = 2 \cdot 51 + 30 & \ggt{132}{51} & = \ggt{51}{30}   \\
-    51  & = 1 \cdot 30 + 21 & \ggt{51}{30}  & = \ggt{30}{21}   \\
-    30  & = 1 \cdot 21 + 9  & \ggt{30}{21}  & = \ggt{21}{9}    \\
-    21  & = 2 \cdot 9 + 3   & \ggt{21}{9}   & = \ggt{9}{3}     \\
-    9   & = 3 \cdot 3 + 0   & \ggt{9}{3}    & = \ggt{3}{0} = 3
-  \end{align*}
-\end{example}
-\noindent
-In allgemeiner Form können die eben gezeigten Schritte folgendermaßen beschrieben werden:
-\begin{equation}
-  \label{eq:euklid}
-  \begin{split}
-    a_i     & = q_i \cdot b_i + r_i \\
-    a_{i+1} & = q_{i+1} \cdot b_{i+1} + r_{i+1} \\
-    \text{mit} \quad a_{i+1} & = b_i \\
-    b_{i+1} & = r_i = a_i - q_i \cdot b_i
-  \end{split}
-\end{equation}
-Eine rekursive Implementierung des Euklidischen Algorithmus ist in \autoref{alg:ggt}
-zu sehen (engl. \textit{greatest common divisor} (gcd)).
-Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde.
-\begin{algorithm}
-  \DontPrintSemicolon
-  \KwIn{zwei ganze Zahlen $a$ und $b$}
-  \KwOut{$\ggt{a}{b}$}
-  \Begin(){
-    $r \leftarrow a \mod{b}$\;
-    \If(){$r = 0$}{
-      \Return{$b$}
-    }
-
-    \Return{$\ggt{a}{b}$}
-  }
-  \caption{Euklidischer Algorithmus}
-  \label{alg:ggt}
-\end{algorithm}
-\subsection{Der erweiterte Euklidische Algorithmus}
-Es wurde gezeigt, dass der größte gemeinsame Teiler zweier Zahlen durch
-das Reduzieren der Operanden ermittelt werden kann. In der Kryptografie ist
-das Finden dieser Zahl allerdings nicht das Hauptanwendungsgebiet des
-Algorithmus. Es stellt sich heraus, dass eine Erweiterung des Euklidischen Algorithmus
-verwendet werden kann, um multiplikative Inverse modulo $m$ zu ermitteln.
-Betrachtet man den Ring $\mathbb{Z}_m$, dann ist das Inverse $a^{-1}$
-einer Zahl $a \in \mathbb{Z}_m$ gegeben durch die folgende Beziehung:
-\begin{equation}
-  \label{eq:inverse}
-  a \cdot a^{-1} \equiv 1 \pmod{m}
-\end{equation}
-Das multiplikative Inverse existiert nicht für alle Elemente. Es kann aber eine Aussage
-darüber getroffen werden, wann es existiert. Ein Element
-$a \in \mathbb{Z}_m$ besitzt genau dann ein Inverses, wenn gilt $\ggt{a}{m} = 1$.
-Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder
-relativ Prim (Symbol $a \perp b$)(engl. \textit{relatively prime} oder \textit{coprime}).
-Der Erweiterte Euklidische Algorithmus berechnet eine Linearkombination der folgenden Form,
-welche auch als diophantische Gleichung
-bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
-\begin{equation*}
-  a \cdot x + b \cdot y = \ggt{a}{b}
-\end{equation*}
-
-\begin{example}
-  Es seien erneut $a=132$ und $b=51$, es wird zuerst der $\ggt{132}{51}$ mit dem
-  Euklidischen Algorithmus bestimmt:
-  \begin{align*}
-    132 & = 2 \cdot 51 + 30 \\
-    51  & = 1 \cdot 30 + 21 \\
-    30  & = 1 \cdot 21 + 9  \\
-    21  & = 2 \cdot 9 + 3   \\
-    9   & = 3 \cdot 3 + 0
-  \end{align*}
-  Der $\ggt{132}{51}$ ist mit 3 bestimmt. Es soll nun versucht werden, ein $x$ und $y$
-  zu finden, so dass $3 = 132 \cdot x + 51 \cdot y$. Aus der vorletzten Zeile weiß man:
-  \begin{equation*}
-    3 = 21 - 2 \cdot 9
-  \end{equation*}
-  Wie kam die 9 zustande? Aus der Zeile darüber mit $9 = 30 - 21$.
-  Eingesetzt und zusammengefasst:
-  \begin{equation*}
-    3 = 21 - 2 \cdot (30 - 21) = 21 - 2 \cdot 30 + 2 \cdot 21 = -2 \cdot 30 + 3 \cdot 21
-  \end{equation*}
-  Wie kam die 21 zustande? Erneut aus der Zeile darüber mit $21 = 51 - 30$.
-  Eingesetzt, zusammengefasst und für die letzten beiden Zeilen fortgeführt:
-  \begin{align*}
-    3 & = -2 \cdot 30 + 3 \cdot (51 - 30) =
-    -2 \cdot 30 + 3 \cdot 51 - 3 \cdot 30 = 3 \cdot 51 - 5 \cdot 30                          \\
-    3 & = 3 \cdot 51 - 5 \cdot (132 - 2 \cdot 51) = 3 \cdot 51 - 5 \cdot 132 + 10 \cdot 51 =
-    -5 \cdot 132 + 13 \cdot 51
-  \end{align*}
-  Man erhält die gewünschte Gleichung.
-\end{example}
-
-\noindent
-Das Verfahren kann erneut allgemein betrachtet werden. Durch Rückwärtsarbeiten erhält
-man verschiedene Gleichungen der folgenden Form:
-\begin{align*}
-  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                 \\
-  \ggt{a}{b} & = x_{i+1} \cdot a_{i+1} + y_{i+1} \cdot b_{i+1}
-\end{align*}
-Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
-\begin{align*}
-  a_i                      & = q_i \cdot b_i + r_i             \\
-  a_{i+1}                  & = q_{i+1} \cdot b_{i+1} + r_{i+1} \\
-  \text{mit} \quad a_{i+1} & = b_i                             \\
-  b_{i+1}                  & = r_i = a_i - q_i \cdot b_i
-\end{align*}
-Einsetzen und umformen:
-\begin{align*}
-  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                               \\
-             & = x_i \cdot (q_i \cdot b_i + r_i) + y_i \cdot a_{i+1}         \\
-             & = x_i \cdot (q_i \cdot a_{i+1} + b_{i+1}) + y_i \cdot a_{i+1} \\
-             & = x_i \cdot b_{i+1} + (y_i + x_i \cdot q_i) \cdot a_{i+1}
-\end{align*}
-Es ergeben sich die folgenden Regeln:
-\begin{align}
-  x_i & = y_{i+1} \\
-  \begin{split}
-    y_i + x_i \cdot q_i &= x_{i+1} \\
-    y_i &= x_{i+1} - x_i \cdot q_i \\
-    y_i &= x_{i+1} - y_{i+1} \cdot q_i
-  \end{split}
-\end{align}
-Dies resultiert im erweiterten Euklidischen Algorithmus, welcher in Tabellenform
-einfach und schnell durchführbar ist:
-
-\begin{table}[h]
-  \caption{Erweiterter Euklidischer Algorithmus}
-  \centering
-  \begin{tabular}{|l|l|l|l|l|l|l|l|}
-    \hline
-    $i$ & $a$ & $b$ & $q$ & $r$ & $x$ & $y$                   & Kontrolle                        \\ \hline
-    0   & 132 & 51  & 2   & 30  & -5  & $3 +5 \cdot 2 = 13$   & $3 = -5 \cdot 132 + 13 \cdot 51$ \\ \hline
-    1   & 51  & 30  & 1   & 21  & 3   & $-2 - 3 \cdot 1 = -5$ & $3 = 3 \cdot 51 - 5 \cdot 30$    \\ \hline
-    2   & 30  & 21  & 1   & 9   & -2  & $1 + 2 \cdot 1 = 3$   & $3 = -2 \cdot 30 + 3 \cdot 21$   \\ \hline
-    3   & 21  & 9   & 2   & 3   & 1   & $0 - 1 \cdot 2 = -2$  & $3 = 1 \cdot 21 - 2 \cdot 9$     \\ \hline
-    4   & 9   & 3   & 3   & 0   & 0   & 1                     & $3 = 0 \cdot 9 + 1 \cdot 3$      \\ \hline
-  \end{tabular}
-\end{table}
-
-\noindent
-Es soll nun gezeigt werden, wie der erweiterte Euklidischen Algorithmus verwendet werden kann,
-um multiplikative Inverse zu berechnen. Es soll das Inverse $a \pmod{m}$ bestimmt werden, wobei
-$m > a$. Das Inverse existiert genau dann, wenn $\ggt{m}{a} = 1$, dies bedeutet es gibt
-eine Gleichung der Form $x \cdot m + y \cdot a = 1$. Stellt man diese Gleichung
-als Kongruenzrelation Modulo $m$ dar, erhalten wir:
-\begin{align*}
-  x \cdot m + y \cdot a & = 1               \\
-  x \cdot m + y \cdot a & \equiv 1 \pmod{m} \\
-  x \cdot 0 + y \cdot a & \equiv 1 \pmod{m} \\
-  a \cdot y             & \equiv 1 \pmod{m}
-\end{align*}
-Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welches
-mit $y$ bestimmt wurde.
-\begin{example}
-  Es soll das Inverse $21^{-1} \pmod{89}$ bestimmt werden. Die Zahlen 21 und 89 sind
-  teilerfremd, d.\,h. das Inverse existiert und es gilt
-  $\ggt{89}{21} = 1 = x \cdot 89 + y \cdot 21$. Der Euklidische
-  Algorithmus kann tabellarisch durchgeführt werden:
-  \begin{center}
-    \centering
-    \begin{tabular}{|l|l|l|l|l|l|l|}
-      \hline
-      $i$ & $a$ & $b$ & $q$ & $r$ & $x$ & $y$                  \\ \hline
-      0   & 89  & 21  & 4   & 5   & -4  & $1 + 4 \cdot 4 = 17$ \\ \hline
-      1   & 21  & 5   & 4   & 1   & 1   & $0 - 1 \cdot 4 = -4$ \\ \hline
-      2   & 5   & 1   & 5   & 0   & 0   & 1                    \\ \hline
-    \end{tabular}
-  \end{center}
-  \noindent
-  Wir erhalten den größten gemeinsamen Teiler als Linearkombination:
-  \begin{equation*}
-    -4 \cdot 89 + 17 \cdot 21 = 1
-  \end{equation*}
-  Es folgt hieraus: Das Inverse von 21 in $\mathbb{Z}_{89}$ beträgt 17, dieses Ergebnis kann durch nachrechnen
-  verifiziert werden:
-  \begin{equation*}
-    17 \cdot 21 = 357 \equiv 1 \pmod{89}
-  \end{equation*}
-\end{example}
-
-\noindent
-Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
-\autoref{alg:ggt-e} zu sehen, das Symbol $\div$ bezeichnet die Ganzzahldivision
-zweier Zahlen $a$ und $b$.
-Wie zuvor terminiert das Verfahren nachdem das erste
-Mal ein Rest von null berechnet wurde.
-\begin{algorithm}
-  \DontPrintSemicolon
-  \KwIn{zwei ganze Zahlen $a$ und $b$}
-  \KwOut{$\ggt{a}{b}$ als auch $x$ und $y$, sodass $\ggt{a}{b} = x \cdot a + y \cdot b$}
-  \Begin(){
-    $r \leftarrow a \mod{b}$\;
-    $q \leftarrow a \div b$\;
-    \If(){$r = 0$}{
-      \Return{$(0,1,b)$}
-    }
-    $x,y,ggt = ggT_e(b,r)$\;
-
-    \Return{$(y,x - y \cdot q, ggt)$}
-  }
-  \caption{Erweiterter Euklidischer Algorithmus}
-  \label{alg:ggt-e}
-\end{algorithm}
-\subsection{Die Eulersche Phi-Funktion}
-Die Eulersche Phi-Funktion befasst sich mit dem auf den ersten Blick seltsamen
-Problem, die Anzahl an teilerfremden Zahlen in einer Menge zu finden. Die Regeln
-und Sätze welche von der zahlentheoretischen Funktion abgeleitet werden können, sind jedoch sehr
-hilfreich in der asymmetrischen Verschlüsselung und insbesondere für das
-RSA-Verfahren. Die Eulersche Phi-Funktion ist folgendermaßen definiert
-\parencite[165]{BOOK:crypto} \parencite{SITE:phi-euler-fermat}:
-
-\begin{definition}[Eulersche Phi-Funktion]
-  Die Anzahl der zu $m \in \mathbb{N}^\times$ teilerfremden Zahlen aus $\{1,2,\dots,m\}$,
-  ist gekennzeichnet als $\phif{m}$ und heißt Eulersche Phi-Funktion. $\phif{m}$
-  kann formal beschrieben werden als die Mächtigkeit der Menge:
-  \begin{equation*}
-    \phif{m} = \vert \{x \in \mathbb{N} \mid 1 \leq x \leq m \wedge \ggt{m}{x} = 1 \} \vert
-  \end{equation*}
-\end{definition}
-
-\begin{example}
-  \begin{align*}
-    \phif{5}  & = \vert \{1,2,3,4\} \vert = 4             \\
-    \phif{6}  & = \vert \{1,5\} \vert = 2                 \\
-    \phif{20} & = \vert \{1,3,7,9,11,13,17,19\} \vert = 8
-  \end{align*}
-\end{example}
-
-\noindent
-Die naive Berechnung der Eulerschen Phi-Funktion, alle Zahlen zu durchlaufen und den
-größten gemeinsamen Teiler zu bestimmen, ist sehr langsam und für große Zahlen, wie sie
-in der asymmetrischen Verschlüsselung verwendet werden, nicht möglich. Es existiert jedoch
-eine Beziehung, mit welcher $\phif{m}$ bestimmt werden kann, unter der
-Bedingung, dass die Primfaktorzerlegung von $m$ bekannt ist. Diese lässt sich aus
-den folgenden Sätzen ableiten, welche hier im einzelnen nicht noch einmal bewiesen werden
-sollen \parencite{SITE:phi-euler-fermat}:
-\begin{enumerate}[ref=(\arabic*)]
-  \item Es sei $p \in \mathbb{P}$, dann gilt: $\phif{p} = p - 1$. \label{enum:phi1}
-  \item Es sei $p \in \mathbb{P}$, dann gilt: $\phif{p^n} = p^n - p^{n-1}$. \label{enum:phi2}
-  \item Es sei $\ggt{n}{m} = 1$, dann gilt:
-        $\phif{n \cdot m} = \phif{n} \cdot \phif{m}$. \label{enum:phi3}
-\end{enumerate}
-
-\begin{satz}[Formel zur Eulerschen Phi-Funktion]
-  Es sei
-  \begin{equation*}
-    n = p_1^{m_1} \cdot p_2^{m_2} \cdot \ldots \cdot p_r^{m_r} = \prod_{i=1}^{r} p_i^{m_i}
-  \end{equation*}
-  die Primfaktorzerlegung einer natürlichen Zahl mit $p_i$ unterschiedlichen Primzahlen
-  und Exponenten $m_1 \geq 1,\ldots, m_r \geq 1$. Dann ist:
-  \begin{equation*}
-    \phif{n} = \prod_{i=1}^{r} p_i^{m_i} - p_i^{m_i - 1} =
-    n \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i}
-  \end{equation*}
-\end{satz}
-\newpage
-\begin{proof}
-  Da die Primfaktoren einer Zahl teilerfremd sind, kann nach Regel \ref{enum:phi3}
-  und \ref{enum:phi2} geschrieben werden:
-  \begin{align*}
-    \phif{n} \numeq{\ref{enum:phi3}} \prod_{i=1}^{r} \phif{p_i^{m_i}}
-     & \numeq{\ref{enum:phi2}} \prod_{i=1}^{r} p_i^{m_i} - p_i^{m_i - 1}   \\
-     & = \prod_{i=1}^{r} p_i^{m_i} \cdot (1 - \frac{1}{p_i})               \\
-     & = \prod_{i=1}^{r} p_i^{m_i} \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i} \\
-     & = n \cdot \prod_{i=1}^{r} 1 - \frac{1}{p_i}
-  \end{align*}
-\end{proof}
-
-\begin{example}
-  \begin{align*}
-    \phif{6 = 2 \cdot 3}        & = 6 \cdot (1 - \frac{1}{2}) \cdot (1 - \frac{1}{3}) =
-    6 \cdot \frac{2}{6} = 2                                                              \\
-    \phif{20 = 2^2 \cdot 5}     & = 20 \cdot (1 - \frac{1}{2}) \cdot (1 - \frac{1}{5}) =
-    20 \cdot \frac{4}{10} = 8                                                            \\
-    \phif{1000 = 2^3 \cdot 5^3} & = 1000 \cdot \frac{4}{10} = 400
-  \end{align*}
-\end{example}
-\subsection{Satz von Euler und Fermat}
-Es werden im Folgenden zwei Sätze vorgestellt von Euler und Fermat, welche
-in der asymmetrischen Verschlüsselung sehr hilfreich sind.
-\begin{satz}[Der Satz von Euler]
-  Es seien $a,m \in \mathbb{N}^\times$ mit $a \perp m$, dann gilt:
-  \begin{equation*}
-    a^{\phif{m}} \equiv 1 \pmod{m}
-  \end{equation*}
-\end{satz}
-\begin{proof}
-  Aus der Vorlesung zur Zahlentheorie \parencite{SITE:phi-euler-fermat} und in
-  abgewandelter Form \parencite[187-188]{BOOK:numberTheory}. \\
-  Es ist $n = \phif{m}$. Seien $x_1,x_2,\ldots,x_n$ die $n$ verschiedenen zu
-  $m$ teilerfremden Zahlen aus der Menge $\{1,2,\ldots,m\}$. Mit einer vorgegeben Zahl
-  $a \in \mathbb{N}^\times$ bilden wir die Produkte $ax_1,ax_2,\ldots,ax_n$.
-  Es gilt $a \perp m$ und $x_i \perp m$, weshalb auch das Produkt $ax_i$ teilerfremd zu $m$ ist.
-  Es kann nun die folgende Beobachtung gemacht werden:
-  \begin{equation*}
-    \label{eq:euler-satz-beweis}
-    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n \equiv
-    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pmod{m} \tag{$\ast$}
-  \end{equation*}
-  Um dies zu verifizieren betrachten wir zuerst ein Beispiel (es wird in $\mathbb{Z}_8$ gerechnet):
-  \begin{align*}
-    \phif{8}            & = 4       \\
-    x_1,x_2,x_3,x_4     & = 1,3,5,7 \\
-    3x_1,3x_2,3x_3,3x_4 & = 3,1,7,5
-  \end{align*}
-  Die Multiplikation von $a$ in $Z_m$ verändert nicht die Menge $\{x_1,x_2,\ldots,x_n\}$,
-  für $i \neq j$ muss also gelten:
-  \begin{equation*}
-    ax_i \not\equiv ax_j \pmod{m}
-  \end{equation*}
-  Diese Vermutung kann bestätigt werden. Angenommen
-  $ax_i \equiv ax_j \pmod{m}$, da $a \perp m$ folgt nach der Kürzungsregel
-  $x_i \equiv x_j \pmod{m}$, was nicht sein kann.
-  Es folgt nun aus der Beobachtung \eqref{eq:euler-satz-beweis}:
-  Wegen $x_1,x_2,\ldots,x_n \perp m$ liefert die Kürzungsregel, wenn man noch
-  $n = \phif{m}$ beachtet, die ursprüngliche Behauptung:
-  \begin{align*}
-    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n & \equiv
-    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pmod{m}              \\
-    a^{\phif{m}}                            & \equiv 1 \pmod{m}
-  \end{align*}
-\end{proof}
-
-\noindent
-Der Kleine Satz von Fermat kann jetzt als Spezialform des Satzes von Euler (mit $m = p$) direkt
-aufgeschrieben werden:
-
-\begin{satz}[Kleiner Satz von Fermat]
-  Es seien $a \in \mathbb{N}^\times$ und $p \in \mathbb{P}$ mit $a \perp p$, dann gilt:
-  \begin{equation*}
-    a^{p-1} \equiv 1 \pmod{p}
-  \end{equation*}
-\end{satz}
-
-\noindent
-Der Kleine Satz von Fermat wird in der Kryptografie unter anderem dafür verwendet,
-Primzahltests durchzuführen.
+\input{chapters/rsa/zahlentheorie/euler-fermat.tex}
 
 \section{Das RSA-Verfahren}
-Das RSA-Verfahren basiert auf der Annahme, dass die Berechnung der Primfaktorzerlegung
-einer natürlichen Zahl, ein schwieriges Problem ist.
+Das RSA-Verfahren basiert auf der Annahme, dass ein effizientes Verfahren
+für das Bestimmen der Primfaktorzerlegung
+einer natürlichen Zahl gibt.
 Die Generierung des privaten und öffentlichen Schlüssels kann in die
 folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
 
@@ -612,13 +203,13 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
   \begin{equation}
     \label{eq:proof-rsa-3.5}
-    x = d_{\keypr}(e_{\keypub}(x)) \equiv (x^e)^d \equiv x^{ed} \pmod{N}
+    x = d_{\keypr}(e_{\keypub}(x)) \equiv (x^e)^d \equiv x^{ed} \pmod{N} \tag{$*$}
   \end{equation}
   Wir wissen per Definition, wobei $t$ irgendeine ganze Zahl ist:
   \begin{align}
-    e \cdot d                 & \equiv 1 \pmod{\phif{N}} \notag \\
+    e \cdot d                 & \equiv 1 \pmod{\phif{N}} \notag   \\
     \label{eq:proof-rsa-3.6}
-    \Leftrightarrow e \cdot d & = t \cdot \phif{N} + 1
+    \Leftrightarrow e \cdot d & = t \cdot \phif{N} + 1 \tag{$**$}
   \end{align}
   Um $x \equiv x^{ed} \pmod{pq}$ zu zeigen, reicht es nach \autoref{satz:composite-mod}
   die Faktoren einzeln zu betrachten.

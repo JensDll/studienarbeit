@@ -1,0 +1,98 @@
+\subsection{Satz von Euler und Fermat}
+Es werden im Folgenden zwei Sätze vorgestellt von Euler und Fermat, welche
+in der asymmetrischen Verschlüsselung sehr hilfreich sind. Es muss zuvor jedoch noch eine
+Eigenschaft der Restklassen festgehalten werden:
+
+\begin{satz}[Eindeutigkeit des $ggT$ von Repräsentanten einer Restklasse und dem Modul $m$]
+  \label{satz:restklasse-ggt}
+  Für einen Modul $m$ und zwei Repräsentanten $a,b \in \mathbb{N}$ derselben
+  Restklasse $\vert a \vert_m = \vert b \vert_m$ gilt:
+  \begin{equation*}
+    \ggt{a}{m} = \ggt{b}{m}
+  \end{equation*}
+\end{satz}
+\begin{proof}
+  Es gilt $b = a + t \cdot m$ mit $t \in \mathbb{Z}$. Es sind
+  \begin{align*}
+    g_1 & = \ggt{a}{m} = x \cdot \fcolorbox{Green}{White}{a} + y \cdot \fcolorbox{Green}{White}{m} \\
+    g_2 & = \ggt{b}{m} = p \cdot \fcolorbox{Red}{White}{b} + q \cdot \fcolorbox{Red}{White}{m}
+  \end{align*}
+  mit $x,y,p,q \in \mathbb{Z}$. Es gilt außerdem allgemeiner: Wenn $c = x \cdot a + y \cdot m$,
+  dann ist $c$ ein Vielfaches von $\ggt{a}{m}$.
+  Man schreibt
+  \begin{align*}
+    g_1 & = xa + ym                                                        & g_2 & = pb + qm                                                            \\
+        & = x(b - tm) + ym                                                 &     & = p(a + tm) + qm                                                     \\
+        & = xb - xtm + ym                                                  &     & = pa + ptm + qm                                                      \\
+        & = x\fcolorbox{Red}{White}{b} - (xt + y)\fcolorbox{Red}{White}{m} &     & = p\fcolorbox{Green}{White}{a} + (pt + q)\fcolorbox{Green}{White}{m} \\
+        & \Rightarrow g_1 \mid g_2                                         &     & \Rightarrow g_2 \mid g_1
+  \end{align*}
+  und es folgt durch die letzte Zeile: $g_1 = g_2$.
+\end{proof}
+
+
+\begin{satz}[Der Satz von Euler]
+  Es seien $a,m \in \mathbb{N}^\times$ mit $a \perp m$, dann gilt:
+  \begin{equation*}
+    a^{\phif{m}} \equiv 1 \pmod{m}
+  \end{equation*}
+\end{satz}
+\begin{proof}
+  Aus der Vorlesung zur Zahlentheorie \parencite{SITE:phi-euler-fermat} und in
+  abgewandelter Form \parencite[187-188]{BOOK:numberTheory}. \\
+  Es ist $n := \phif{m}$. Es seien $x_1,x_2,\ldots,x_n$ die $n$ verschiedenen zu
+  $m$ teilerfremden Zahlen aus der Menge $\{1,2,\ldots,m\}$.
+  Mit einer vorgegeben Zahl
+  $a \in \mathbb{N}^\times \wedge a \perp m$ bilden wir die Produkte $ax_1,ax_2,\ldots,ax_n$.
+  Wir betrachten ein Beispiel um eine Vermutung zu bestätigen:
+  \begin{example}
+    Es ist $\phif{8} = |\{1,3,5,7\}| = 4$. Wir wählen $a = 3$ und bilden in $\mathbb{Z}_8$ die Produkte:
+    $3\cdot \{1,3,5,7\} = \{3,9,15,21\} \Rightarrow \{3,1,7,5\}$. Die Multiplikation von $a$ erzeugt eine
+    Permutation der Menge $\{1,3,5,7\}$.
+  \end{example}
+  \noindent
+  Es sind $|x_1|_m,\ldots,|x_n|_m$ genau alle zu $m$ teilerfremden Restklassen.
+  \footnote{
+    Nach \autoref{satz:restklasse-ggt} wissen wir, ist eine Zahl einer Restklasse teilerfremd zu $m$,
+    gilt dies auch für alle anderen Zahlen der Restklasse.
+  }
+  Es gilt $x_i \perp m$ und $a \perp m$, weshalb auch das Produkt $ax_i$ teilerfremd zu $m$ sein muss.\\
+  Es folgt $ax_i \mod{m} = x_j$ und wir halten fest:
+  \begin{equation}
+    \label{proof:satz-euler-1}
+    \forall ax_i \exists x_j: ax_i \equiv x_j \pmod{m} \qquad 1 \leq i,j \leq n \tag{$*$}
+  \end{equation}
+  Es bleibt zu zeigen, dass in \eqref{proof:satz-euler-1} keine Doppelungen enstehen, es muss
+  also gelten:
+  \begin{equation*}
+    ax_i \not\equiv ax_j \pmod{m} \qquad x_i \neq x_j
+  \end{equation*}
+  Angenommen $ax_i \equiv ax_j \pmod{m}$ für $x_i \neq x_j$, dann gilt nach der Kürzungsregel
+  \footnote{
+    Da das Inverse wegen $a \perp m$ existiert, kann mit diesem multipliziert werden und die $a$'s
+    fallen weg.
+  }
+  $x_i \equiv x_j \pmod{m}$, was nicht sein kann.
+  Wegen $x_1,x_2,\ldots,x_n \perp m$ liefert die Kürzungsregel, wenn man noch
+  $n = \phif{m}$ beachtet, die ursprüngliche Behauptung:
+  \begin{align*}
+    ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n & \equiv
+    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pmod{m}              \\
+    a^{\phif{m}}                            & \equiv 1 \pmod{m}
+  \end{align*}
+\end{proof}
+
+\noindent
+Der Kleine Satz von Fermat kann jetzt als Spezialform des Satzes von Euler (mit $m = p$) direkt
+aufgeschrieben werden:
+
+\begin{satz}[Kleiner Satz von Fermat]
+  Es seien $a \in \mathbb{N}^\times$ und $p \in \mathbb{P}$ mit $a \perp p$, dann gilt:
+  \begin{equation*}
+    a^{p-1} \equiv 1 \pmod{p}
+  \end{equation*}
+\end{satz}
+
+\noindent
+Der Kleine Satz von Fermat wird in der Kryptografie unter anderem dafür verwendet,
+Primzahltests durchzuführen.
