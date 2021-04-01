@@ -284,7 +284,7 @@ Ein Benutzer erhält nach dem Anmelden eine Kombination aus Zugriffstoken
 (engl. \textit{access token}) und Erneuerungstoken (engl. \textit{refresh token}),
 welche clientseitig gespeichert werden.
 Wird versucht, auf einen geschützten Bereich der API zuzugreifen, muss die Anfrage
-einen gültigen Token enthalten, welcher als Teil des HTTP-Headers im
+einen gültigen Token enthalten, welcher als Teil des HTTP-Header im
 Autorisierungsfeld versandt wird.
 Ist im Header der Anfrage kein oder ein
 abgelaufener Token vorhanden, wird diese mit einem HTTP-Statuscode 401 \enquote{Unautorisiert}
@@ -342,10 +342,10 @@ Verschlüssel\-ung geschieht durch die \textit{ASP.NET Core Data Protection API}
   security/data-protection/introduction?view=aspnetcore-5.0}.
 Als Garantie, dass nur der geplante Empfänger eine Nachricht lesen
 kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
-der Ver- und Entschlüsselungsfunktion übergeben wird.
+der Verschlüsselungsfunktion übergeben wird.
 Der Parameter setzt sich zusammen aus (Datenbank ID $\parallel$ - $\parallel$ Name)
-und ist somit garantiert eindeutig. Das Symbol $\parallel$
-beschreibt hierbei die Konkatenation. \autoref{alg:data-protect} und \ref{alg:data-unprotect}
+und ist somit garantiert eindeutig, das Symbol $\parallel$
+beschreibt hierbei die Konkatenation mehrerer Zeichenketten. \autoref{alg:data-protect} und \ref{alg:data-unprotect}
 zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
 eine Methode \texttt{CreateProtector} zur Verfügung:
 \begin{algorithm}[h]
@@ -361,7 +361,7 @@ eine Methode \texttt{CreateProtector} zur Verfügung:
 \end{algorithm}
 
 \noindent
-Es ist jetzt zu sehen, warum es wichtig ist, eine Anfragen mit einem Benutzer zu verbinden:
+Es ist jetzt zu sehen, warum es wichtig ist, Anfragen mit einem Benutzer in Verbindung zu bringen:
 
 \begin{algorithm}[h]
   \DontPrintSemicolon

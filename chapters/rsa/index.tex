@@ -131,9 +131,8 @@ welche im RSA-Kryptosystem zum Einsatz kommen.
 \input{chapters/rsa/zahlentheorie/euler-fermat.tex}
 
 \section{Das RSA-Verfahren}
-Das RSA-Verfahren basiert auf der Annahme, dass ein effizientes Verfahren
-für das Bestimmen der Primfaktorzerlegung
-einer natürlichen Zahl gibt.
+Das RSA-Verfahren basiert auf der Annahme, dass es nicht effizient
+möglich ist, die Primfaktorzerlegung einer natürlichen Zahl zu bestimmen.
 Die Generierung des privaten und öffentlichen Schlüssels kann in die
 folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
 
@@ -158,11 +157,12 @@ gestaltet sich sehr einfach:
 
 \begin{definition}[Ver- und Entschlüsselung RSA]
   Es seien der öffentliche und private Schlüssel gegeben mit
-  $\keypub = (N,e)$ und $\keypr = (N,d)$. Dann gilt:
+  $\keypub = (N,e)$ und $\keypr = (N,d)$. Dann gilt
   \begin{description}
     \item[Verschlüsselung:] $y = e_{\keypub}(x) \equiv x^e \pmod{N}$
     \item[Entschlüsselung:] $x = d_{\keypr}(y) \equiv y^d \pmod{N}$
   \end{description}
+  mit $x,y \in \mathbb{Z}_N$.
 \end{definition}
 
 \noindent
@@ -207,9 +207,9 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
   \end{equation}
   Wir wissen per Definition, wobei $t$ irgendeine ganze Zahl ist:
   \begin{align}
-    e \cdot d                 & \equiv 1 \pmod{\phif{N}} \notag   \\
+    e \cdot d & \equiv 1 \pmod{\phif{N}} \notag   \\
     \label{eq:proof-rsa-3.6}
-    \Leftrightarrow e \cdot d & = t \cdot \phif{N} + 1 \tag{$**$}
+    e \cdot d & = t \cdot \phif{N} + 1 \tag{$**$}
   \end{align}
   Um $x \equiv x^{ed} \pmod{pq}$ zu zeigen, reicht es nach \autoref{satz:composite-mod}
   die Faktoren einzeln zu betrachten.

@@ -27,7 +27,7 @@ Eigenschaft der Restklassen festgehalten werden:
         & = x\fcolorbox{Red}{White}{b} - (xt + y)\fcolorbox{Red}{White}{m} &     & = p\fcolorbox{Green}{White}{a} + (pt + q)\fcolorbox{Green}{White}{m} \\
         & \Rightarrow g_1 \mid g_2                                         &     & \Rightarrow g_2 \mid g_1
   \end{align*}
-  und es folgt durch die letzte Zeile: $g_1 = g_2$.
+  und es folgt aus der letzten Zeile: $g_1 = g_2$.
 \end{proof}
 
 
@@ -62,12 +62,13 @@ Eigenschaft der Restklassen festgehalten werden:
     \label{proof:satz-euler-1}
     \forall ax_i \exists x_j: ax_i \equiv x_j \pmod{m} \qquad 1 \leq i,j \leq n \tag{$*$}
   \end{equation}
-  Es bleibt zu zeigen, dass in \eqref{proof:satz-euler-1} keine Doppelungen entstehen, es muss
+  Es bleibt zu zeigen, dass in \eqref{proof:satz-euler-1} keine Doppelungen entstehen und alle $ax_i$
+  Teil unterschiedlicher Restklassen sind, es muss
   also gelten:
   \begin{equation*}
-    ax_i \not\equiv ax_j \pmod{m} \qquad x_i \neq x_j
+    ax_i \not\equiv ax_j \pmod{m} \qquad i \neq j
   \end{equation*}
-  Angenommen $ax_i \equiv ax_j \pmod{m}$ für $x_i \neq x_j$, dann gilt nach der Kürzungsregel
+  Angenommen $ax_i \equiv ax_j \pmod{m}$ für $i \neq j$, dann gilt nach der Kürzungsregel
   \footnote{
     Da das Inverse wegen $a \perp m$ existiert, kann mit diesem multipliziert werden und die $a$'s
     fallen weg.
