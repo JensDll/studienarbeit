@@ -5,7 +5,7 @@ seinen drei Erfindern Ronald Rivest, Adi Shamir und Leonard Adleman, welche das 
 im Jahr 1977 veröffentli\-chten \parencite[173]{BOOK:crypto}. In diesem Kapitel
 sollen die Ideen von asymmetrischer Verschlüsselung
 (engl. \textit{public-key-crpytography} oder \textit{asymmetric crpytography})
-vorgestellt werden. Es wird hierbei genauer auf das RSA-Kryptosystem eingegangen und
+vorgestellt werden, es wird hierbei genauer auf das RSA-Kryptosystem eingegangen und
 es werden einige zahlentheoretischen Grundlagen gezeigt.
 
 \section{Asymmetrische Verschlüsselung}
@@ -19,12 +19,12 @@ ist es hilfreich auf das Prinzip der symmetrischen Verfahren zurückzukommen
 Ein solches System hat zwei symmetrische Eigenschaften:
 \begin{enumerate}
   \item Derselbe geheime Schlüssel wird sowohl für die
-        Verschlüsselung als auch Entschlüsselung verwendet.
+        Verschlüsselung als auch Entschlüs\-selung verwendet.
   \item Die Ver- und Entschlüsselungsfunktion sind sich sehr ähnlich
         (im Fall von \acs{otp} oder \acs{des} sind sie sogar gleich).
 \end{enumerate}
 Symmetrische Verfahren wie \acs{aes} sind sehr sicher und schnell,
-jedoch haben auch sie gewisse Beeinträchtigungen, welche im Folgenden beschrieben werden.
+jedoch haben auch sie Problemstellungen, welche im Folgenden beschrieben werden.
 
 \paragraph{Schlüsselverteilungsproblem}
 Da beide Parteien denselben Schlüssel benötigen, muss dieser in
@@ -56,9 +56,9 @@ Es gibt jedoch viele Bereiche, in denen dieser Beweis wichtig ist, beispielsweis
 im Onlinehandel:
 \begin{example}
   Alice betreibt einen Onlinehandel, sie muss beweisen können, dass ein
-  Käufer Bob eine Bestellung wirklich getätigt hat,
+  Käufer Bob eine Bestellung getätigt hat,
   denn anderenfalls könnte er jederzeit behaupten,
-  Alice hätte seine Bestellung fälschlicherweise erstellt.
+  Alice hätte diese fälschlicherweise erstellt.
 \end{example}
 \noindent
 Das Problem ist auch bekannt als Non-Repudiation \parencite{SITE:nonrepudiation}
@@ -155,7 +155,7 @@ Sind $p$ und $q$ entsprechend groß, ist es nicht in annehmbarer Zeit möglich, 
 von $N$ zu bestimmen und damit auch $\phif{N}$. Die Ver- und Entschlüsselung mit RSA
 gestaltet sich sehr einfach:
 
-\begin{definition}[Ver- und Entschlüsselung RSA]
+\begin{definition}[Das RSA-Verfahren]
   Es seien der öffentliche und private Schlüssel gegeben mit
   $\keypub = (N,e)$ und $\keypr = (N,d)$. Dann gilt
   \begin{description}
@@ -255,9 +255,9 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
             \end{tabular}
           \end{center}
           Die Ergebnis stimmt, denn es gilt $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
-    \item Alice kennt den öffentlichen Schlüssel $\keypub = (33,3)$ und kann eine
+    \item Alice kennt den öffentlichen Schlüssel $\keypub = (N,e) = (33,3)$ und kann eine
           Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$
-    \item Bob kennt den privaten Schlüssel $\keypr = (33,7)$ und kann die Nachricht
+    \item Bob kennt den privaten Schlüssel $\keypr = (N,d) = (33,7)$ und kann die Nachricht
           entschlüsseln mit $y^d = 31^7 \equiv (-2)^7 \equiv (-2)^5 \cdot 2^2 \equiv
             1 \cdot 4 \equiv 4 = x \pmod{33}$.
   \end{enumerate}

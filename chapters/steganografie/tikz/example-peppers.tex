@@ -1,0 +1,50 @@
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    [spy scope= {circle, magnification=8, size=3cm},
+      every spy on node/.style={draw, blue, ultra thick},
+      every node/.style={inner sep=0},
+      label distance=-1cm]
+
+    \node (original) {
+      \begin{minipage}{0.35\textwidth}
+        \includegraphics[width=1\textwidth]{peppers-0.png}
+        \caption*{Original}
+      \end{minipage}
+    };
+    \node [right= of original] (300kb) {
+      \begin{minipage}{0.35\textwidth}
+        \includegraphics[width=1\textwidth]{peppers-300000.png}
+        \caption*{300 KB Nachricht}
+      \end{minipage}
+    };
+    \node [below=0.5cm of original] (500kb) {
+      \begin{minipage}{0.35\textwidth}
+        \includegraphics[width=1\textwidth]{peppers-500000.png}
+        \caption*{500 KB Nachricht}
+      \end{minipage}
+    };
+    \node [below=0.5cm of 300kb] (700kb) {
+      \begin{minipage}{0.35\textwidth}
+        \includegraphics[width=1\textwidth]{peppers-700000.png}
+        \caption*{700 KB Nachricht}
+      \end{minipage}
+    };
+
+    \matrix [column sep=3.5cm] at ($(original.north)!0.5!(300kb.north) + (0,3.5cm)$) {
+      \coordinate (a); & \coordinate (b); & \coordinate (c); & \coordinate (d); \\
+    };
+
+    \coordinate (spy-on) at (-0.95cm,-0.8cm);
+
+    \spy on ($(original.north) + (spy-on)$) in node[label=below:Original] at (a);
+    \spy on ($(300kb.north) + (spy-on)$) in node[label=below:300 KB] at (b);
+    \spy on ($(500kb.north) + (spy-on)$) in node[label=below:500 KB] at (c);
+    \spy on ($(700kb.north) + (spy-on)$) in node[label=below:700 KB] at (d);
+
+
+  \end{tikzpicture}
+  \caption{Paprika. Größe 509 $\times$ 509 Pixel. Maximale Kapazität $\approx 777$ KB.
+    Gute Bildqualität bis zu 300-500 KB versteckter Nachricht.}
+  \label{fig:example-peppers}
+\end{figure}

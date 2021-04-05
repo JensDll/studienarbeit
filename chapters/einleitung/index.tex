@@ -75,7 +75,7 @@ In einer solchen Situation bietet die symmetrische Verschlüsselung eine gute L�
 Bevor Alice ihr Passwort sendet, verschlüsselt sie es mit einem symmetrischen Algorithmus.
 Bob invertiert die Verschlüsselung und erhält die unverschlüsselte Nachricht. Wurde für
 die Verschlüsselung ein sicherer Algorithmus gewählt, erscheint die Nachricht für Oscar nur wie
-eine zufällige Folge von Bits.
+eine zufällige Folge von Bit.
 \newpage
 
 \input{chapters/einleitung/tikz/symmetric-encryption.tex}
@@ -88,9 +88,9 @@ Kryptografie eine besondere Bedeutung:
   \item $x$ ist der Klartext (engl. \textit{plaintext}).
   \item $y$ ist das Chiffrat oder der Geheimtext (engl. \textit{ciphertext}).
   \item $k$ ist der Schlüssel (engl. \textit{key}).
-  \item $e$ ist die Verschlüsselung (engl. \textit{encryption}).
-  \item $d$ ist die Entschlüsselung (engl. \textit{decryption}),
-        d.\,h. die Umkehrfunktion von $e$.
+  \item $e$ bezeichnet die Verschlüsselung (engl. \textit{encryption}).
+  \item $d$ bezeichnet Entschlüsselung (engl. \textit{decryption}),
+        d.\,h. die Umkehrung von $e$.
 \end{itemize}
 
 \noindent
@@ -103,7 +103,7 @@ basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13
 Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben)
 in der wir es gewohnt sind in unendlichen
 Mengen zu rechnen, z.\,B. die natürlichen oder die reellen Zahlen. Die modulare Arithmetik,
-d.\,h. die Division mit Rest, bietet eine gute Möglichkeit um in diesen begrenzten Mengen rechnen
+also die Division mit Rest, bietet eine gute Möglichkeit, um in diesen begrenzten Mengen rechnen
 zu können.
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
@@ -114,8 +114,9 @@ zu können.
   \end{enumerate}
 \end{lemma}
 \begin{proof}
-  Es seien $a = q_1m + r_1$ und $b = q_2m + r_2$ mit $0 \leq r_1,r_2 < m$,
-  die Gleichungen, die bei Division mit Rest entstehen. $q_1,q_2,r_1,r_2 \in \mathbb{Z}$. \\
+  Es seien $a = q_1m + r_1$ und $b = q_2m + r_2$ mit $0 \leq r_1,r_2 < m$
+  und  $q_1,q_2,r_1,r_2 \in \mathbb{Z}$, die Gleichungen,
+  die bei Division mit Rest entstehen. \\
   \textit{i)} $\Rightarrow$ \textit{ii)}: \\
   Es gilt: $r_1 = r_2$. \\
   Zu zeigen: $m \mid (a-b)$.
@@ -135,9 +136,8 @@ zu können.
   \end{align*}
   Teilt $m$ zwei Zahlen $a$ und $b$, muss $m$ auch eine Linearkombination dieser Zahlen teilen.
   \begin{align*}
-    m                 & \mid (q_1 - q_2)m + (r_1 - r_2)                \\
-    m                 & \mid (q_1 - q_2)m                              \\
-    \Leftrightarrow m & \mid (q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m \\
+    m                 & \mid (q_1 - q_2)m + (r_1 - r_2) \wedge m \mid (q_1 - q_2)m \\
+    \Rightarrow m     & \mid (q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m             \\
     \Leftrightarrow m & \mid (r_1 - r_2)
   \end{align*}
   Aus der letzten Zeile folgt wegen $0 \leq r_1,r_2 < m$ sofort $r_1 - r_2 = 0$.
@@ -211,9 +211,8 @@ wie es in der Kryptografie oft der Fall ist.
 \end{example}
 
 \begin{remark}
-  \citeauthor{BOOK:crypto} \parencite*[16]{BOOK:crypto} haben sich in ihrem Buch darauf geeinigt,
-  in der Kongruenzrelation \eqref{eq:kongruenz} ein $b$ für gewöhnlich
-  so zu wählen, dass:
+  Wir einigen uns darauf, wenn nicht anders erwähnt,
+  in der Kongruenzrelation \eqref{eq:kongruenz} ein $b$ so zu wählen, dass:
   \begin{equation*}
     0 \leq b < m
   \end{equation*}
@@ -223,7 +222,7 @@ wie es in der Kryptografie oft der Fall ist.
   Mathematisch macht es jedoch keinen Unterschied.
 \end{remark}
 \noindent
-Wir vereinbaren für den folgenden Text, dass auch die Null eine natürliche Zahl ist,
+Wir vereinbaren für den folgenden Text außerdem, dass auch die Null eine natürliche Zahl ist,
 also $\mathbb{N} := \{0,1,2,\dots, 1000, 1001, \dots\}$. Da häufig die Menge
 $\{1,2,3,\dots\}$ aller von 0 verschiedenen natürlichen Zahlen betrachtet wird, ist
 es sinnvoll, auch für diese Menge ein Symbol einzuführen. Wir vereinbaren folgende
@@ -276,7 +275,7 @@ lateinische Alphabet ist in \autoref{tab:encode-alph} zu sehen.
 Würde ein Buchstabe zu weit verschoben werden, wird von vorne,
 also beim ersten Buchstaben weitergemacht.
 Sowohl Klartext- als auch Geheimtextbuchstaben sind somit Teil des Rings $\mathbb{Z}_{26}$.
-Die Ver- und Entschlüsselung kann nun folgendermaßen ausgedrückt werden:
+Das Verfahren kann nun folgendermaßen beschrieben werden:
 
 \begin{definition}[Cäsar-Chiffre]
   Es seien $x,y,k \in \mathbb{Z}_{26}$. Dann gilt:
@@ -316,7 +315,7 @@ Das Verschlüsselungsverfahren funktioniert.
 \end{example}
 
 \noindent
-Wie zu erwarten ist die Cäsar-Chiffre natürlich nicht besonders sicher.
+Wie zu erwarten bietet die Cäsar-Chiffre natürlich keine besonders sicher Verschlüsselung.
 Es gibt nur 26 verschiedene Schlüssel (wobei $k = 0$ den Klartext nicht verändert),
 welche schnell alle ausprobiert werden können. Zusätzlich
 haben Klartext und Geheimtext die selben statistischen Eigenschaften.

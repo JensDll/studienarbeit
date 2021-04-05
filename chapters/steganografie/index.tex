@@ -300,8 +300,8 @@ untersucht und einige Beispiele gezeigt.
 \subsection{Risiken der Token basierten Autorisierung}
 Besondere Vorsicht muss geboten werden, wenn es um die Handhabung
 der Zugriffstoken geht.
-Fällt ein Token in die Hände des Angreifers, kann dieser
-im Namen des Nutzers beliebig Anfragen durchführen, d.\,h. sowohl geheime Nachrichten
+Fällt ein Token in die Hände eines Angreifers, kann dieser
+im Namen des Tokeninhabers beliebig Anfragen durchführen, d.\,h. sowohl geheime Nachrichten
 lesen als auch Nachrichten schreiben.
 Zugriffstoken werden clientseitig gespeichert. Über eine
 Clientumgebung wie beispielsweise dem Webbrowser, besteht in den meisten
@@ -345,7 +345,8 @@ kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
 der Verschlüsselungsfunktion übergeben wird.
 Der Parameter setzt sich zusammen aus (Datenbank ID $\parallel$ - $\parallel$ Name)
 und ist somit garantiert eindeutig, das Symbol $\parallel$
-beschreibt hierbei die Konkatenation mehrerer Zeichenketten. \autoref{alg:data-protect} und \ref{alg:data-unprotect}
+beschreibt hierbei die Konkatenation zweier Zeichenketten.
+\autoref{alg:data-protect} und \ref{alg:data-unprotect}
 zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
 eine Methode \texttt{CreateProtector} zur Verfügung:
 \begin{algorithm}[h]
@@ -382,69 +383,30 @@ um die unbemerkte Nachrichtenmanipulation zu verhindern. Wäre die Nachricht wä
 verändert worden, würde es während der Entschlüsselung auffallen.
 
 \subsection{Steganografische Qualität}
-Um die Qualität des Algorithmus zu beurteilen,
+Um die Qualität des steganografischen Algorihtmus zu beurteilen,
 lohnt es sich vor allem einige
-Beispiele anzusehen. Die steganografische Qualität des Verfahrens soll jetzt
+Beispiele anzusehen. Die Qualität des Verfahrens soll jetzt
 anhand der folgenden Bilder untersucht werden.
 
-\vspace{1cm}
-\begin{figure}[h!]
-  \centering
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{flowers.png}
-    \caption*{Original}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{flowers-10000000.png}
-    \caption*{10 MB Nachricht}
-  \end{minipage}%
-  \vspace{0.5cm}
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{flowers-20000000.png}
-    \caption*{20 MB Nachricht}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{flowers-30000000.png}
-    \caption*{30 MB Nachricht}
-  \end{minipage}
-  \caption{Blumen. Größe 4272 $\times$ 2848 Pixel. Maximale Kapazität $\approx 36,5$ MB.
-    Gute Bildqualität bis zu 20MB versteckter Nachricht.}
-  \label{fig:example-flowers}
-\end{figure}
+\newpage
+
+\input{chapters/steganografie/tikz/example-peppers.tex}
 
 \newpage
 
-\begin{figure}[h!]
-  \centering
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-0.png}
-    \caption*{Original}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-300000.png}
-    \caption*{300 KB Nachricht}
-  \end{minipage}%
-  \vspace{0.5cm}
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-500000.png}
-    \caption*{500 KB Nachricht}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-700000.png}
-    \caption*{700 KB Nachricht}
-  \end{minipage}
-  \caption{Paprika. Größe 509 $\times$ 509 Pixel. Maximale Kapazität $\approx 777$ KB.
-    Gute Bildqualität bis zu 300-500 KB versteckter Nachricht.}
-  \label{fig:example-peppers}
-\end{figure}
+\input{chapters/steganografie/tikz/example-turtle.tex}
 
 \newpage
 
-\noindent
+\input{chapters/steganografie/tikz/example-flowers.tex}
+
+\newpage
+
+
+
+
+
+\section{Fazit und Ausblick}
 Sind die Seitenverhältnisse eines Bilds Zweierpotenzen, entstehen Streifen,
 welche einfacher erkannt werden können. \autoref{fig:example-white-stripes} zeigt dieses
 Verhalten, die veränderte Pixel sind weiß eingefärbt.

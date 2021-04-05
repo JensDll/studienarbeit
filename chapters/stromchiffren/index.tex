@@ -5,7 +5,8 @@
 \noindent
 Werfen wir in \autoref{fig:sym-ciphers-overview} einen genaueren Blick auf die Algorithmen
 der Kryptografie, stellen wir fest: Das Gebiet
-der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Strom- und Blockchiffren.
+der symmetrischen Verschlüsselungsverfahren kann unterteilt werden in Stromchiffren
+und Blockchiffren.
 In diesem Kapitel sollen anhand von Stromchiffren einige Definitionen eingeführt
 und der Unterschied zu den Blockchiffren erläutert werden.
 Außerdem wird gezeigt, welche Rolle hierbei die Zufallszahlengeneratoren spielen.
@@ -26,7 +27,7 @@ Blockchiffren arbeiten mit Datenblöcken fester Länge, wobei ein Großteil der
 relevanten Algorithmen eine Eingangsweite von 64 oder 128 Bits besitzen.
 Prominente Beispiele sind Verfahren wie der \acl{des}
 (\acs{des}, Blocklänge 64 Bit, \cite[55-58]{BOOK:crypto}) oder der \acl{aes}
-(\acs{des}, Blocklänge 128 Bit, \cite[87-90]{BOOK:crypto}).
+(\acs{aes}, Blocklänge 128 Bit, \cite[87-90]{BOOK:crypto}).
 Eine grundlegende Idee für das Entwerfen starker Blockchiffren, ist das Prinzip
 der Konfusion (engl. \textit{confusion}) und
 Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
@@ -86,7 +87,7 @@ besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 \begin{enumerate}
   \item Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?
   \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
-  \item Was sind die Eigenschaften der Schlüsselstrombits $k_i$?
+  \item Was sind die Eigenschaften der Schlüsselstrombit $k_i$?
 \end{enumerate}
 
 \paragraph{Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
@@ -108,7 +109,7 @@ Es gilt: $-1 \equiv 1 \pmod{2}$.
 \paragraph{Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
 Das Rechnen in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
 der Menge $\{0,1\}$. Dieses Verhalten ist sehr hilfreich, denn es ermöglicht das Ausdrücken der
-Arithmetik durch einfache boolesche Algebra.
+Rechenregeln durch einfache boolesche Algebra.
 Betrachten wir die Wahrheitstabelle (\ref{tab:truth-table-addition-mod-2})
 der Addition in $\mathbb{Z}_2$, kann sofort eine weitere Beobachtung gemacht werden:
 Die Addition Modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ein
@@ -150,11 +151,11 @@ bei Stromchiffren.
   \centering
   \caption{Wahrheitstabelle der Exklusiv-Oder-Verknüpfung}
   \begin{tabular}{cc|c}
-    $x_i$ & $k_i$ & $y_i = x_i \oplus k_i$ \\ \hline
-    0     & 0     & 0                      \\
-    0     & 1     & 1                      \\ \hline
-    1     & 0     & 1                      \\
-    1     & 1     & 0                      \\
+    $x_i$      & $k_i$      & $y_i = x_i \oplus k_i$ \\ \hline
+    \textbf{0} & \textbf{0} & \textbf{0}             \\
+    \textbf{0} & \textbf{1} & \textbf{1}             \\
+    1          & 0          & 1                      \\
+    1          & 1          & 0                      \\
   \end{tabular}
   \label{tab:truth-table-xor}
 \end{table}
@@ -213,10 +214,10 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
 
 \noindent
 Stromchiffren erscheinen fast zu gut, um wahr zu sein, doch wie später gezeigt wird,
-gibt es aus auch hier gewisse Nachteile, welche in der Praxis entstehen.
+gibt es aus auch hier Einschränkungen, welche in der Praxis entstehen.
 Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
-\paragraph{Was sind die Eigenschaften der Schlüsselstrombits?}\mbox{}\\
+\paragraph{Was sind die Eigenschaften der Schlüsselstrombit?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
 Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet daher
 die zentrale Fragestellung der Verschlüsselungsmethode.
@@ -259,15 +260,14 @@ Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
 Kryptografisch sichere Pseudozufallszahlengeneratoren
 (engl. \acp{csprng}) sind \acp{prng} mit
 einer zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesprochen
-bedeutet dies, es rechentechnisch nicht möglich, aus $n$ gegeben Schlüsselstrombit
+bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombit
 $k_1,k_2,\dots,k_n$, die folgenden Bit $k_{n+1},k_{n+2},\dots,k_{n+m}$ zu berechnen. Außerdem
-soll es zeitlich unmöglich sein, eines der vorherigen Bit $k_{n-1},k_{n-2},\dots,k_{n-m}$ zu
-berechnen.
+soll es zeitlich unmöglich sein, eines der vorherigen Bit
+$k_{-1},k_{-2},\allowbreak\dots,k_{-m}$ zu berechnen.
 
 \section{Das One-Time-Pad}
-Es sind jetzt mit den bis hierher eingeführten Ideen zu Stromchiffren und den verschiedenen
-Zufallszahlengeneratoren alle Bausteine vorhanden, um ein beweisbar
-sicheres Verschlüsselungsverfahren zu bauen. Ein System heißt beweisbar sicher,
+Es sind jetzt mit den bisher eingeführten Ideen alle Teile vorhanden, um ein beweisbar
+sicheres Verschlüsselungsverfahren zu entwerfen. Ein System heißt beweisbar sicher,
 wenn es trotz unendlich vorhandener Rechenleistung nachweislich nicht gebrochen werden kann.
 Es kann folgende Definition gegeben werden \parencite[36]{BOOK:crypto}:
 
@@ -301,8 +301,8 @@ Zu jedem Bit im Geheimtext gibt es eine Gleichung der Form:
 Stammt der Schlüsselstrom von einem \ac{trng} können diese Gleichungen nicht gelöst werden.
 Für alle $y_i$ gibt es genau zwei Lösungen mit gleich großer Wahrscheinlichkeit:
 \begin{align*}
-  y_i = 0 & \equiv 1 + 1_k \equiv 0 + 0_k \pmod{2} \\
-  y_i = 1 & \equiv 1 + 0_k \equiv 0 + 1_k \pmod{2}
+  y_i = 0 & \equiv 0_{x_i} + 0_{k_i} \equiv 1_{x_i} + 1_{k_i} \pmod{2} \\
+  y_i = 1 & \equiv 0_{x_i} + 1_{k_i} \equiv 1_{x_i} + 0_{k_i} \pmod{2}
 \end{align*}
 
 \section{Die praktischen Stromchiffren}
@@ -347,8 +347,8 @@ Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
 Aussage darüber getroffen werden, ob ein Problem mit bekannten Verfahren
 optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
 sondern nur angenommen werden kann. Ein bekanntes Beispiel ist, dass des RSA-Kryptosystems
-(Asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
-berechnet werden kann, durch das Faktorisieren zweier großer
+(asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
+berechnet werden kann, durch die Faktorisierung zweier großer
 natürlicher Zahlen. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
 ob es andere Verfahren gibt, welche das Problem effizienter lösen können.
 Im Fall von symmetrischen Verfahren nimmt man an, dass es keinen besseren Algorithmus

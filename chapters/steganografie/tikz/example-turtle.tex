@@ -1,0 +1,50 @@
+\begin{figure}[h!]
+  \centering
+  \begin{tikzpicture}
+    [spy scope= {circle, magnification=8, size=3cm},
+      every spy on node/.style={draw, Red, ultra thick},
+      every node/.style={inner sep=0},
+      label distance=-1cm]
+
+    \node (original) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{turtle.png}
+        \caption*{Original}
+      \end{minipage}
+    };
+    \node [right= of original] (2mb) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{turtle-2000000.png}
+        \caption*{2 MB Nachricht}
+      \end{minipage}
+    };
+    \node [below=0.5cm of original] (4mb) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{turtle-4000000.png}
+        \caption*{4 MB Nachricht}
+      \end{minipage}
+    };
+    \node [below=0.5cm of 2mb] (6mb) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{turtle-6000000.png}
+        \caption*{6 MB Nachricht}
+      \end{minipage}
+    };
+
+    \matrix [column sep=3.5cm] at ($(original.north)!0.5!(2mb.north) + (0,3.5cm)$) {
+      \coordinate (a); & \coordinate (b); & \coordinate (c); & \coordinate (d); \\
+    };
+
+    \coordinate (spy-on) at (1cm,-0.5cm);
+
+    \spy on ($(original.north) + (spy-on)$) in node[label=below:Original] at (a);
+    \spy on ($(2mb.north) + (spy-on)$) in node[label=below:2 MB] at (b);
+    \spy on ($(4mb.north) + (spy-on)$) in node[label=below:4 MB] at (c);
+    \spy on ($(6mb.north) + (spy-on)$) in node[label=below:6 MB] at (d);
+
+
+  \end{tikzpicture}
+  \caption{Schildkröte. Größe 1368 $\times$ 1824 Pixel. Maximale Kapazität $\approx 7,5$ MB.
+    Gute Bildqualität bis zu 4MB versteckter Nachricht.}
+  \label{fig:example-turtle}
+\end{figure}
