@@ -221,30 +221,8 @@ Werden nicht null indizierte Koordinaten benötigt, können diese entsprechend s
 \autoref{fig:punkt-verteilung} zeigt die Koordinatenverteilung für Nachrichten unterschiedlicher
 Längen auf einem $500 \times 500$ Pixel Farbbild mit schwarzen Hintergrund. Die durch den Algorithmus
 errechneten Koordinaten sind weiß eingefärbt.
-\begin{figure}
-  \centering
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{black-1200.png}
-    \caption*{1200 Byte}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{black-3600.png}
-    \caption*{3600 Byte}
-  \end{minipage}%
-  \vspace{0.5cm}
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{black-10800.png}
-    \caption*{10800 Byte}
-  \end{minipage}
-  \hfill
-  \begin{minipage}[t]{0.45\textwidth}
-    \includegraphics[width=1\textwidth]{black-32400.png}
-    \caption*{32400 Byte}
-  \end{minipage}
-  \caption{Koordinatenverteilung auf einem $500 \times 500$ Pixel Schwarzbild für Nachrichtenlängen von 1200, 3600, 10800 und 32400 Byte.}
-  \label{fig:punkt-verteilung}
-\end{figure}
+
+\input{chapters/steganografie/tikz/example-distribution.tex}
 
 \newpage
 \section{Die Architektur der Anwendung}
@@ -386,7 +364,9 @@ verändert worden, würde es während der Entschlüsselung auffallen.
 Um die Qualität des steganografischen Algorihtmus zu beurteilen,
 lohnt es sich vor allem einige
 Beispiele anzusehen. Die Qualität des Verfahrens soll jetzt
-anhand der folgenden Bilder untersucht werden.
+anhand der folgenden Bilder untersucht werden, es werden Beispiele
+betrachtet mit versteckten Nachrichten und einer Nachrichtenlänge von
+48, 60\ und 72 Prozent der maximalen Bildkapazität.
 
 \newpage
 
@@ -402,19 +382,40 @@ anhand der folgenden Bilder untersucht werden.
 
 \newpage
 
-
-
-
-
-\section{Fazit und Ausblick}
-Sind die Seitenverhältnisse eines Bilds Zweierpotenzen, entstehen Streifen,
-welche einfacher erkannt werden können. \autoref{fig:example-white-stripes} zeigt dieses
+\noindent
+Es kann beobachtet werden, dass
+eine gute Bildqualität erreicht wird,
+wenn die Grenze von vier Bitänderungen pro Farbkanal ($n = 4$) nicht überschritten wird.
+Nachrichten mit einer Länge größer 50\,\% der maximalen Bildkapazität werden bis in die höheren
+Bitstellen geschrieben und sind deshalb zunehmend schnell zu erkennen.
+Nicht alle Bilder sind gleich gut geeignet um lange Nachrichten zu verstecken.
+Änderungen bei \ref{fig:example-turtle} (Schildkröte) mit viel einfarbigen Hintergrund
+lösen schneller einen sichtbaren Effekt aus als bei Bild \ref{fig:example-peppers}
+(Paprika) oder \ref{fig:example-flowers} (Blumen), wo auch Nachrichten länger
+50\,\% eher schwer zu erkennen sind. Sind die Seitenverhältnisse
+eines Bilds Zweierpotenzen, entstehen vertikale Streifen,
+welche die steganografische Qualität verschlechtern.
+\autoref{fig:example-white-stripes} zeigt dieses
 Verhalten, die veränderte Pixel sind weiß eingefärbt.
-\vspace{2cm}
+
 \begin{figure}[h!]
   \centering
-  \includegraphics{black-white-stripes.png}
-  \caption{Koordinatenverteilung auf einem $512 \times 512$ Pixel Schwarzbild
-    für eine Nachrichtenlänge von 10 KB.}
+  \begin{tikzpicture}
+    \node [inner sep=0] (p) {
+      \includegraphics[width=0.5\textwidth,trim={0 10cm 0 0},clip]{black-white-stripes.png}
+    };
+  \end{tikzpicture}
+  \caption{Koordinatenverteilung auf einem $512 \times 512$ Pixel Farbbild mit
+    schwarzen Hintergrund für eine Nachrichtenlänge von 2\,kB (gekürzt).}
   \label{fig:example-white-stripes}
 \end{figure}
+
+\noindent
+Indem das Bild leicht skaliert wird, kann diese Symmetrie jedoch ungefährlich aufgelöst
+werden. Es wird allgemein festgehalten, dass die Verteilfunktion $v$
+(zu sehen in \autoref{fig:punkt-verteilung})
+verbessert werden kann, da diese bei vielen Nachrichtenlängen noch immer
+sichtbare Kanten erzeugt. Besser wäre eine Verteilung, welche mehr aussieht wie
+zufälliges Rauschen oder ein Algorithmus, welcher die Wahl der Pixel schlauer
+bestimmt und beispielsweise aktiv versucht, entstandene Fehler während
+der Durchführung auszugleichen.

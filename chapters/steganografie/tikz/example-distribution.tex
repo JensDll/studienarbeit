@@ -1,0 +1,54 @@
+\begin{figure}
+  \centering
+  \begin{tikzpicture}
+    [spy scope= {circle, magnification=3, size=2cm},
+      every spy in node/.style={draw, Red, thin},
+      every node/.style={inner sep=0},
+      label distance=-0.5cm]
+
+    \node (1200b) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{black-1200.png}
+        \caption*{1200 Byte}
+      \end{minipage}
+    };
+    \node [right= of 1200b] (3600b) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{black-3600.png}
+        \caption*{3600 Byte}
+      \end{minipage}
+    };
+    \node [below=0.5cm of 1200b] (10800b) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{black-10800.png}
+        \caption*{10800 Byte}
+      \end{minipage}
+    };
+    \node [below=0.5cm of 3600b] (32400b) {
+      \begin{minipage}{0.45\textwidth}
+        \includegraphics[width=1\textwidth]{black-32400.png}
+        \caption*{32400 Byte}
+      \end{minipage}
+    };
+
+    \matrix [column sep=2.5cm] at ($(1200b.north)!0.5!(3600b.north) + (0,2.5cm)$) {
+      \coordinate (a); & \coordinate (b); & \coordinate (c); & \coordinate (d); \\
+    };
+
+    \spy on ($(1200b.north) + (2cm,-4.1cm)$) in node;
+    \spy on ($(1200b.north) + (-2cm,-2cm)$) in node;
+
+    \spy on ($(3600b.north) + (2cm,-1.3cm)$) in node;
+    \spy on ($(3600b.north) + (-2cm,-3cm)$) in node;
+
+    \spy on ($(10800b.north) + (2cm,-5.5cm)$) in node;
+    \spy on ($(10800b.north) + (-2cm,-2.25cm)$) in node;
+
+    \spy on ($(32400b.north) + (2cm,-2.8cm)$) in node;
+    \spy on ($(32400b.north) + (-2cm,-5cm)$) in node;
+
+  \end{tikzpicture}
+  \caption{Koordinatenverteilung auf einem $500 \times 500$ Pixel Farbbild mit
+    schwarzen Hintergrund für Nachrichtenlängen von 1200, 3600, 10800 und 32400 Byte.}
+  \label{fig:punkt-verteilung}
+\end{figure}
