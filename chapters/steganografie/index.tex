@@ -1,4 +1,4 @@
-\chapter{Ein Steganografischer Algorihtmus}
+\chapter{Ein Steganografischer Algorihtmus} \label{cha:steganografie}
 Die Steganografie bezeichnet eine weitere Methode die Vertraulichkeit eines
 Informationsaustausches zu gewährleisten.
 Es wird das Ziel verfolgt, eine Nachricht in einer für den Computer
@@ -41,7 +41,7 @@ Betrachten des veränderten Bilds nicht zu erkennen sein.
 \paragraph{Wie stark kann ein Bild angepasst werden?}
 Es soll nun abgeschätzt werden, wie stark ein Bild verändert
 werden kann, ohne dass die Qualität des Ergebnisses sichtbar beeinflusst
-wird. Es seien $b_7\,b_6\, \ldots \,b_0$ die acht Bit eines Farbkanals, es soll für
+wird. Es seien $b_7\,b_6\,b_5\,b_4\,b_3\,b_2\,b_1\,b_0$ die acht Bit eines Farbkanals, es soll für
 jeden Kanal der maximale Fehler betrachtet werden, welcher entstehen kann,
 wenn die $n$ niederwertigsten Bit durch eine Nachricht ersetzt werden.
 Der neue Farbwert einschließlich Fehler wird nach \eqref{eq:bit-max-error} in Bezug auf $n$ bestimmt:
@@ -316,8 +316,8 @@ von 30 Sekunden und es werden keine Sitzungsinformationen gespeichert.
 \subsection{Kryptografische Qualität}
 Nachrichten werden verschlüsselt, bevor sie in einem Bild versteckt werden.
 Verschlüssel\-ung geschieht durch die \textit{ASP.NET Core Data Protection API}
-, welche als sicher angenommen wird \footnote{https://docs.microsoft.com/en-us/aspnet/core/\\
-  security/data-protection/introduction?view=aspnetcore-5.0}.
+, welche als sicher angenommen wird. \footnote{https://docs.microsoft.com/en-us/aspnet/core/\\
+  security/data-protection/introduction?view=aspnetcore-5.0}
 Als Garantie, dass nur der geplante Empfänger eine Nachricht lesen
 kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
 der Verschlüsselungsfunktion übergeben wird.
@@ -412,10 +412,12 @@ Verhalten, die veränderte Pixel sind weiß eingefärbt.
 
 \noindent
 Indem das Bild leicht skaliert wird, kann diese Symmetrie jedoch ungefährlich aufgelöst
-werden. Es wird allgemein festgehalten, dass die Verteilfunktion $v$
+werden. Es wird abschließend festgehalten, dass die Verteilfunktion $v$
 (zu sehen in \autoref{fig:punkt-verteilung})
 verbessert werden kann, da diese bei vielen Nachrichtenlängen noch immer
 sichtbare Kanten erzeugt. Besser wäre eine Verteilung, welche mehr aussieht wie
 zufälliges Rauschen oder ein Algorithmus, welcher die Wahl der Pixel schlauer
 bestimmt und beispielsweise aktiv versucht, entstandene Fehler während
-der Durchführung auszugleichen.
+der Durchführung auszugleichen. Zusätzliche Informationen und der Quelltext zum Projekt
+sind über den folgenden Link auf GitHub zu finden.
+\footnote{https://github.com/jens-studienarbeit/image-data-hiding}

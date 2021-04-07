@@ -8,11 +8,12 @@
 \newcommand{\keypr}{k_{pr}}
 
 \usepackage[utf8]{inputenc}
-\usepackage[german]{babel}
+\usepackage[english, german]{babel}
 \usepackage[left=2.5cm, right=2.5cm]{geometry}
 \usepackage{csquotes}
 \usepackage{setspace}
 \usepackage{caption} % http://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/caption/caption-eng.pdf
+\usepackage{framed}
 
 \usepackage[dvipsnames]{xcolor}
 \newcommand{\hl}[2]{\fcolorbox{#1}{White}{#2}}
@@ -91,11 +92,14 @@
 \newcommand{\numeq}[1]{\stackrel{#1}{=}}
 \newcommand{\phif}[1]{\ensuremath{\varphi(#1)}}
 
+
 \begin{document}
 \pagenumbering{Roman}
 \include{others/titlepage}
-
 \onehalfspacing
+\include{others/erklärung.tex}
+\include{others/abstract.tex}
+
 
 % Verzeichnisse 
 \tableofcontents
@@ -110,6 +114,7 @@
 \include{chapters/stromchiffren/index.tex}
 \include{chapters/rsa/index.tex}
 \include{chapters/steganografie/index.tex}
+\include{chapters/reflektion/index.tex}
 
 % Anhänge
 \pagenumbering{Alph}

@@ -1,0 +1,18 @@
+\newenvironment{abstractpage}
+{\cleardoublepage\vspace*{\fill}\thispagestyle{empty}}
+{\vfill\cleardoublepage}
+\newenvironment{myabstract}[1]
+{\bigskip\selectlanguage{#1}
+  \begin{center}
+    \bfseries\abstractname
+  \end{center}}
+{\par\bigskip}
+
+\begin{abstractpage}
+  \begin{myabstract}{german}
+    Test
+  \end{myabstract}
+  \begin{myabstract}{english}
+    Test
+  \end{myabstract}
+\end{abstractpage}

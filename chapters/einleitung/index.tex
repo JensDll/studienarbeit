@@ -6,10 +6,10 @@ wie zum Beispiel die Entzifferung der durch die Enigma-Chiffriermaschine
 verschlüsselten deutschen Funksprüche während des Zweiten Weltkrieges. Es scheint, als
 wäre Kryptografie stark mit den modernen elektronischen Kommunikationstechniken
 verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptografie
-gehen zurück bis etwa 2000 v. Chr., als bereits im antiken Ägypten neben den
+gehen zurück bis etwa 2000 v.\,Chr., als bereits im antiken Ägypten neben den
 Standard-Hieroglyphen zusätzlich auch \enquote{geheime} Zeichen
 verwendet wurden \parencite[2]{BOOK:crypto}. Es werden prinzipiell zwei
-unterschiedliche kryptografische Verfahren unterschieden, diese sind
+Varianten kryptografischer Verfahren unterschieden, diese sind
 symmetrische- und asymmetrische Algorithmen. Die symmetrische Verschlüsselung ist
 seit langer Zeit ein fester Bestandteil der Kryptografie mit bekannten historischen
 Verfahren wie die Cäsar-Chiffre, welche bereits im antiken Rom für das Verschlüsseln von
@@ -18,7 +18,7 @@ der Kryptografie, Whitfield Diffie, Martin Hellman und Ralph Merkle haben die Id
 1976 erstmalig öffentlich eingeführt \parencite[3]{BOOK:crypto}.
 Eine Übersicht über das Gebiet der Kryptografie ist in \autoref{fig:kryptologie} zu sehen.
 Es ist zu bemerken, dass an oberster Stelle nicht die Kryptografie, sondern
-der Oberbegriff Kryptologie zu finden ist, welche sich in die zwei großen Bereiche unterteilt:
+der Oberbegriff Kryptologie zu finden ist, welche sich in die drei großen Bereiche unterteilt:
 
 \input{chapters/einleitung/tikz/cryptology.tex}
 
@@ -29,8 +29,21 @@ verstanden werden kann, für den sie bestimmt ist.
 \paragraph{Kryptanalyse}
 Die Wissenschaft, ein kryptografisches System zu analysieren mit dem Ziel, mögliche
 Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil der
-Kryptologie. Ohne Personen, welche versuchen ein kryptografisches System zu
+Kryptologie, denn ohne Personen, welche versuchen ein kryptografisches System zu
 brechen, wird man nie herausfinden können, ob das System wirklich sicher ist.
+
+\paragraph{Steganografie}
+Die Kunst, Informationen in einer für den Computer
+zugänglichen Trä\-gerdatei (engl. \textit{cover media}) zu verstecken, sodass eine
+weitere Person die Existenz einer geheimen Botschaft gar nicht erst vermuten würde.
+Die Steganografie wird in der Literatur oftmals nicht als ein Bereich der Kryptologie
+erwähnt, soll aber als wesentlicher Teil dieser Studienarbeit auch hier
+schon betrachtet werden. Es ist wichtig abzugrenzen, dass es sich
+im Gegensatz zu den Chiffren der Kryptografie nicht um ein Verschlüsselungsverfahren handelt
+und ein Außenstehender, welcher von der Existenz einer geheimen Nachricht bescheid weiß,
+diese unverschlüsselt lesen könnte.\\
+
+\noindent
 Ein starkes Kryptoverfahren sollte dem \textit{Kerckhoffs's principle} unterliegen, welches
 im Jahr 1883 von Auguste Kerckhoffs postuliert wurde und von \citeauthor{BOOK:crypto}
 durch folgende Definition beschrieben ist \parencite*[11]{BOOK:crypto}:
@@ -52,6 +65,13 @@ für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Ind
 Funktionsweise von CSS geheim zu halten, gelang das Design durch Reverse Code Engineering
 schnell an die Öffentlichkeit. Es zeigten sich Mängel in der Implementierung,
 welche das Brechen der Verschlüsselung mit sehr geringen Aufwand ermöglichten \parencite{SITE:CSS}.
+Anhand von symmetrischen und asymmetrischen Verschlüsselungsverfahren
+sollen in den folgenden Kapiteln eine Mehrheit von Begriffen und Ideen aus dem
+Bereich der Kryptografie eingeführt werden.
+Zusätzlich wird in \autoref{cha:steganografie} gezielt darauf eingegangen,
+wie ein steganografischer Algorithmus entworfen werden kann.
+Der Algorithmus soll eine beliebig lange Nachricht in einer Bilddatei verstecken,
+ohne dabei die visuelle Qualität sichtbar zu beeinflussen.
 
 \section{Symmetrische Verschlüsselung}
 Denkt man an die Teilbereiche der Kryptografie, ist die symmetrische Verschlüsselung
@@ -64,6 +84,7 @@ Zwei Parteien Alice und Bob möchten über einen unsicheren Kanal Nachrichten un
 Ein unsicherer Kanal ist hierbei lediglich die Kommunikationsstrecke,
 z.\,B. das Internet, die Luftschnittstelle bei WLAN und Mobilfunk
 oder jedes andere Medium, über das sich digitale Daten übertragen lassen.
+\newpage
 
 \input{chapters/einleitung/tikz/insecure-channel.tex}
 
@@ -76,7 +97,6 @@ Bevor Alice ihr Passwort sendet, verschlüsselt sie es mit einem symmetrischen A
 Bob invertiert die Verschlüsselung und erhält die unverschlüsselte Nachricht. Wurde für
 die Verschlüsselung ein sicherer Algorithmus gewählt, erscheint die Nachricht für Oscar nur wie
 eine zufällige Folge von Bit.
-\newpage
 
 \input{chapters/einleitung/tikz/symmetric-encryption.tex}
 
@@ -102,9 +122,11 @@ Fast alle kryptografischen Algorithmen, sowohl symmetrische als auch asymmetrisc
 basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13]{BOOK:crypto}.
 Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben)
 in der wir es gewohnt sind in unendlichen
-Mengen zu rechnen, z.\,B. die natürlichen oder die reellen Zahlen. Die modulare Arithmetik,
+Mengen zu rechnen, z.\,B. die natürlichen oder reellen Zahlen. Die modulare Arithmetik,
 also die Division mit Rest, bietet eine gute Möglichkeit, um in diesen begrenzten Mengen rechnen
 zu können.
+
+\newpage
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
   Folgende Aussagen über drei ganze Zahlen $a$, $b$, $m$, wobei $m > 0$, sind äquivalent:
@@ -191,9 +213,9 @@ wie es in der Kryptografie oft der Fall ist.
 
 \begin{example}[{\cite[15-16]{BOOK:crypto}}]
   Die Hauptoperation in vielen Asymmetrischen Chiffren ist die Exponentiation der Form
-  $x^e \pmod{m}$, wobei $x,e,m$ sehr große ganze Zahlen sind. Anhand eines Beispiels können
+  $x^e \mod{m}$, wobei $x,e,m$ sehr große ganze Zahlen sind. Anhand eines Beispiels können
   zwei Formen der modularen Exponentiation gezeigt werden. Es soll das Ergebnis der
-  Berechnung $3^8 \pmod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
+  Berechnung $3^8 \mod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
   ausgerechnet, und im zweiten Beispiel wird zwischen den Restklassen gewechselt:
   \begin{enumerate}
     \item $3^8 = 6561 \equiv 2 \pmod{7}$, weil $6561 = 937 \cdot 7 + 2$ \\
@@ -210,18 +232,16 @@ wie es in der Kryptografie oft der Fall ist.
   \end{enumerate}
 \end{example}
 
-\begin{remark}
-  Wir einigen uns darauf, wenn nicht anders erwähnt,
-  in der Kongruenzrelation \eqref{eq:kongruenz} ein $b$ so zu wählen, dass:
-  \begin{equation*}
-    0 \leq b < m
-  \end{equation*}
-  Man schreibt somit $27 \equiv 6 \pod{7}$ und nicht $27 \equiv -1 \pod{7}$
-  oder $27 \equiv 13 \pod{7}$. \footnote{Mit dieser Vereinbarung ist das $b$ der Relation
-    $a \equiv b \pmod{m}$ eine Lösung für die Gleichung \\ $a \mod{m} = r = b$.}
-  Mathematisch macht es jedoch keinen Unterschied.
-\end{remark}
 \noindent
+Wir einigen uns für den folgenden Text darauf, in
+\eqref{eq:kongruenz} ein $b$ für gewöhn\-lich so zu wählen, dass:
+\begin{equation*}
+  0 \leq b < m
+\end{equation*}
+Man schreibt somit $27 \equiv 6 \pod{7}$ und nicht $27 \equiv -1 \pod{7}$
+oder $27 \equiv 13 \pod{7}$. \footnote{Mit dieser Vereinbarung ist das $b$ der Relation
+  $a \equiv b \pmod{m}$ eine Lösung für die Gleichung \\ $a \mod{m} = r = b$.}
+Mathematisch macht es jedoch keinen Unterschied.
 Wir vereinbaren für den folgenden Text außerdem, dass auch die Null eine natürliche Zahl ist,
 also $\mathbb{N} := \{0,1,2,\dots, 1000, 1001, \dots\}$. Da häufig die Menge
 $\{1,2,3,\dots\}$ aller von 0 verschiedenen natürlichen Zahlen betrachtet wird, ist
@@ -315,7 +335,7 @@ Das Verschlüsselungsverfahren funktioniert.
 \end{example}
 
 \noindent
-Wie zu erwarten bietet die Cäsar-Chiffre natürlich keine besonders sicher Verschlüsselung.
+Wie zu erwarten ist, bietet die Cäsar-Chiffre natürlich keine besonders sicher Verschlüs\-selung.
 Es gibt nur 26 verschiedene Schlüssel (wobei $k = 0$ den Klartext nicht verändert),
 welche schnell alle ausprobiert werden können. Zusätzlich
 haben Klartext und Geheimtext die selben statistischen Eigenschaften.
