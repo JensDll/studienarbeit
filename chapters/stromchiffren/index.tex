@@ -24,7 +24,7 @@ $n$ Bits verschlüsselt werden sollen.
 
 \noindent
 Blockchiffren arbeiten mit Datenblöcken fester Länge, wobei ein Großteil der
-relevanten Algorithmen eine Eingangsweite von 64 oder 128 Bits besitzen.
+relevanten Algorithmen eine Eingangsweite von 64 oder 128 Bit besitzen.
 Prominente Beispiele sind Verfahren wie der \acl{des}
 (\acs{des}, Blocklänge 64 Bit, \cite[55-58]{BOOK:crypto}) oder der \acl{aes}
 (\acs{aes}, Blocklänge 128 Bit, \cite[87-90]{BOOK:crypto}).
@@ -97,9 +97,9 @@ Mit diesem Wissen kann die Verschlüsselungsfunktion durch einfaches Umformen in
 Entschlüsselungsfunktion überführt werden.
 \begin{proof}
   \begin{align*}
-    y_i  & \equiv x_i + s_i \pmod{2}  \\
-    -x_i & \equiv -y_i + s_i \pmod{2} \\
-    x_i  & \equiv y_i + s_i \pmod{2}
+    y_i  & \equiv x_i + s_i \pmod{2}          \\
+    -x_i & \equiv -y_i + s_i \pmod{2}         \\
+    x_i  & \equiv y_i + s_i \pmod{2} \qedhere
   \end{align*}
 \end{proof}
 \noindent
@@ -193,8 +193,7 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   Schlüsselstrom wird außerdem angegeben, es seien
   $(k_0,k_1,\dots,k_7) \allowbreak = 00111010_2$.
   \newpage
-
-  \begin{table*}[h]
+  \begin{table*}
     \centering
     \begin{tabular}{lc}
       $\streamencryption$              & \textbf{Alice} \\
@@ -263,10 +262,10 @@ einer zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesproch
 bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombit
 $k_1,k_2,\dots,k_n$, die folgenden Bit $k_{n+1},k_{n+2},\dots,k_{n+m}$ zu berechnen. Außerdem
 soll es zeitlich unmöglich sein, eines der vorherigen Bit
-$k_{-1},k_{-2},\allowbreak\dots,k_{-m}$ zu berechnen.
+$k_{0},k_{-1},\allowbreak\dots,k_{-m}$ zu berechnen.
 
 \section{Das One-Time-Pad}
-Es sind jetzt mit den bisher eingeführten Ideen alle Teile vorhanden, um ein beweisbar
+Es sind nun mit den bisher eingeführten Ideen alle Teile vorhanden, um ein beweisbar
 sicheres Verschlüsselungsverfahren zu entwerfen. Ein System heißt beweisbar sicher,
 wenn es trotz unendlich vorhandener Rechenleistung nachweislich nicht gebrochen werden kann.
 Es kann folgende Definition gegeben werden \parencite[36]{BOOK:crypto}:
@@ -346,9 +345,9 @@ In anderen Worten ausgedrückt: Es ist nicht effizient möglich, den
 Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
 Aussage darüber getroffen werden, ob ein Problem mit bekannten Verfahren
 optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
-sondern nur angenommen werden kann. Ein bekanntes Beispiel ist, dass des RSA-Kryptosystems
+sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryptosystems
 (asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
-berechnet werden kann, durch die Faktorisierung zweier großer
+berechnet werden kann, durch das Faktorisieren zweier großer
 natürlicher Zahlen. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
 ob es andere Verfahren gibt, welche das Problem effizienter lösen können.
 Im Fall von symmetrischen Verfahren nimmt man an, dass es keinen besseren Algorithmus

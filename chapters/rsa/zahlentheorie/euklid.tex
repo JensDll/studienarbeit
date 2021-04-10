@@ -5,9 +5,9 @@ dann heißt jedes $t \in T(a) \cap T(b)$ gemeinsamer Teiler von $a$ und $b$.
 
 \begin{example}
   \begin{align*}
-    T(6)           & = \{1,2,3,6\} \\
-    T(4)           & = \{1,2,4\}   \\
-    T(6) \cap T(4) & = \{1,2\}
+    T(6)           & = \{1,2,3,6\}      \\
+    T(4)           & = \{1,2,4\}        \\
+    T(6) \cap T(4) & = \{1,2\} \qedhere
   \end{align*}
 \end{example}
 
@@ -34,7 +34,7 @@ Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
     \item Wegen $T(a) \cap T(a) = T(a)$.
     \item Wegen $T(1) = \{1\}$ und $T(a) \cap \{1\} = \{1\}$.
     \item Wegen $T(0) = \mathbb{N}$ und $T(a) \cap \mathbb{N} = T(a)$.
-    \item Wegen der Kommutativität der Schnittmenge $T(a) \cap T(b) = T(b)\cap T(a)$.\newpage
+    \item Wegen der Kommutativität der Schnittmenge $T(a) \cap T(b) = T(b)\cap T(a)$.
     \item Zu zeigen: $\ggt{a}{b} = \ggt{a - b}{b}$ geschrieben als $g = g'$.
           \begin{center}
             Aus $g \mid a$ und $g \mid b \Rightarrow g \mid a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
@@ -59,7 +59,7 @@ Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
     \ggt{9}{21} \numeq{\ref{enum:ggT4}}
     \ggt{21}{9} \numeq{\ref{enum:ggT5}} \ggt{12}{9} \numeq{\ref{enum:ggT5}}       \\
     \ggt{3}{9}    & \numeq{\ref{enum:ggT4}} \ggt{9}{3} \numeq{\ref{enum:ggT5}}
-    \ggt{6}{3} \numeq{\ref{enum:ggT5}} \ggt{3}{3} \numeq{\ref{enum:ggT1}} 3
+    \ggt{6}{3} \numeq{\ref{enum:ggT5}} \ggt{3}{3} \numeq{\ref{enum:ggT1}} 3 \qedhere
   \end{align*}
 \end{example}
 
@@ -71,17 +71,17 @@ Es ist zu sehen, dass sich Rechenregel \ref{enum:ggT5} iterativ anwenden lässt:
 Wird ein maximales $m$ gewählt, mit der Bedingung $(a-mb) > 0$, kann der Algorithmus
 in minimalen Schritten durchgeführt werden. Dies ist der Fall für die Division mit Rest:
 \begin{equation*}
-  \ggt{a}{b} = \ggt{a \mod{b}}{b} = \ggt{b}{a \mod{b}}
+  \ggt{a}{b} = \ggt{a \mod{b}}{b}
 \end{equation*}
 
 \begin{example}
   Es seien $a=132$ und $b=51$, dann gilt:
   \begin{align*}
-    132 & = 2 \cdot 51 + 30 & \ggt{132}{51} & = \ggt{51}{30}   \\
-    51  & = 1 \cdot 30 + 21 & \ggt{51}{30}  & = \ggt{30}{21}   \\
-    30  & = 1 \cdot 21 + 9  & \ggt{30}{21}  & = \ggt{21}{9}    \\
-    21  & = 2 \cdot 9 + 3   & \ggt{21}{9}   & = \ggt{9}{3}     \\
-    9   & = 3 \cdot 3 + 0   & \ggt{9}{3}    & = \ggt{3}{0} = 3
+    132 & = 2 \cdot 51 + 30 & \ggt{132}{51} & = \ggt{51}{30}            \\
+    51  & = 1 \cdot 30 + 21 & \ggt{51}{30}  & = \ggt{30}{21}            \\
+    30  & = 1 \cdot 21 + 9  & \ggt{30}{21}  & = \ggt{21}{9}             \\
+    21  & = 2 \cdot 9 + 3   & \ggt{21}{9}   & = \ggt{9}{3}              \\
+    9   & = 3 \cdot 3 + 0   & \ggt{9}{3}    & = \ggt{3}{0} = 3 \qedhere
   \end{align*}
 \end{example}
 \noindent
@@ -98,21 +98,24 @@ In allgemeiner Form können die eben gezeigten Schritte folgendermaßen beschrie
 Eine rekursive Implementierung des Euklidischen Algorithmus ist in \autoref{alg:ggt}
 zu sehen (engl. \textit{greatest common divisor} (gcd)).
 Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde.
-\begin{algorithm}
-  \DontPrintSemicolon
-  \KwIn{zwei ganze Zahlen $a$ und $b$}
-  \KwOut{$\ggt{a}{b}$}
-  \BlankLine
-  \Fn(){$\ggt{a}{b}$}{
-    $r \leftarrow a \mod{b}$\;
-    \If(){$r = 0$}{
-      \Return{$b$}
+\begin{singlespace}
+  \begin{algorithm}
+    \DontPrintSemicolon
+    \KwIn{zwei ganze Zahlen $a$ und $b$}
+    \KwOut{$\ggt{a}{b}$}
+    \BlankLine
+    \Fn(){$\ggt{a}{b}$}{
+      $r \leftarrow a \mod{b}$\;
+      \If(){$r = 0$}{
+        \Return{$b$}
+      }
+      \Return{$\ggt{a}{b}$}
     }
-    \Return{$\ggt{a}{b}$}
-  }
-  \caption{Euklidischer Algorithmus}
-  \label{alg:ggt}
-\end{algorithm}
+    \caption{Euklidischer Algorithmus}
+    \label{alg:ggt}
+  \end{algorithm}
+\end{singlespace}
+
 \subsection{Der erweiterte Euklidische Algorithmus}
 Es wurde gezeigt, dass der größte gemeinsame Teiler zweier Zahlen durch
 das Reduzieren der Operanden ermittelt werden kann. In der Kryptografie ist
@@ -200,9 +203,8 @@ Es ergeben sich die folgenden Regeln:
 \end{align}
 Dies resultiert im erweiterten Euklidischen Algorithmus, welcher in Tabellenform
 einfach und schnell durchführbar ist:
-\newpage
 
-\begin{table}
+\begin{table}[h]
   \caption{Erweiterter Euklidischer Algorithmus}
   \centering
   \begin{tabular}{|l|l|l|l|l|l|l|l|}
@@ -250,10 +252,10 @@ mit $y$ bestimmt wurde.
   \begin{equation*}
     -4 \cdot 89 + 17 \cdot 21 = 1
   \end{equation*}
-  Es folgt hieraus: Das Inverse von 21 in $\mathbb{Z}_{89}$ beträgt 17, dieses Ergebnis kann durch nachrechnen
+  Es folgt hieraus: Das Inverse von 21 in $\mathbb{Z}_{89}$ beträgt 17. Dieses Ergebnis kann durch nachrechnen
   verifiziert werden:
   \begin{equation*}
-    17 \cdot 21 = 357 \equiv 1 \pmod{89}
+    17 \cdot 21 = 357 \equiv 1 \pmod{89} \qedhere
   \end{equation*}
 \end{example}
 
@@ -263,21 +265,23 @@ Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
 zweier Zahlen $a$ und $b$.
 Wie zuvor terminiert das Verfahren nachdem das erste
 Mal ein Rest von null berechnet wurde.
-\begin{algorithm}
-  \DontPrintSemicolon
-  \KwIn{zwei ganze Zahlen $a$ und $b$}
-  \KwOut{$\ggt{a}{b}$ als auch $x$ und $y$, sodass $\ggt{a}{b} = x \cdot a + y \cdot b$}
-  \BlankLine
-  \Fn(){$ggT(a,b)$}{
-    $r \leftarrow a \mod{b}$\;
-    $q \leftarrow a \div b$\;
-    \If(){$r = 0$}{
-      \Return{$(0,1,b)$}
-    }
-    $(x,y,ggt) \leftarrow ggT(b,r)$\;
+\begin{singlespace}
+  \begin{algorithm}
+    \DontPrintSemicolon
+    \KwIn{zwei ganze Zahlen $a$ und $b$}
+    \KwOut{$\ggt{a}{b}$ als auch $x$ und $y$, sodass $\ggt{a}{b} = x \cdot a + y \cdot b$}
+    \BlankLine
+    \Fn(){$ggT(a,b)$}{
+      $r \leftarrow a \mod{b}$\;
+      $q \leftarrow a \div b$\;
+      \If(){$r = 0$}{
+        \Return{$(0,1,b)$}
+      }
+      $(x,y,ggt) \leftarrow ggT(b,r)$\;
 
-    \Return{$(y,x - y \cdot q, ggt)$}
-  }
-  \caption{Erweiterter Euklidischer Algorithmus}
-  \label{alg:ggt-e}
-\end{algorithm}
+      \Return{$(y,x - y \cdot q, ggt)$}
+    }
+    \caption{Erweiterter Euklidischer Algorithmus}
+    \label{alg:ggt-e}
+  \end{algorithm}
+\end{singlespace}

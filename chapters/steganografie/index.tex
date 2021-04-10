@@ -38,7 +38,7 @@ der \acs{lsb} verändert den Farbwert nur minimal und
 die kleinen Änderungen in den Zahlen werden nur durch das
 Betrachten des veränderten Bilds nicht zu erkennen sein.
 
-\paragraph{Wie stark kann ein Bild angepasst werden?}
+\paragraph{Wie stark kann ein Bild angepasst werden?} \label{par:test}
 Es soll nun abgeschätzt werden, wie stark ein Bild verändert
 werden kann, ohne dass die Qualität des Ergebnisses sichtbar beeinflusst
 wird. Es seien $b_7\,b_6\,b_5\,b_4\,b_3\,b_2\,b_1\,b_0$ die acht Bit eines Farbkanals, es soll für
@@ -68,47 +68,47 @@ ohne Vergleich mit der Originaldatei wahrscheinlich nicht erkannt werden würden
 \begin{figure}[h!]
   \centering
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-0.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-0.png}
     \caption*{Original ($n = 0$)}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-1.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-1.png}
     \caption*{$n = 1$}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-2.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-2.png}
     \caption*{$n = 2$}
   \end{minipage}%
   \vspace{0.5cm}
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-3.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-3.png}
     \caption*{$n = 3$}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-4.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-4.png}
     \caption*{$n = 4$}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-5.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-5.png}
     \caption*{$n = 5$}
   \end{minipage}%
   \vspace{0.5cm}
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-6.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-6.png}
     \caption*{$n = 6$}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-7.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-7.png}
     \caption*{$n = 7$}
   \end{minipage}
   \hfill
   \begin{minipage}[t]{0.3\textwidth}
-    \includegraphics[width=1\textwidth]{peppers-8.png}
+    \includegraphics[width=1\textwidth]{peppers/peppers-8.png}
     \caption*{$n = 8$}
   \end{minipage}
   \caption{Farbbild Paprika verändert durch maximalen Fehler für $n \in [0,8]$.}
@@ -132,92 +132,109 @@ kryptografischen Algorithmus zu verschlüsseln.
 \begin{definition}[\acs{lsb}-Verfahren]
   Es sei $p_{xy} = (r,g,b)$ ein Pixel und $\mathbf{B} = p^{m \times n}$ ein Bild
   mit $y \in [1, m]$ und $x \in [1, n]$. Es sei $P$ die Menge aller Pixel von $\mathbf{B}$
-  und $v$ eine Funktion mit $v: P \setminus \{p_{1,1},p_{mn}\} \leftarrow v(\mathbf{B})$.
+  und $v$ eine Funktion mit $v: P \setminus \{p_{1,1},p_{m,n}\} \leftarrow v(\mathbf{B})$.
   \autoref{alg:lsb-enkodierung} und \ref{alg:lsb-dekodierung} zeigen ein Verfahren für das
   Schreiben und Lesen einer Nachricht in $\mathbf{B}$.
-  \begin{algorithm}
-    \DontPrintSemicolon
-    \KwIn{$\mathbf{B}$ und Nachricht $x$}
-    \KwOut{$\mathbf{B}$ mit versteckter Nachricht $y$}
-    \Begin(){
-      $y \leftarrow e_k(x)$\;
-      $n \leftarrow 1$\;
-      schreibe Nachrichtenlänge von $y$ nach $p_{11}$ und $p_{mn}$\;
-      \While(){true}{
-        \lIf(){$n = 9$}{$y$ ist zu lang}
-        \For{$p \in v(\mathbf{B})$}{
-          \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
-            $b \leftarrow$ lese nächstes Bit von $y$\;
-            schreibe $b$ nach Position $n$ von $c$\;
-            \lIf(){$y$ bearbeitet}{\Return{}}
-          }
-        }
-        $n \leftarrow n + 1$\;
-      }
-    }
-    \caption{\acs{lsb}-Verfahren Schreiben}
-    \label{alg:lsb-enkodierung}
-  \end{algorithm}
 
-  \begin{algorithm}[H]
-    \DontPrintSemicolon
-    \KwIn{$\mathbf{B}$ mit versteckter Nachricht $y$}
-    \KwOut{Nachricht $x$}
-    \Begin(){
-      $n \leftarrow 1$\;
-      $y \leftarrow \emptyset$\;
-      $l \leftarrow$ lese Nachrichtenlänge bei $p_{11}$ und $p_{mn}$\;
-      \While(){$l \neq 0$}{
-        \For(){$p \in v(\mathbf{B})$}{
-          \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
-            $b \leftarrow$ lese Bit bei Position $n$ von $c$\;
-            $y \leftarrow y \cup \{b\}$\;
-            \lIf(){$l = 0$} {
-              \Return{$d_k(y)$}
+  \begin{singlespace}
+    \begin{algorithm}
+      \DontPrintSemicolon
+      \KwIn{$\mathbf{B}$ und Nachricht $x$}
+      \KwOut{$\mathbf{B}$ mit versteckter Nachricht $y$}
+      \Begin(){
+        $y \leftarrow e_k(x)$\;
+        $n \leftarrow 1$\;
+        schreibe Nachrichtenlänge von $y$ nach $p_{1,1}$ und $p_{m,n}$\;
+        \While(){true}{
+          \lIf(){$n = 9$}{$y$ ist zu lang}
+          \For{$p \in v(\mathbf{B})$}{
+            \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
+              $b \leftarrow$ lese nächstes Bit von $y$\;
+              schreibe $b$ nach Position $n$ von $c$\;
+              \lIf(){$y$ bearbeitet}{\Return{}}
             }
-            \lElse(){$l \leftarrow l - 1$}
           }
+          $n \leftarrow n + 1$\;
         }
-        $n \leftarrow n + 1$\;
       }
-    }
-    \caption{\acs{lsb}-Verfahren Lesen}
-    \label{alg:lsb-dekodierung}
-  \end{algorithm}
-\end{definition}
+      \caption{\acs{lsb}-Verfahren Schreiben}
+      \label{alg:lsb-enkodierung}
+    \end{algorithm}
+  \end{singlespace}
 
+  \begin{singlespace}
+    \begin{algorithm}[H]
+      \DontPrintSemicolon
+      \KwIn{$\mathbf{B}$ mit versteckter Nachricht $y$}
+      \KwOut{Nachricht $x$}
+      \Begin(){
+        $n \leftarrow 1$\;
+        $y \leftarrow \emptyset$\;
+        $l \leftarrow$ lese Nachrichtenlänge bei $p_{1,1}$ und $p_{m,n}$\;
+        \While(){$l \neq 0$}{
+          \For(){$p \in v(\mathbf{B})$}{
+            \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
+              $b \leftarrow$ lese Bit bei Position $n$ von $c$\;
+              $y \leftarrow y \cup \{b\}$\;
+              \lIf(){$l = 0$} {
+                \Return{$d_k(y)$}
+              }
+              \lElse(){$l \leftarrow l - 1$}
+            }
+          }
+          $n \leftarrow n + 1$\;
+        }
+      }
+      \caption{\acs{lsb}-Verfahren Lesen}
+      \label{alg:lsb-dekodierung}
+    \end{algorithm}
+  \end{singlespace}
+\end{definition}
 \noindent
 Damit eine Nachricht im Bild möglichst wenig auffällt, macht es Sinn, Pixel
 so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$ hat genau diese
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
-$a = 0,1,\ldots,mn - 1$ betrachtet. Durch Wiederholtes halbieren von $a$ und
-speichern der entstehenden Hälften in einer Warteschlange kann die Folge nach
-dem Prinzip der Breitensuche abgearbeitet werden und es entstehen relativ gleichmäßig
-verteile Koordinaten.
+$a_i = 0,1,\ldots,mn - 1$ betrachtet.
+Durch ein \acs{prng} wird jetzt
+eine pseudozufällige Permutation von $a$ bestimmt. Der Algorithmus ist bekannt
+als das Fisher-Yates-Verfahren:
+
+\begin{singlespace}
+  \begin{algorithm}[h]
+    \DontPrintSemicolon
+    \KwIn{Ein Array $A$ mit allen Elementen aus $a_i$ und ein \textit{seed} $s$}
+    \KwOut{Permutation $A'$}
+    \Begin(){
+      \For(){$i \leftarrow mn - 1$ \KwTo $0$}{
+        $j \leftarrow$ pseudozufällige Zahl durch $s$ mit $j \in [0,i]$\;
+        tausche $A[i]$ und $A[j]$\;
+      }
+      \Return{$A$}\;
+    }
+    \caption{Fisher-Yates-Verfahren}
+    \label{alg:fisher-yates-verfahren}
+  \end{algorithm}
+\end{singlespace}
+
+
+\noindent
+Der Determinismus des \acs{prng} ist wichtig, da die gleiche Permutation
+für das Lesen der Nachricht ein zweites Mal erzeugt werden muss.
+Durch das Lösen von $a = n \cdot y + x$ für alle $a \in A'$ mit $0 \leq x < n$
+kann die Permutation in null indizierte Koordinaten $(x,y)$ des Bilds umgewandelt werden.
 \begin{example}
-  Ein wird ein $3 \times 3$ großes Bild betrachtet und die Zahlenfolge ist
-  $a = 0,1,2,3,4,5,6,7,8$. Die nachfolgende Tabelle zeigt den Verlauf des Algorithmus:
-  \begin{center}
-    \begin{tabular}{cccc}
-      \multicolumn{1}{c}{Warteschlange} & Mitte & Umformung           & Koordinate \\
-      $[0,8]$                           & $m$   & $m = y \cdot 3 + x$ & $(x,y)$    \\
-      $[5,8],[0,3]$                     & 4     & $4 = 1 \cdot 3 + 1$ & $(1,1)$    \\
-      $[2,3],[0,0],[5,8]$               & 1     & $1 = 0 \cdot 3 + 1$ & $(1,0)$    \\
-      $[7,8],[5,5],[2,3],[0,0]$         & 6     & $6 = 2 \cdot 3 + 0$ & $(0,2)$    \\
-      $[7,8],[5,5],[2,3]$               & 0     & $0 = 0 \cdot 3 + 0$ & $(0,0)$    \\
-      $[3,3][2,2],[7,8],[5,5]$          & -     & -                   & -          \\
-      $[3,3][2,2],[7,8]$                & 5     & $5 = 1 \cdot 3 + 2$ & $(2,1)$    \\
-      $[8,8],[7,7],[3,3],[2,2]$         & -     & -                   & -          \\
-      $[8,8],[7,7],[3,3]$               & 2     & $2 = 0 \cdot 3 + 2$ & $(2,0)$    \\
-      $[8,8],[7,7]$                     & 3     & $3 = 1 \cdot 3 + 0$ & $(0,1)$    \\
-      $[8,8]$                           & 7     & $7 = 2 \cdot 3 + 1$ & $(1,2)$    \\
-      $\emptyset$                       & 8     & $8 = 2 \cdot 3 + 2$ & $(2,2)$
-    \end{tabular}
-  \end{center}
+  Ein wird ein $2 \times 3$ großes Bild betrachtet und es gilt $A' = (2,5,3,1,0,4)$.
+  \begin{align*}
+    2 & = 3 \cdot 0 + 2 \Rightarrow (2,0)          \\
+    5 & = 3 \cdot 1 + 2 \Rightarrow (2,1)          \\
+    3 & = 3 \cdot 1 + 0 \Rightarrow (0,1)          \\
+    1 & = 3 \cdot 0 + 1 \Rightarrow (1,0)          \\
+    0 & = 3 \cdot 0 + 0 \Rightarrow (0,0)          \\
+    4 & = 3 \cdot 1 + 1 \Rightarrow (1,1) \qedhere
+  \end{align*}
 \end{example}
 
 \noindent
-Werden nicht null indizierte Koordinaten benötigt, können diese entsprechend skaliert werden.
 \autoref{fig:punkt-verteilung} zeigt die Koordinatenverteilung für Nachrichten unterschiedlicher
 Längen auf einem $500 \times 500$ Pixel Farbbild mit schwarzen Hintergrund. Die durch den Algorithmus
 errechneten Koordinaten sind weiß eingefärbt.
@@ -327,46 +344,85 @@ beschreibt hierbei die Konkatenation zweier Zeichenketten.
 \autoref{alg:data-protect} und \ref{alg:data-unprotect}
 zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
 eine Methode \texttt{CreateProtector} zur Verfügung:
-\begin{algorithm}[h]
-  \DontPrintSemicolon
-  \KwIn{message $x$ and information of the receiver $(id,username)$}
-  \KwOut{protected message $y$}
-  \Begin(){
-    $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
-    \Return{$e_k(x)$}
-  }
-  \caption{\textit{Data Protection Encryption}}
-  \label{alg:data-protect}
-\end{algorithm}
+
+\begin{singlespace}
+  \begin{algorithm}[h]
+    \DontPrintSemicolon
+    \KwIn{message $x$ and information of the receiver $(id,username)$}
+    \KwOut{protected message $y$}
+    \Begin(){
+      $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
+      \Return{$e_k(x)$}
+    }
+    \caption{\textit{Data Protection Encryption}}
+    \label{alg:data-protect}
+  \end{algorithm}
+\end{singlespace}
 
 \noindent
-Es ist jetzt zu sehen, warum es wichtig ist, Anfragen mit einem Benutzer in Verbindung zu bringen:
+Es ist nun zu sehen, warum es wichtig ist, Anfragen mit einem Benutzer in Verbindung zu bringen:
 
-\begin{algorithm}[h]
-  \DontPrintSemicolon
-  \KwIn{protected message $y$}
-  \KwOut{message $x$}
-  \Begin(){
-    $(id, username) \leftarrow$ get user information of request\;
-    $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
-    \Return{$d_k(y)$}
-  }
-  \caption{\textit{Data Protection Decryption}}
-  \label{alg:data-unprotect}
-\end{algorithm}
+\begin{singlespace}
+  \begin{algorithm}[h]
+    \DontPrintSemicolon
+    \KwIn{protected message $y$}
+    \KwOut{message $x$}
+    \Begin(){
+      $(id, username) \leftarrow$ get user information of request\;
+      $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
+      \Return{$d_k(y)$}
+    }
+    \caption{\textit{Data Protection Decryption}}
+    \label{alg:data-unprotect}
+  \end{algorithm}
+\end{singlespace}
 
 \noindent
 Das Funktionspaar $(e_k, d_k)$ der \texttt{CreateProtector} Methode verwendet \acp{mac},
 um die unbemerkte Nachrichtenmanipulation zu verhindern. Wäre die Nachricht während der Übertragung
 verändert worden, würde es während der Entschlüsselung auffallen.
 
+\newcommand{\bmax}{\ensuremath{\mathbf{B}_{max}}}
+
 \subsection{Steganografische Qualität}
 Um die Qualität des steganografischen Algorihtmus zu beurteilen,
 lohnt es sich vor allem einige
-Beispiele anzusehen. Die Qualität des Verfahrens soll jetzt
-anhand der folgenden Bilder untersucht werden, es werden Beispiele
-betrachtet mit versteckten Nachrichten und einer Nachrichtenlänge von
-48, 60\ und 72 Prozent der maximalen Bildkapazität.
+Beispiele anzusehen.
+Nach der Überlegung in \autoref{par:test} können wir abschätzen,
+wie lang eine Nachricht sein sollte, um mit
+den Beispielbildern sinnvolle Beobachtungen machen zu können.
+Die nachfolgende Tabelle
+zeigt die nötige Länge einer Nachricht, um auf allen $n$ \acs{lsb}
+der Farbkanäle Änderungen auszulösen.
+Die Nachrichtenlänge $l$ ist als prozentualer Anteil
+der maximalen Bildkapazität $\bmax$ angegeben:
+\begin{table}[h]
+  \centering
+  \caption{Die Zuordnung von $n$ zu der Nachrichtenlänge $l$ in Bezug auf $\bmax$}
+  \begin{tabular}{|c|c|}
+    \hline
+    n & $l$        \\ \hline
+    0 & \num{0}    \\ \hline
+    1 & \num{12,5} \\ \hline
+    2 & \num{25}   \\ \hline
+    3 & \num{37,5} \\ \hline
+    4 & \num{50}   \\ \hline
+    5 & \num{62,5} \\ \hline
+    6 & \num{75}   \\ \hline
+    7 & \num{87,5} \\ \hline
+    8 & \num{100}  \\ \hline
+  \end{tabular}
+\end{table}
+
+\noindent
+Es macht keinen Sinn Nachrichten zu betrachten mit $l < \num{37.5}\,\%$,
+da diese fast immer eine gute Bildqualität aufweisen sollten.
+Zusätzlich macht es keinen Sinn sehr lange Nachrichten zu
+untersuchen, da diese immer eine schlechte Bildqualität erzeugen.
+In den folgenden Beispielen wird deshalb nur der mittlere Bereich $n \in [4,6]$ beachtet.
+Es werden jeweils drei Bilder miteinander verglichen mit einer
+versteckten Nachrichtenlänge von 48, 60 und 72\,\% der maximalen Bildkapazität.
+Die Nachricht ist für jedes Bild zufällig erzeugt:
 
 \newpage
 
@@ -392,32 +448,7 @@ Nicht alle Bilder sind gleich gut geeignet um lange Nachrichten zu verstecken.
 Änderungen bei \ref{fig:example-turtle} (Schildkröte) mit viel einfarbigen Hintergrund
 lösen schneller einen sichtbaren Effekt aus als bei Bild \ref{fig:example-peppers}
 (Paprika) oder \ref{fig:example-flowers} (Blumen), wo auch Nachrichten länger
-50\,\% eher schwer zu erkennen sind. Sind die Seitenverhältnisse
-eines Bilds Zweierpotenzen, entstehen vertikale Streifen,
-welche die steganografische Qualität verschlechtern.
-\autoref{fig:example-white-stripes} zeigt dieses
-Verhalten, die veränderte Pixel sind weiß eingefärbt.
-
-\begin{figure}[h!]
-  \centering
-  \begin{tikzpicture}
-    \node [inner sep=0] (p) {
-      \includegraphics[width=0.5\textwidth,trim={0 10cm 0 0},clip]{black-white-stripes.png}
-    };
-  \end{tikzpicture}
-  \caption{Koordinatenverteilung auf einem $512 \times 512$ Pixel Farbbild mit
-    schwarzen Hintergrund für eine Nachrichtenlänge von 2\,kB (obere Hälfte).}
-  \label{fig:example-white-stripes}
-\end{figure}
-
-\noindent
-Indem das Bild leicht skaliert wird, kann diese Symmetrie jedoch ungefährlich aufgelöst
-werden. Es wird abschließend festgehalten, dass die Verteilfunktion $v$
-(zu sehen in \autoref{fig:punkt-verteilung})
-verbessert werden kann, da diese bei vielen Nachrichtenlängen noch immer
-sichtbare Kanten erzeugt. Besser wäre eine Verteilung, welche mehr aussieht wie
-zufälliges Rauschen oder ein Algorithmus, welcher die Wahl der Pixel schlauer
-bestimmt und beispielsweise aktiv versucht, entstandene Fehler während
-der Durchführung auszugleichen. Zusätzliche Informationen und der Quelltext zum Projekt
+50\,\% eher schwer zu erkennen sind.
+Zusätzliche Informationen und der Quelltext zum Projekt
 sind über den folgenden Link auf GitHub zu finden.
 \footnote{https://github.com/jens-studienarbeit/image-data-hiding}

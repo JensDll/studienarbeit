@@ -2,11 +2,13 @@
 Das RSA-Kryptosystem ist eines der bekanntesten und meist
 verbreiteten asymmetrischen Verschlüsselungsverfahren. Es ist benannt nach
 seinen drei Erfindern Ronald Rivest, Adi Shamir und Leonard Adleman, welche das Verfahren
-im Jahr 1977 veröffentli\-chten \parencite[173]{BOOK:crypto}. In diesem Kapitel
-sollen die Ideen von asymmetrischer Verschlüsselung
+im Jahr 1977 veröffentli\-chten \parencite[173]{BOOK:crypto}.
+Am Beispiel von RSA sollen in diesem Kapitel die
+Ideen der asymmetrischer Verschlüsselung
 (engl. \textit{public-key-crpytography} oder \textit{asymmetric crpytography})
-vorgestellt werden, es wird hierbei genauer auf das RSA-Kryptosystem eingegangen und
-es werden einige zahlentheoretischen Grundlagen gezeigt.
+vorgestellt werden. Es werden die nötigen
+zahlentheoretischen Begriffe eingeführt, um nachzuvollziehen
+warum die RSA-Verschlüsselung sicher ist.
 
 \section{Asymmetrische Verschlüsselung}
 Um die Idee der asymmetrischen Verschlüsselung besser zu verstehen,
@@ -23,8 +25,10 @@ Ein solches System hat zwei symmetrische Eigenschaften:
   \item Die Ver- und Entschlüsselungsfunktion sind sich sehr ähnlich
         (im Fall von \acs{otp} oder \acs{des} sind sie sogar gleich).
 \end{enumerate}
-Symmetrische Verfahren wie \acs{aes} sind sehr sicher und schnell,
-jedoch haben auch sie Problemstellungen, welche im Folgenden beschrieben werden.
+Verfahren wie \acs{aes} sind sehr sicher und schnell,
+ihre symmetrischen Eigenschaften führen jedoch auch zu Problemen
+und Einschränkungen,
+welche im Folgenden beschrieben werden.
 
 \paragraph{Schlüsselverteilungsproblem}
 Da beide Parteien denselben Schlüssel benötigen, muss dieser in
@@ -43,7 +47,7 @@ Teilnehmern, wobei jeder Teilnehmer mit jedem verschlüsselt kommunizieren soll,
 verschiedene Schlüsselpaare und jeder Teilnehmer muss $n-1$ Schlüssel speichern.
 \begin{example}
   In einem Netz mit 500 Teilnehmern gibt es bereits $500 \cdot 499 / 2 = 124.750$ Schlüsselpaare
-  und $500 \cdot 499 = 249.500$ Schlüssel müssen verteilt werden.
+  und $124.750 \cdot 2 = 249.500$ Schlüssel müssen verteilt werden.
 \end{example}
 \noindent
 Das Problem ist auch bekannt als das
@@ -117,8 +121,9 @@ Die erste Funktion, welche auch in RSA verwendet wird,
 basiert auf dem Faktorisieren großer natürlicher Zahlen.
 Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig, eine Zahl zu
 faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
-Das Lösen diskreter Logarithmen ist schwierig, das gesamte Verfahren
-hat jedoch keine so intuitive Beschreibung.
+Das Lösen diskreter Logarithmen ist die Einwegfunktion des
+Diffie-Hellman-Schlüsselaustausches und ein schwieriges Problem,
+das gesamte Verfahren hat jedoch keine so intuitive Beschreibung.
 
 \section{Zahlentheoretische Grundlagen}
 In diesem Abschnitt sollen die zahlentheoretischen Grundlagen beschrieben werden,
@@ -135,7 +140,7 @@ Das RSA-Verfahren basiert auf der Annahme, dass es nicht effizient
 möglich ist, die Primfaktorzerlegung einer natürlichen Zahl zu bestimmen.
 Die Generierung des privaten und öffentlichen Schlüssels kann in die
 folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
-
+\newpage
 \begin{definition}[RSA Schlüsselgenerierung]\mbox{}
   \begin{enumerate}
     \item Wähle zwei sehr große Primzahlen $p$ und $q$, beispielsweise mit einer Länge
@@ -197,7 +202,7 @@ Beweis verwendet werden kann:
 \end{proof}
 
 \noindent
-Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
+Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
 
 \begin{proof}
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
@@ -234,7 +239,7 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
                   \end{equation*}
           \end{enumerate}
     \item Die Überlegung für $q$ kann analog durchgeführt werden. Es müssen hierfür
-          alle $p$ und $q$ vertauscht werden.
+          alle $p$ und $q$ vertauscht werden. \qedhere
   \end{enumerate}
 \end{proof}
 
@@ -259,6 +264,6 @@ Es soll nun die Bewiesen werden, warum das RSA-Verfahren funktioniert:
           Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$
     \item Bob kennt den privaten Schlüssel $\keypr = (N,d) = (33,7)$ und kann die Nachricht
           entschlüsseln mit $y^d = 31^7 \equiv (-2)^7 \equiv (-2)^5 \cdot 2^2 \equiv
-            1 \cdot 4 \equiv 4 = x \pmod{33}$.
+            1 \cdot 4 \equiv 4 = x \pmod{33}$. \qedhere
   \end{enumerate}
 \end{example}

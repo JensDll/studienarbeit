@@ -38,7 +38,7 @@ Eigenschaft der Restklassen festgehalten werden:
   \end{equation*}
 \end{satz}
 \begin{proof}
-  Mit gleicher Grundidee in \parencite{SITE:phi-euler-fermat} und
+  Mit gleichem Grundgedanken in \parencite{SITE:phi-euler-fermat} und
   \parencite[187-188]{BOOK:numberTheory}. \\
   Es ist $n := \phif{m}$. Es seien $x_1,x_2,\ldots,x_n$ die $n$ verschiedenen zu
   $m$ teilerfremden Zahlen aus der Menge $\{1,2,\ldots,m\}$.
@@ -60,7 +60,7 @@ Eigenschaft der Restklassen festgehalten werden:
   Es folgt $ax_i \mod{m} = x_j$ und wir halten fest:
   \begin{equation}
     \label{proof:satz-euler-1}
-    \forall ax_i \exists x_j: ax_i \equiv x_j \pmod{m} \qquad 1 \leq i,j \leq n \tag{$*$}
+    \forall ax_i \, \exists x_j: ax_i \equiv x_j \pmod{m} \qquad 1 \leq i,j \leq n \tag{$*$}
   \end{equation}
   Es bleibt zu zeigen, dass in \eqref{proof:satz-euler-1} keine Doppelungen entstehen,
   also alle $ax_i$ Teil unterschiedlicher Restklassen sind. Es muss gelten:
@@ -77,8 +77,8 @@ Eigenschaft der Restklassen festgehalten werden:
   $n = \phif{m}$ beachtet, die ursprüngliche Behauptung:
   \begin{align*}
     ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n & \equiv
-    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pmod{m}              \\
-    a^{\phif{m}}                            & \equiv 1 \pmod{m}
+    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pmod{m}                       \\
+    a^{\phif{m}}                            & \equiv 1 \pmod{m} \qedhere
   \end{align*}
 \end{proof}
 

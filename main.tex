@@ -14,6 +14,8 @@
 \usepackage{setspace}
 \usepackage{caption} % http://ftp.rrzn.uni-hannover.de/pub/mirror/tex-archive/macros/latex/contrib/caption/caption-eng.pdf
 \usepackage{framed}
+\usepackage{pdflscape}
+\usepackage{siunitx}
 
 \usepackage[dvipsnames]{xcolor}
 \newcommand{\hl}[2]{\fcolorbox{#1}{White}{#2}}
@@ -72,6 +74,7 @@
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
+
 \theoremstyle{plain}
 \newtheorem{lemma}{Lemma}[section]
 \newtheorem{satz}{Satz}[section]
@@ -84,9 +87,6 @@
 \newenvironment{example}
   {\pushQED{\qed}\renewcommand{\qedsymbol}{$\triangle$}\examplex}
   {\popQED\endexamplex}
-
-\theoremstyle{remark}
-\newtheorem{remark}{Bemerkung}[section]
 
 \newcommand{\ggt}[2]{ggT(#1,#2)}
 \newcommand{\numeq}[1]{\stackrel{#1}{=}}

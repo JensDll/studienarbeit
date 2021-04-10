@@ -8,26 +8,26 @@
 
     \node (original) {
       \begin{minipage}{0.45\textwidth}
-        \includegraphics[width=1\textwidth]{flowers.png}
+        \includegraphics[width=1\textwidth]{flowers/flowers.png}
         \caption*{Original}
       \end{minipage}
     };
     \node [right= of original] (10mb) {
       \begin{minipage}{0.45\textwidth}
-        \includegraphics[width=1\textwidth]{flowers-17519984-48.png}
-        \caption*{48\,\% (17,5\,MB)}
+        \includegraphics[width=1\textwidth]{flowers/flowers-48.png}
+        \caption*{48\,\% (\num{17.5}\,MB)}
       \end{minipage}
     };
     \node [below=0.5cm of original] (20mb) {
       \begin{minipage}{0.45\textwidth}
-        \includegraphics[width=1\textwidth]{flowers-21899980-60.png}
-        \caption*{60\,\% (21,9\,MB)}
+        \includegraphics[width=1\textwidth]{flowers/flowers-60.png}
+        \caption*{60\,\% (\num{21.9}\,MB)}
       \end{minipage}
     };
     \node [below=0.5cm of 10mb] (30mb) {
       \begin{minipage}{0.45\textwidth}
-        \includegraphics[width=1\textwidth]{flowers-26279976-72.png}
-        \caption*{72\,\% (26,3\,MB)}
+        \includegraphics[width=1\textwidth]{flowers/flowers-72.png}
+        \caption*{72\,\% (\num{26.3}\,MB)}
       \end{minipage}
     };
 
@@ -43,7 +43,8 @@
     \spy on ($(30mb.north) + (spy-on)$) in node[label=below:72\,\%] at (d);
 
   \end{tikzpicture}
-  \caption{Blumen. Größe 2848 $\times$ 4272 Pixel. Maximale Kapazität $\approx 36,5$\,MB.
-    Gute Bildqualität zwischen 17,5 und 22\,MB versteckter Nachricht.}
+  \caption{Blumen mit einer Größe von 2848 $\times$ 4272 Pixel.
+    Gute Bildqualität bis zu 22\,MB versteckter
+    Nachricht ($\bmax \approx \num{36.5}$\,MB).}
   \label{fig:example-flowers}
 \end{figure}
