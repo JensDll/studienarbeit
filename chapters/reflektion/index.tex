@@ -1,24 +1,24 @@
 \chapter{Reflektion und Ausblick}
 Die vorliegende Studienarbeit befasst sich mit der Frage \enquote{Wie kann
-  ein Algorithmus entwickelt werden, welcher eine beliebige Nachricht
-  in einem Bild versteckt und während\-dessen die Bildqualität nicht sichtbar beeinflusst?}.
+  ein Algorithmus entwickelt werden, welcher eine beliebig lange Nachricht
+  in einer Bilddatei versteckt, ohne dabei die visuelle Qualität sichtbar zu beeinflussen?}.
 Zusätzlich wird den Fragen nachgegangen \enquote{Wie kann die Vertraulichkeit dieser Nachricht
   gesichert werden?} und \enquote{Wie ist der Algorithmus als Teil einer
   größeren Anwendung einzuordnen?}. Um diese Fragen zu beantworten, wurden die
-Prinzipien der symmetrischen und asymmetrischen Kryptografie aufgearbeitet
-und die Möglichkeiten eines steganografischen Verfahrens untersucht.\\\\
+Prinzipien der symmetrischen und asymmetrischen Kryptografie kritisch aufgearbeitet
+und die Möglichkeiten eines steganografischen Verfahrens untersucht.\\[8pt]
 Als Ergebnis einer ersten Überlegung \eqref{sec:bild-these} hat sich gezeigt,
-dass Änderungen bis zur vierten Bitstelle im Farbkanal eines Bilds nur
+dass Änderungen an einem Bild bis zur viert niederwertigsten Bitstelle im Farbkanal nur
 schwer zu erkennen sind. Es wurde hieraus geschlossen, dass ein
 Algorithmus, welcher nach dem \acs{lsb}-Verfahren arbeitet,
 grundsätzlich ein steganografisch gutes Ergebnis liefert.
 Insbesondere kann nach \eqref{sec:bild-these} und \autoref{tab:zuordnung-n-bmax}
 mit Zuversicht behauptet werden, dass diese Qualität für
-ein Großteil der Bilder mit $l < \num{37.5}$ erhalten bleibt.\\\\
+ein Großteil der Bilder mit $l < \num{37.5}$ erhalten bleibt.\\[8pt]
 Es konnte anhand dieser Überlegungen schließlich ein Algorithmus vorgestellt werden
 mit guter steganografischer Qualität.
-Aufseiten einer Anwendung wurde gezeigt,
-wie Nachrichten benutzergebunden verschlüsselt werden. In Kombination
-mit dem Algorithmus konnte somit ein System beschrieben werden, welches einen
+In Bezug auf eine Anwendung, welche als Benutzeroberfläche dient, wurde gezeigt, wie
+Nachrichten benutzergebunden verschlüsselt werden.
+Zusammen mit dem Algorithmus konnte somit dann ein System beschrieben werden, welches einen
 sicheren Nachrichtenaustausch über in Bildern versteckten Informationen ermöglicht.
 

@@ -1,4 +1,4 @@
-\chapter{Das RSA-Kryptosystem}
+\chapter{Das RSA-Kryptosystem} \label{cha:rsa}
 Das RSA-Kryptosystem ist eines der bekanntesten und meist
 verbreiteten asymmetrischen Verschlüsselungsverfahren. Es ist benannt nach
 seinen drei Erfindern Ronald Rivest, Adi Shamir und Leonard Adleman, welche das Verfahren
@@ -121,13 +121,15 @@ Die erste Funktion, welche auch in RSA verwendet wird,
 basiert auf dem Faktorisieren großer natürlicher Zahlen.
 Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig, eine Zahl zu
 faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
-Das Lösen diskreter Logarithmen ist die Einwegfunktion des
-Diffie-Hellman-Schlüsselaustausches und ein schwieriges Problem,
-das gesamte Verfahren hat jedoch keine so intuitive Beschreibung.
+Das Lösen diskreter Logarithmen
+ist im Sinne der Komplexitätstheorie ein rechenintensives Problem
+und bildet die Einwegfunktion des
+Diffie-Hellman-Schlüsselaustausches.
+Das gesamte Verfahren hat jedoch keine so intuitive Beschreibung.
 
 \section{Zahlentheoretische Grundlagen}
 In diesem Abschnitt sollen die zahlentheoretischen Grundlagen beschrieben werden,
-welche im RSA-Kryptosystem zum Einsatz kommen.
+um nachzuvollziehen warum die RSA-Verschlüsselung funktioniert.
 
 \input{chapters/rsa/zahlentheorie/euklid.tex}
 
