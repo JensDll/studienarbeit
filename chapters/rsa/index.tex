@@ -4,11 +4,11 @@ verbreiteten asymmetrischen Verschlüsselungsverfahren. Es ist benannt nach
 seinen drei Erfindern Ronald Rivest, Adi Shamir und Leonard Adleman, welche das Verfahren
 im Jahr 1977 veröffentli\-chten \parencite[173]{BOOK:crypto}.
 Am Beispiel von RSA sollen in diesem Kapitel die
-Ideen der asymmetrischer Verschlüsselung
+Ideen der asymmetrischen Verschlüsselung
 (engl. \textit{public-key-crpytography} oder \textit{asymmetric crpytography})
 vorgestellt werden. Es werden die nötigen
 zahlentheoretischen Begriffe eingeführt, um nachzuvollziehen
-warum die RSA-Verschlüsselung sicher ist.
+warum die RSA-Verschlüsselung funktioniert und sicher ist.
 
 \section{Asymmetrische Verschlüsselung}
 Um die Idee der asymmetrischen Verschlüsselung besser zu verstehen,
@@ -25,10 +25,10 @@ Ein solches System hat zwei symmetrische Eigenschaften:
   \item Die Ver- und Entschlüsselungsfunktion sind sich sehr ähnlich
         (im Fall von \acs{otp} oder \acs{des} sind sie sogar gleich).
 \end{enumerate}
-Verfahren wie \acs{aes} sind sehr sicher und schnell,
-ihre symmetrischen Eigenschaften führen jedoch auch zu Problemen
+Verfahren wie \acs{aes} sind sehr sicher und schnell.
+Ihre symmetrischen Eigenschaften führen jedoch auch zu Problemen
 und Einschränkungen,
-welche im Folgenden beschrieben werden.
+welche im Folgenden beschrieben werden:
 
 \paragraph{Schlüsselverteilungsproblem}
 Da beide Parteien denselben Schlüssel benötigen, muss dieser in

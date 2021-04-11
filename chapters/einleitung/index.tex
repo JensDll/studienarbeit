@@ -40,7 +40,7 @@ Die Steganografie wird in der Literatur häufig nicht als ein Bereich der Krypto
 erwähnt, soll aber als wesentlicher Teil dieser Studienarbeit auch hier
 schon betrachtet werden. Es ist wichtig abzugrenzen, dass es sich
 im Gegensatz zu den Chiffren der Kryptografie nicht um ein Verschlüsselungsverfahren handelt
-und ein Außenstehender, welcher von der Existenz einer geheimen Nachricht bescheid weiß,
+und ein Außenstehender, welcher von der Existenz einer geheimen Nachricht Bescheid weiß,
 diese unverschlüsselt lesen könnte.\\
 
 \noindent
@@ -111,7 +111,7 @@ Kryptografie eine besondere Bedeutung:
   \item $y$ ist das Chiffrat oder der Geheimtext (engl. \textit{ciphertext}).
   \item $k$ ist der Schlüssel (engl. \textit{key}).
   \item $e$ bezeichnet die Verschlüsselung (engl. \textit{encryption}).
-  \item $d$ bezeichnet Entschlüsselung (engl. \textit{decryption}),
+  \item $d$ bezeichnet die Entschlüsselung (engl. \textit{decryption}),
         d.\,h. die Umkehrung von $e$.
 \end{itemize}
 
@@ -188,16 +188,15 @@ führte Gauß folgende Schreibweise ein \parencite[180]{BOOK:numberTheory}:
 Die Gleichung der Modulo Rechnung hat unendlich viele Lösungen. Zu einem gegeben $m$ gibt es
 beliebig viele Zahlen $a$, welche den selben Rest ergeben.
 \begin{example}
-  Die folgenden Zahlen erfüllen die Gleichung $a \pmod{8} = 5$.
+  Die folgenden Zahlen erfüllen die Gleichung $a \mod{8} = 5$.
   Sie werden kongruent Modulo 8 genannt:
   \begin{equation*}
     29 \equiv 21 \equiv 13 \equiv 5 \equiv -3 \equiv -11 \pmod{8}
   \end{equation*}
   Elemente welche bei der Modulo Rechnung den gleichen Rest ergeben,
   können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restklasse bezüglich $m$.
-  Die acht Restklassen bezüglich 8 sind:
-  \footnote{Man schreibt $|a|_m$ und spricht, die Restklasse mit
-    dem Modul $m$ und dem Repräsentanten $a$.}
+  Die acht Restklassen bezüglich 8 sind: \footnote{Man schreibt $|a|_m$ und bezeichnet $a$ als einen
+    Repräsentanten der Restklasse mit dem Modul $m$.}
   \begin{gather*}
     \vert0\vert_8 = \{\dots,-24,-16,-8,0,8,16,24,\dots\}\\
     \vert1\vert_8 =\{\dots,-25,-17,-9,1,9,17,25,\dots\}\\
@@ -213,8 +212,8 @@ Diese Eigenschaft ist von großem Nutzen vor allem bei Berechnungen mit großen 
 wie es in der Kryptografie oft der Fall ist.
 
 \begin{example}[{\cite[15-16]{BOOK:crypto}}]
-  Die Hauptoperation in vielen Asymmetrischen Chiffren ist die Exponentiation der Form
-  $x^e \mod{m}$, wobei $x,e,m$ sehr große ganze Zahlen sind. Anhand eines Beispiels können
+  Die Hauptoperation in vielen asymmetrischen Chiffren ist die Exponentiation der Form
+  $x^e \mod{m}$, wobei $x,e$ und $m$ sehr große natürliche Zahlen sind. Anhand eines Beispiels können
   zwei Formen der modularen Exponentiation gezeigt werden. Es soll das Ergebnis der
   Berechnung $3^8 \mod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
   ausgerechnet, und im zweiten Beispiel wird zwischen den Restklassen gewechselt:
@@ -237,8 +236,7 @@ wie es in der Kryptografie oft der Fall ist.
 Wir einigen uns für den folgenden Text darauf, ein $b$ in
 \eqref{eq:kongruenz} für gewöhn\-lich so zu wählen, dass: $0 \leq b < m$.
 Man schreibt somit $27 \equiv 6 \pod{7}$ und nicht $27 \equiv -1 \pod{7}$
-oder $27 \equiv 13 \pod{7}$. \footnote{Mit dieser Vereinbarung ist das $b$ der Relation
-  $a \equiv b \pmod{m}$ eine Lösung für die Gleichung \\ $a \mod{m} = r = b$.}
+oder $27 \equiv 13 \pod{7}$.
 Mathematisch macht es jedoch keinen Unterschied.
 Wir vereinbaren für den folgenden Text außerdem, dass auch die Null eine natürliche Zahl ist,
 also $\mathbb{N} := \{0,1,2,\dots, 100, 101, \dots\}$. Da häufig die Menge
@@ -257,8 +255,8 @@ besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ def
           definiert als die Menge $\mathbb{Z}_m = \{0,1,\dots,m - 1\}$
     \item Zu je zwei Elementen $a,b \in \mathbb{Z}_m$ existiert eindeutig in $\mathbb{Z}_m$
           \begin{enumerate}[topsep=0pt]
-            \item Eine Summe $a + b \pmod{m}$
-            \item Ein Produkt $a \cdot b \pmod{m}$
+            \item Eine Summe $a + b \mod{m}$
+            \item Ein Produkt $a \cdot b \mod{m}$
           \end{enumerate}
   \end{enumerate}
 \end{definition}
@@ -315,19 +313,21 @@ Das Verschlüsselungsverfahren funktioniert.
 \begin{example}
   Es sei $k = 9$ und der Klartext:
   \begin{equation*}
-    \text{\texttt{A\kern 0.2mmT\kern 0.2mmT\kern 0.2mmA\kern 0.2mmC\kern 0.2mmK}}
-    = x_1,x_2,\dots,x_6 = 0,19,19,0,2,10
+    \text{\texttt{A\kern 0.2mmN\kern 0.2mmG\kern 0.2mmR\kern 0.2mmI\kern 0.2mmF\kern 0.2mmF}}
+    = x_1,x_2,\dots,x_7 = 0,13,6,17,8,5,5
   \end{equation*}
   Der Geheimtext wird wie folgt berechnet:
   \begin{align*}
     e_9(0)  & \equiv 9 \pmod{26}           \\
-    e_9(2)  & \equiv 11 \pmod{26}          \\
-    e_9(10) & \equiv 19 \pmod{26}          \\
-    e_9(19) & \equiv 28 \equiv 2 \pmod{26}
+    e_9(13) & \equiv 22 \pmod{26}          \\
+    e_9(6)  & \equiv 15 \pmod{26}          \\
+    e_9(17) & \equiv 26 \equiv 0 \pmod{26} \\
+    e_9(8)  & \equiv 17 \pmod{26}          \\
+    e_9(5)  & \equiv 14 \pmod{26}          \\
   \end{align*}
   \begin{equation*}
-    y_1,y_2,\dots,y_6 = 9,2,2,9,11,19 =
-    \text{\texttt{J\kern 0.2mmC\kern 0.2mmC\kern 0.2mmJ\kern 0.2mmL\kern 0.2mmT}} \qedhere
+    y_1,y_2,\dots,y_7 = 9,22,15,0,17,14,14 =
+    \text{\texttt{J\kern 0.2mmW\kern 0.2mmP\kern 0.2mmA\kern 0.2mmR\kern 0.2mmO\kern 0.2mmO}} \qedhere
   \end{equation*}
 \end{example}
 

@@ -207,14 +207,15 @@ einfach und schnell durchführbar ist:
 \begin{table}[h]
   \caption{Erweiterter Euklidischer Algorithmus}
   \centering
+  \renewcommand{\arraystretch}{1.4}
   \begin{tabular}{|l|l|l|l|l|l|l|l|}
     \hline
-    $a$ & $b$ & $q$ & $r$ & $x$                & $y$                                                              & Kontrolle                        \\ \hline
-    132 & 51  & 2   & 30  & -5                 & $\hl{Magenta}{3} + \hl{orange}{5} \cdot 2 = 13$                  & $3 = -5 \cdot 132 + 13 \cdot 51$ \\ \hline
-    51  & 30  & 1   & 21  & \hl{Magenta}{3}    & $\hl{RoyalBlue}{-2} - \hl{Magenta}{3} \cdot 1 = \hl{orange}{-5}$ & $3 = 3 \cdot 51 - 5 \cdot 30$    \\ \hline
-    30  & 21  & 1   & 9   & \hl{RoyalBlue}{-2} & $\hl{Green}{1} + \hl{RoyalBlue}{2} \cdot 1 = \hl{Magenta}{3} $   & $3 = -2 \cdot 30 + 3 \cdot 21$   \\ \hline
-    21  & 9   & 2   & 3   & \hl{Green}{1}      & $\hl{Red}{0} - \hl{Green}{1}  \cdot 2 = \hl{RoyalBlue}{-2}$      & $3 = 1 \cdot 21 - 2 \cdot 9$     \\ \hline
-    9   & 3   & 3   & 0   & \hl{Red}{0}        & \hl{Green}{1}                                                    & $3 = 0 \cdot 9 + 1 \cdot 3$      \\ \hline
+    $i$ & $a$ & $b$ & $q$ & $r$ & $x$                & $y$                                                              & Kontrolle                        \\ \hline
+    1   & 132 & 51  & 2   & 30  & \hl{orange}{-5}    & $\hl{Magenta}{3} + \hl{orange}{5} \cdot 2 = 13$                  & $3 = -5 \cdot 132 + 13 \cdot 51$ \\ \hline
+    2   & 51  & 30  & 1   & 21  & \hl{Magenta}{3}    & $\hl{RoyalBlue}{-2} - \hl{Magenta}{3} \cdot 1 = \hl{orange}{-5}$ & $3 = 3 \cdot 51 - 5 \cdot 30$    \\ \hline
+    3   & 30  & 21  & 1   & 9   & \hl{RoyalBlue}{-2} & $\hl{Green}{1} + \hl{RoyalBlue}{2} \cdot 1 = \hl{Magenta}{3} $   & $3 = -2 \cdot 30 + 3 \cdot 21$   \\ \hline
+    4   & 21  & 9   & 2   & 3   & \hl{Green}{1}      & $\hl{Red}{0} - \hl{Green}{1}  \cdot 2 = \hl{RoyalBlue}{-2}$      & $3 = 1 \cdot 21 - 2 \cdot 9$     \\ \hline
+    5   & 9   & 3   & 3   & 0   & \hl{Red}{0}        & \hl{Green}{1}                                                    & $3 = 0 \cdot 9 + 1 \cdot 3$      \\ \hline
   \end{tabular}
 \end{table}
 

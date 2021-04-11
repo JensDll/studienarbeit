@@ -18,7 +18,12 @@
 \usepackage{siunitx}
 
 \usepackage[dvipsnames]{xcolor}
-\newcommand{\hl}[2]{\fcolorbox{#1}{White}{#2}}
+\newcommand{\hl}[2]{
+  {
+    \setlength{\fboxrule}{1pt}
+    \fcolorbox{#1}{White}{#2}
+  }
+}
 
 \usepackage{listings} % https://ctan.math.illinois.edu/macros/latex/contrib/listings/listings.pdf
 \lstset{language=[Sharp]C}
