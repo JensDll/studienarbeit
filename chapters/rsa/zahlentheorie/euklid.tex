@@ -37,13 +37,13 @@ Für $a,b \in \mathbb{N}$ gilt \parencite{SITE:euklid}:
     \item Wegen der Kommutativität der Schnittmenge $T(a) \cap T(b) = T(b)\cap T(a)$.
     \item Zu zeigen: $\ggt{a}{b} = \ggt{a - b}{b}$ geschrieben als $g = g'$.
           \begin{center}
-            Aus $g \mid a$ und $g \mid b \Rightarrow g \mid a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
+            $g \mid a \wedge g \mid b \Rightarrow g \mid a-b \Rightarrow g \in T(a-b) \cap T(b)$.\\
             $g$ ist ein Teiler von $a-b$ und $b$.
           \end{center}
           Ist $g$ der größte gemeinsame Teiler?
           Es sei $h \in T(a-b) \cap T(b)$ und $h > g$:
           \begin{center}
-            Aus $h \mid a-b$ und $h \mid b \Rightarrow h \mid a$.\\
+            $h \mid a-b \wedge h \mid b \Rightarrow h \mid a$.\\
             $h \mid a$ und $h \mid b$ und $h > g$ führt zum Wiederspruch.
           \end{center}
   \end{enumerate}
@@ -175,8 +175,8 @@ bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
 Das Verfahren kann erneut allgemein betrachtet werden. Durch Rückwärtsarbeiten erhält
 man verschiedene Gleichungen der folgenden Form:
 \begin{align*}
-  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                 \\
-  \ggt{a}{b} & = x_{i+1} \cdot a_{i+1} + y_{i+1} \cdot b_{i+1}
+  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                                           \\
+  \ggt{a}{b} & = x_{i+1} \cdot \hl{Red}{$a_{i+1}$} + y_{i+1} \cdot \hl{Green}{$b_{i+1}$}
 \end{align*}
 Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
 \begin{align*}
@@ -187,16 +187,17 @@ Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
 \end{align*}
 Einsetzen und umformen:
 \begin{align*}
-  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                               \\
-             & = x_i \cdot (q_i \cdot b_i + r_i) + y_i \cdot a_{i+1}         \\
-             & = x_i \cdot (q_i \cdot a_{i+1} + b_{i+1}) + y_i \cdot a_{i+1} \\
-             & = x_i \cdot b_{i+1} + (y_i + x_i \cdot q_i) \cdot a_{i+1}
+  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                                                     \\
+             & = x_i \cdot (q_i \cdot b_i + r_i) + y_i \cdot a_{i+1}                               \\
+             & = x_i \cdot (q_i \cdot a_{i+1} + b_{i+1}) + y_i \cdot a_{i+1}                       \\
+             & = x_i \cdot q_i \cdot a_{i+1} + x_i \cdot b_{i+1} + y_i \cdot a_{i+1}               \\
+             & = (x_i \cdot q_i + y_i) \cdot \hl{Red}{$a_{i+1}$} + x_i \cdot \hl{Green}{$b_{i+1}$}
 \end{align*}
 Es ergeben sich die folgenden Regeln:
 \begin{align}
   x_i & = y_{i+1} \\
   \begin{split}
-    y_i + x_i \cdot q_i &= x_{i+1} \\
+    x_i \cdot q_i + y_i &= x_{i+1} \\
     y_i &= x_{i+1} - x_i \cdot q_i \\
     y_i &= x_{i+1} - y_{i+1} \cdot q_i
   \end{split}

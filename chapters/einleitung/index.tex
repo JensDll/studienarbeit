@@ -122,10 +122,10 @@ muss vor der Kommunikation auf einem sicheren Weg zwischen Alice und Bob verteil
 \section{Modulare Arithmetik}
 Fast alle kryptografischen Algorithmen, sowohl symmetrische als auch asymmetrische Chiffren
 basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13]{BOOK:crypto}.
-Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben)
-in der wir es gewohnt sind in unendlichen
-Mengen zu rechnen, z.\,B. die natürlichen oder reellen Zahlen. Die modulare Arithmetik,
-also die Division mit Rest, bietet eine gute Möglichkeit, um mit diesen begrenzten Mengen
+Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben),
+in der wir es gewohnt sind, in unendlichen
+Mengen zu rechnen, z.\,B. den natürlichen oder reellen Zahlen. Die modulare Arithmetik,
+d.\,h. die Division mit Rest, bietet eine gute Möglichkeit, um mit diesen begrenzten Mengen
 zu arbeiten.
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
@@ -143,8 +143,8 @@ zu arbeiten.
   Es gilt: $r_1 = r_2$. \\
   Zu zeigen: $m \mid (a-b)$.
   \begin{align*}
-    a - b & = q_1m + r_1 - q_2m + r_2  \\
-    a - b & = (q_1 - q_2)m + r_1 - r_2 \\
+    a - b & = q_1m + r_1 - q_2m - r_2    \\
+    a - b & = (q_1 - q_2)m + (r_1 - r_2) \\
     a - b & = (q_1 - q_2)m
   \end{align*}
   Aus der letzten Gleichung folgt: $m \mid (a - b)$. \\
@@ -152,8 +152,7 @@ zu arbeiten.
   Es gilt: $m \mid (a - b)$. \\
   Zu zeigen: $r_1 = r_2$.
   \begin{align*}
-    m                 & \mid (a - b)                     \\
-    \Leftrightarrow m & \mid (q_1m + r_1) - (q_2m + r_2) \\
+    m                 & \mid (a - b)                    \\
     \Leftrightarrow m & \mid (q_1 - q_2)m + (r_1 - r_2)
   \end{align*}
   Teilt $m$ zwei Zahlen $a$ und $b$, muss $m$ auch eine Linearkombination dieser Zahlen teilen.
@@ -185,35 +184,30 @@ führte Gauß folgende Schreibweise ein \parencite[180]{BOOK:numberTheory}:
 \end{example}
 
 \noindent
-Die Gleichung der Modulo Rechnung hat unendlich viele Lösungen. Zu einem gegeben $m$ gibt es
-beliebig viele Zahlen $a$, welche den selben Rest ergeben.
+Die Division mit Rest hat unendlich viele Lösungen.
+Elemente welche bei Division durch $m$ denselben Rest ergeben,
+können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restklasse bezüglich $m$.
 \begin{example}
-  Die folgenden Zahlen erfüllen die Gleichung $a \mod{8} = 5$.
-  Sie werden kongruent Modulo 8 genannt:
-  \begin{equation*}
-    29 \equiv 21 \equiv 13 \equiv 5 \equiv -3 \equiv -11 \pmod{8}
-  \end{equation*}
-  Elemente welche bei der Modulo Rechnung den gleichen Rest ergeben,
-  können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restklasse bezüglich $m$.
-  Die acht Restklassen bezüglich 8 sind: \footnote{Man schreibt $|a|_m$ und bezeichnet $a$ als einen
-    Repräsentanten der Restklasse mit dem Modul $m$.}
+  Die acht Restklassen bezüglich 8 sind:
   \begin{gather*}
     \vert0\vert_8 = \{\dots,-24,-16,-8,0,8,16,24,\dots\}\\
     \vert1\vert_8 =\{\dots,-25,-17,-9,1,9,17,25,\dots\}\\
     \vdots\\
-    \vert7\vert_8 =\{\dots,-17,-9,-1,7,15,23,31,\dots\} \qedhere
+    \vert7\vert_8 =\{\dots,-17,-9,-1,7,15,23,31,\dots\}
   \end{gather*}
+  Man schreibt $|a|_m$ und bezeichnet $a$ als einen
+  Repräsentanten der Restklasse mit dem Modul $m$.
 \end{example}
 
 \noindent
-Alle Elemente einer Restklasse verhalten sich gleich. Zu einem gegebenen Modulo $m$ spielt es
+Alle Elemente einer Restklasse verhalten sich gleich. Es spielt
 keine Rolle, welches Element der Restklasse für eine Berechnung ausgewählt wird.
 Diese Eigenschaft ist von großem Nutzen vor allem bei Berechnungen mit großen Zahlen,
 wie es in der Kryptografie oft der Fall ist.
 
 \begin{example}[{\cite[15-16]{BOOK:crypto}}]
   Die Hauptoperation in vielen asymmetrischen Chiffren ist die Exponentiation der Form
-  $x^e \mod{m}$, wobei $x,e$ und $m$ sehr große natürliche Zahlen sind. Anhand eines Beispiels können
+  $x^e \mod{m}$, wobei $x,e,m$ sehr große natürliche Zahlen sind. Anhand eines Beispiels können
   zwei Formen der modularen Exponentiation gezeigt werden. Es soll das Ergebnis der
   Berechnung $3^8 \mod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
   ausgerechnet, und im zweiten Beispiel wird zwischen den Restklassen gewechselt:
@@ -271,7 +265,7 @@ Um die Cäsar-Chiffre mathematisch zu
 beschreiben, muss das zu Grunde liegende Alphabet enkodiert werden.
 Eine Möglichkeit ist die fortlaufende Nummerierung der Buchstaben. Das so kodierte
 lateinische Alphabet ist in \autoref{tab:encode-alph} zu sehen.
-\newpage
+
 \begin{table}[h]
   \centering
   \caption{Enkodierung des lateinischen Alphabets}

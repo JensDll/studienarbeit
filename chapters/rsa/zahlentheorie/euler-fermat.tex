@@ -14,18 +14,18 @@ Eigenschaft der Restklassen festgehalten werden:
 \begin{proof}
   Es gilt $b = a + t \cdot m$ mit $t \in \mathbb{Z}$. Es sind
   \begin{align*}
-    g_1 & = \ggt{a}{m} = x \cdot \hl{Green}{a} + y \cdot \hl{Green}{m} \\
-    g_2 & = \ggt{b}{m} = p \cdot \hl{Red}{b} + q \cdot \hl{Red}{m}
+    g_1 & = \ggt{a}{m} = x \cdot \hl{Red}{a} + y \cdot \hl{Red}{m}     \\
+    g_2 & = \ggt{b}{m} = p \cdot \hl{Green}{b} + q \cdot \hl{Green}{m}
   \end{align*}
   mit $x,y,p,q \in \mathbb{Z}$. Es gilt außerdem allgemeiner: Wenn $c = x \cdot a + y \cdot m$,
   dann ist $c$ ein Vielfaches von $\ggt{a}{m}$.
   Man schreibt
   \begin{align*}
-    g_1 & = xa + ym                                & g_2 & = pb + qm                                    \\
-        & = x(b - tm) + ym                         &     & = p(a + tm) + qm                             \\
-        & = xb - xtm + ym                          &     & = pa + ptm + qm                              \\
-        & = x\,\hl{Red}{b} - (xt + y)\,\hl{Red}{m} &     & = p\,\hl{Green}{a} + (pt + q)\,\hl{Green}{m} \\
-        & \Rightarrow g_1 \mid g_2                 &     & \Rightarrow g_2 \mid g_1
+    g_1 & = xa + ym                                    & g_2 & = pb + qm                                \\
+        & = x(b - tm) + ym                             &     & = p(a + tm) + qm                         \\
+        & = xb - xtm + ym                              &     & = pa + ptm + qm                          \\
+        & = x\,\hl{Green}{b} - (xt + y)\,\hl{Green}{m} &     & = p\,\hl{Red}{a} + (pt + q)\,\hl{Red}{m} \\
+        & \Rightarrow g_1 \mid g_2                     &     & \Rightarrow g_2 \mid g_1
   \end{align*}
   und es folgt aus der letzten Zeile: $g_1 = g_2$.
 \end{proof}

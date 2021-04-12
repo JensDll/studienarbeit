@@ -121,14 +121,13 @@ Die erste Funktion, welche auch in RSA verwendet wird,
 basiert auf dem Faktorisieren großer natürlicher Zahlen.
 Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig, eine Zahl zu
 faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
-Das Lösen diskreter Logarithmen
-ist im Sinne der Komplexitätstheorie ein rechenintensives Problem
-und bildet die Einwegfunktion des
+Das Berechnen diskreter Logarithmen ist ein rechenintensives Problem
+und bildet unter anderem die Einwegfunktion des
 Diffie-Hellman-Schlüsselaustausches.
 Das gesamte Verfahren hat jedoch keine so intuitive Beschreibung.
 
 \section{Zahlentheoretische Grundlagen}
-In diesem Abschnitt sollen die zahlentheoretischen Grundlagen beschrieben werden,
+Es werden in diesem Abschnitt die zahlentheoretischen Grundlagen beschrieben,
 um nachzuvollziehen warum die RSA-Verschlüsselung funktioniert.
 
 \input{chapters/rsa/zahlentheorie/euklid.tex}
@@ -261,7 +260,7 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
               2   & 1   & 2   & 0   & 0   & 1                       \\ \hline
             \end{tabular}
           \end{center}
-          Die Ergebnis stimmt, denn es gilt $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
+          Das Ergebnis stimmt, denn es gilt $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
     \item Alice kennt den öffentlichen Schlüssel $\keypub = (N,e) = (33,3)$ und kann eine
           Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$
     \item Bob kennt den privaten Schlüssel $\keypr = (N,d) = (33,7)$ und kann die Nachricht

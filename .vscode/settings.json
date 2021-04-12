@@ -1,6 +1,13 @@
 {
-  "spellright.language": ["de"],
-  "spellright.documentTypes": ["markdown", "latex", "plaintext"],
+  "spellright.language": [
+    "de",
+    "en"
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext"
+  ],
   "editor.formatOnSave": true,
   "editor.tabSize": 2
 }
