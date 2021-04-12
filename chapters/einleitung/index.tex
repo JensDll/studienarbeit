@@ -1,8 +1,8 @@
 \chapter{Einleitung} \label{cha:einleitung}
 Redet man heutzutage über das Thema Kryptografie, sind im Gespräch wahrscheinlich
 Themen wie E-Mail-Verschlüsselung, Internetprotokolle oder Anwendungen im
-Bankenwesen. Auch bekannt sind die Angriffe auf kryptografische Systeme,
-wie zum Beispiel die Entzifferung der durch die Enigma-Chiffriermaschine
+Bankenwesen. Auch bekannt sind die Angriffe auf kryptografische Systeme
+wie die Entzifferung der durch die Enigma-Chiffriermaschine
 verschlüsselten deutschen Funksprüche während des Zweiten Weltkrieges. Es scheint, als
 wäre Kryptografie stark mit den modernen elektronischen Kommunikationstechniken
 verbunden. Dies ist allerdings nicht so: Frühe Formen der Kryptografie
@@ -30,7 +30,7 @@ verstanden werden kann, für den sie bestimmt ist.
 Die Wissenschaft, ein kryptografisches System zu analysieren mit dem Ziel, mögliche
 Schwachstellen aufzudecken. Die Kryptanalyse ist ein äußerst wichtiger Teil der
 Kryptologie, denn ohne Personen, welche versuchen ein kryptografisches System zu
-brechen, wird man nie herausfinden können, ob das System wirklich sicher ist.
+brechen, wird man nie herausfinden können, ob dieses wirklich sicher ist.
 
 \paragraph{Steganografie}
 Die Kunst, Informationen in einer für den Computer
@@ -124,8 +124,8 @@ Fast alle kryptografischen Algorithmen, sowohl symmetrische als auch asymmetrisc
 basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13]{BOOK:crypto}.
 Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben),
 in der wir es gewohnt sind, in unendlichen
-Mengen zu rechnen, z.\,B. den natürlichen oder reellen Zahlen. Die modulare Arithmetik,
-d.\,h. die Division mit Rest, bietet eine gute Möglichkeit, um mit diesen begrenzten Mengen
+Mengen zu rechnen, z.\,B. den natürlichen oder den reellen Zahlen. Die modulare Arithmetik,
+d.\,h. die Division mit Rest bietet eine gute Möglichkeit, um mit diesen begrenzten Mengen
 zu arbeiten.
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
@@ -184,7 +184,7 @@ führte Gauß folgende Schreibweise ein \parencite[180]{BOOK:numberTheory}:
 \end{example}
 
 \noindent
-Die Division mit Rest hat unendlich viele Lösungen.
+\autoref{eq:kongruenz} hat unendlich viele Lösungen.
 Elemente welche bei Division durch $m$ denselben Rest ergeben,
 können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restklasse bezüglich $m$.
 \begin{example}
@@ -296,9 +296,9 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
 \end{definition}
 
 \noindent
-Das Verschlüsselungsverfahren funktioniert.
 \begin{proof}
-  Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben. \\
+  Das Verschlüsselungsverfahren funktioniert.
+  Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
   Zu zeigen: $d_k(e_k(x)) = x$.
   \begin{equation*}
     d_k(e_k(x)) = x \equiv x + k - k \equiv x \pmod{26} \qedhere
@@ -317,7 +317,7 @@ Das Verschlüsselungsverfahren funktioniert.
     e_9(6)  & \equiv 15 \pmod{26}          \\
     e_9(17) & \equiv 26 \equiv 0 \pmod{26} \\
     e_9(8)  & \equiv 17 \pmod{26}          \\
-    e_9(5)  & \equiv 14 \pmod{26}          \\
+    e_9(5)  & \equiv 14 \pmod{26}
   \end{align*}
   \begin{equation*}
     y_1,y_2,\dots,y_7 = 9,22,15,0,17,14,14 =

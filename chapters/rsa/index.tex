@@ -209,22 +209,22 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
   \begin{equation}
     \label{eq:proof-rsa-3.5}
-    x = d_{\keypr}(e_{\keypub}(x)) \equiv (x^e)^d \equiv x^{ed} \pmod{N} \tag{$*$}
+    d_{\keypr}(e_{\keypub}(x)) = x \equiv x^{ed} \pmod{N} \tag{$*$}
   \end{equation}
-  Wir wissen per Definition, wobei $t$ irgendeine ganze Zahl ist:
+  Wir wissen per Definition:
   \begin{align}
-    e \cdot d & \equiv 1 \pmod{\phif{N}} \notag   \\
+    e \cdot d & \equiv 1 \pmod{\phif{N}} \notag                           \\
     \label{eq:proof-rsa-3.6}
-    e \cdot d & = t \cdot \phif{N} + 1 \tag{$**$}
+    e \cdot d & = t \cdot \phif{N} + 1 \qquad t \in \mathbb{Z} \tag{$**$}
   \end{align}
-  Um $x \equiv x^{ed} \pmod{pq}$ zu zeigen, reicht es nach \autoref{satz:composite-mod}
+  Um $x \equiv x^{ed} \pmod{pq}$ zu zeigen, reicht es nach \eqref{satz:composite-mod}
   die Faktoren einzeln zu betrachten.
   \begin{enumerate}
     \item Um $x \equiv x^{ed} \pmod{p}$ zu beweisen, betrachten wir zwei Fälle:
           \begin{enumerate}[topsep=0pt]
-            \item Es gilt $p \mid x$ und man kann schreiben:
+            \item Es gilt $p \mid x$ und es folgt:
                   $x \equiv 0 \pmod{p}$ woraus folgt $x^{ed} \equiv 0 \equiv x \pmod{p}$
-            \item Es gilt $p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
+            \item Es gilt $p \nmid x \Rightarrow p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
                   \eqref{eq:proof-rsa-3.5}
                   und umformen:
                   \begin{equation*}
