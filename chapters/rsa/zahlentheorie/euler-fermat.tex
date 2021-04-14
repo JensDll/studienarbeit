@@ -47,7 +47,7 @@ Eigenschaft der Restklassen festgehalten werden:
   Wir betrachten ein Beispiel um eine Vermutung zu bestätigen:
   \begin{example}
     Es ist $\phif{8} = |\{1,3,5,7\}| = 4$. Wir wählen $a = 3$ und bilden in $\mathbb{Z}_8$ die Produkte:
-    $3\cdot \{1,3,5,7\} = \{3,9,15,21\} \Rightarrow \{3,1,7,5\}$. Die Multiplikation von $a$ erzeugt eine
+    $3\cdot \{1,3,5,7\} = \{3,9,15,21\} \equiv \{3,1,7,5\} \pmod{8}$. Die Multiplikation von $a$ erzeugt eine
     Permutation der Menge $\{1,3,5,7\}$.
   \end{example}
   \noindent
@@ -56,13 +56,13 @@ Eigenschaft der Restklassen festgehalten werden:
     Nach \autoref{satz:restklasse-ggt} wissen wir, ist eine Zahl einer Restklasse teilerfremd zu $m$,
     gilt dies auch für alle anderen Zahlen der Restklasse.
   }
-  Es gilt $x_i \perp m$ und $a \perp m$, weshalb auch das Produkt $ax_i$ teilerfremd zu $m$ sein muss.\\
+  Es gilt $x_i \perp m$ und $a \perp m$, wonach auch das Produkt $ax_i$ teilerfremd zu $m$ sein muss.\\
   Es folgt $ax_i \mod{m} = x_j$ und wir halten fest:
-  \begin{equation}
-    \label{proof:satz-euler-1}
-    \forall ax_i \, \exists x_j: ax_i \equiv x_j \pmod{m}
-  \end{equation}
-  Es bleibt zu zeigen, dass in \eqref{proof:satz-euler-1} keine Doppelungen entstehen,
+  \begin{equation*}
+    \label{eq:proof-satz-euler}
+    \forall ax_i \, \exists x_j: ax_i \equiv x_j \pmod{m} \tag{$*$}
+  \end{equation*}
+  Es bleibt zu zeigen, dass in \eqref{eq:proof-satz-euler} keine Doppelungen entstehen,
   also alle $ax_i$ Teil unterschiedlicher Restklassen sind. Es muss gelten:
   \begin{equation*}
     ax_i \not\equiv ax_j \pmod{m} \qquad i \neq j
