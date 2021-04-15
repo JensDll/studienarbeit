@@ -67,7 +67,7 @@ Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOO
 
 \section{Die Ver- und Entschlüsselung mit Stromchiffren}
 Stromchiffren verschlüsseln jedes Bit im Klartext einzeln. Hierfür
-wird durch einen Schlüs\-sel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bits
+wird durch ein Schlüs\-sel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bit
 des Klartextes kombiniert wird. Die Ver- und Entschlüsselung ist verblüffend einfach, es handelt
 sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 
@@ -260,9 +260,9 @@ Kryptografisch sichere Pseudozufallszahlengeneratoren
 (engl. \acp{csprng}) sind \acp{prng} mit
 einer zusätzlichen Eigenschaft: \acp{csprng} sind unvorhersehbar. Grob gesprochen
 bedeutet dies, dass es rechentechnisch nicht möglich ist, aus $n$ gegeben Schlüsselstrombit
-$k_1,k_2,\dots,k_n$, die folgenden Bit $k_{n+1},k_{n+2},\dots,k_{n+m}$ zu berechnen. Außerdem
+$(k_1,k_2,\dots,k_n)$, die folgenden Bit $(k_{n+1},k_{n+2},\dots,k_{n+m})$ zu berechnen. Außerdem
 soll es zeitlich unmöglich sein, eines der vorherigen Bit
-$k_{0},k_{-1},\allowbreak\dots,k_{-m}$ zu berechnen.
+$(k_{0},k_{-1},\allowbreak\dots,k_{-m})$ zu berechnen.
 
 \section{Das One-Time-Pad}
 Es sind nun mit den bisher eingeführten Ideen alle Teile vorhanden, um ein beweisbar
@@ -282,9 +282,9 @@ erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
 \begin{definition}[One-Time-Pad]
   Eine Stromchiffre heißt One-Time-Pad, wenn die folgenden Kriterien eingehalten werden:
   \begin{enumerate}
-    \item Der Schüsselstrom $k_1,k_2,\dots,k_n$ wird durch einen \ac{trng} generiert.
+    \item Der Schüsselstrom $(k_1,k_2,\dots,k_n)$ wird durch einen \ac{trng} generiert.
     \item Nur vertrauenswürdige Gesprächspartner kennen den Schüsselstrom.
-    \item Jedes Schlüsselstrombit $k_i$ wird nur einmal verwendet.
+    \item Jedes Schlüsselstrombit wird nur einmal verwendet.
   \end{enumerate}
   Das One-Time-Pad ist beweisbar sicher.
 \end{definition}
