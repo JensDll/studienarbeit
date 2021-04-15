@@ -130,7 +130,7 @@ nur indirekt sichert, ist es sinnvoll, diese vor dem Verwenden mit einem
 kryptografischen Algorithmus zu verschlüsseln.
 
 \begin{definition}[\acs{lsb}-Verfahren]
-  Es sei $p_{xy} = (r,g,b)$ ein Pixel und $\mathbf{B} = p^{m \times n}$ ein Bild
+  Es sei $p_{x,y} = (r,g,b)$ ein Pixel und $\mathbf{B} = p^{m \times n}$ ein Bild
   mit $y \in [1, m]$ und $x \in [1, n]$. Es sei $P$ die Menge aller Pixel von $\mathbf{B}$
   und $v$ eine Funktion mit $v: P \setminus \{p_{1,1},p_{m,n}\} \leftarrow v(\mathbf{B})$.
   \autoref{alg:lsb-enkodierung} und \ref{alg:lsb-dekodierung} zeigen ein Verfahren für das
@@ -196,7 +196,7 @@ so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
 $a_i = 0,1,\ldots,mn - 1$ betrachtet.
 Durch ein \acs{prng} wird jetzt
-eine pseudozufällige Permutation von $a$ bestimmt. Der Algorithmus ist bekannt
+eine pseudozufällige Permutation von $a_i$ bestimmt. Der Algorithmus ist bekannt
 als das Fisher-Yates-Verfahren:
 
 \begin{singlespace}
