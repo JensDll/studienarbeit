@@ -62,7 +62,7 @@ gelangt, fast immer unsicher ist. Ein hierfür gutes Beispiel ist das Content Sc
 für das Verschlüsseln von DVD-Videoinhalten. Trotz großer Bemühungen der Industrie, die
 Funktionsweise von CSS geheim zu halten, gelang das Design durch Reverse Code Engineering
 schnell an die Öffentlichkeit. Es zeigten sich Mängel in der Implementierung,
-welche das Brechen der Verschlüsselung mit sehr geringen Aufwand ermöglichten \parencite{SITE:CSS}.
+welche das Brechen der Verschlüsselung mit sehr geringem Aufwand ermöglichten \parencite{SITE:CSS}.
 Am Beispiel von symmetrischen und asymmetrischen Verschlüsselungsverfahren werden in den
 folgenden Kapiteln Begriffe und Ideen aus dem Bereich der Kryptografie eingeführt.
 Zusätzlich wird in \autoref{cha:steganografie} gezielt darauf eingegangen,
@@ -73,7 +73,7 @@ wie stark ein Bild angepasst werden kann und ab welcher Nachrichtenlängen
 eine Veränderung sichtbar wird.
 \section{Symmetrische Verschlüsselung}
 Denkt man an die Teilbereiche der Kryptografie, ist die symmetrische Verschlüsselung
-das wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
+dass wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
 Algorithmus zum Ver- und Entschlüsseln von Nachrichten und haben sich auf einen
 gemeinsamen geheimen Schlüssel geeinigt. Wie es in der Literatur sehr beliebt ist,
 wird die Idee der symmetrischen Verschlüsselung
@@ -295,7 +295,7 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
 \begin{proof}
   Das Verschlüsselungsverfahren funktioniert.
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
-  Zu zeigen: $d_k(e_k(x)) = x$.
+  Zu zeigen: $d_k(e_k(x)) \equiv x \pmod{26}$.
   \begin{equation*}
     d_k(e_k(x)) = x \equiv x + k - k \equiv x \pmod{26} \qedhere
   \end{equation*}
