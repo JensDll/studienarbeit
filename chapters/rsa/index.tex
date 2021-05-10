@@ -98,7 +98,7 @@ rechenintensiver ist.
 
 \noindent
 Asymmetrische Verfahren basieren alle auf einem zugrunde liegenden Prinzip:
-Der Einwegfunktion oder auch Falltürfunktion genannt. Es kann folgende
+Der Einwegfunktion. Es kann folgende
 Definition gegeben werden \parencite[153]{BOOK:crypto}:
 
 \begin{definition}[Einwegfunktion]
@@ -115,14 +115,15 @@ Definition gegeben werden \parencite[153]{BOOK:crypto}:
 
 \noindent
 Es gibt zwei Einwegfunktionen, welche in der Praxis häufig eingesetzt werden.
-Die erste Funktion, welche auch in RSA verwendet wird,
-basiert auf dem Faktorisieren großer natürlicher Zahlen.
+Das Faktorisierungsproblem und die Umkehrung der Exponentiation mit ganzen Zahlen
+(Lösen des diskreten Logarithmus).
+RSA basiert auf dem Faktorisierungsproblem.
 Es ist einfach ein Produkt zu berechnen, jedoch ist es schwierig, eine Zahl zu
-faktorisieren. Die zweite Funktion basiert auf dem Lösen diskreter Logarithmen.
-Das Berechnen diskreter Logarithmen ist ein rechenintensives Problem
-und bildet unter anderem die Einwegfunktion des
+faktorisieren.
+Der diskrete Logarithmus bildet die Einwegfunktion des
 Diffie-Hellman-Schlüsselaustausches.
-Das gesamte Verfahren hat jedoch keine so intuitive Beschreibung.
+Es ist einfach eine Zahl zu potenzieren, jedoch ist es schwierig,
+den diskreten Logarithmus zu bestimmen.
 
 \section{Zahlentheoretische Grundlagen}
 Es werden in diesem Abschnitt die zahlentheoretischen Grundlagen beschrieben,
@@ -139,18 +140,18 @@ Das RSA-Verfahren basiert auf der Annahme, dass es nicht effizient
 möglich ist, die Primfaktorzerlegung einer natürlichen Zahl zu bestimmen.
 Die Generierung des privaten und öffentlichen Schlüssels kann in die
 folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
-\newpage
+
 \begin{definition}[RSA Schlüsselgenerierung]\mbox{}
   \begin{enumerate}
-    \item Wähle zwei sehr große Primzahlen $p$ und $q$, beispielsweise mit einer Länge
-          von 512 oder 1024 Bit.
+    \item Wähle zwei sehr große Primzahlen $p$ und $q$, beispielsweise mit einer
+          Länge von 512 oder 1024 Bit.
     \item Berechne $N = p \cdot q$.
     \item Berechne $\phif{N} = \phif{p \cdot q} = \phif{p} \cdot \phif{q} = (p-1) \cdot (q-1)$.
-    \item Wähle eine Zahl $e$ mit $1 \leq e < \phif{N}$ und $\ggt{e}{\phif{N}} = 1$. Jetzt bilden
-          $(N,e)$ den öffentlichen Schlüssel.
+    \item Wähle eine Zahl $e$ mit $1 \leq e < \phif{N}$ und $e \perp \phif{N}$.
     \item Berechne $d$ mit $e \cdot d \equiv 1 \pmod{\phif{N}}$ und dem erweiterten
-          Euklidischen Algorithmus. Das Inverse existiert, denn es gilt $e \perp \phif{N}$.
-          Jetzt bilden $(N,d)$ den privaten Schlüssel.
+          Euklidischen Algorithmus.
+    \item Vernichte $p$ und $q$.
+    \item Jetzt bilden $(N,e)$ den öffentlichen und $(N,d)$ den privaten Schlüssel.
   \end{enumerate}
 \end{definition}
 
@@ -176,7 +177,7 @@ Beweis verwendet werden kann:
 \begin{satz}
   \label{satz:composite-mod}
   $m$ ist eine zusammengesetzte Zahl der Form $m = k_1 \cdot k_2 \cdot \ldots \cdot k_n$ und
-  es gilt $a \equiv b \pmod{m}$, dann ist auch:
+  es gilt $a \equiv b \pmod{m}$, dann gilt auch:
   \begin{equation*}
     a \equiv b \pmod{k_1} \quad\ldots\quad a \equiv b \pmod{k_n}
   \end{equation*}
@@ -204,14 +205,13 @@ Beweis verwendet werden kann:
 Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
 
 \begin{proof}
-  Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
+  Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben. Zu zeigen:
   \begin{equation}
     \label{eq:proof-rsa-3.5}
-    d_{\keypr}(e_{\keypub}(x)) = x \equiv x^{ed} \pmod{N} \tag{$*$}
+    x \equiv x^{ed} \pmod{N} \tag{$*$}
   \end{equation}
   Wir wissen per Definition:
   \begin{align}
-    e \cdot d & \equiv 1 \pmod{\phif{N}} \notag                           \\
     \label{eq:proof-rsa-3.6}
     e \cdot d & = t \cdot \phif{N} + 1 \qquad t \in \mathbb{Z} \tag{$**$}
   \end{align}
@@ -221,7 +221,7 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
     \item Um $x \equiv x^{ed} \pmod{p}$ zu beweisen, betrachten wir zwei Fälle:
           \begin{enumerate}[topsep=0pt]
             \item Es gilt $p \mid x$ und es folgt:
-                  $x \equiv 0 \pmod{p}$ woraus folgt $x^{ed} \equiv 0 \pmod{p}$
+                  $x \equiv 0 \pmod{p}$ woraus folgt: $x^{ed} \equiv 0 \pmod{p}$
             \item Es gilt $p \nmid x \Rightarrow p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
                   \eqref{eq:proof-rsa-3.5}
                   und umformen:
@@ -231,9 +231,9 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
                     x^{t(p - 1)(q - 1)} \cdot x \equiv
                     (x^{p - 1})^{t(q - 1)} \cdot x \pmod{p}
                   \end{equation*}
-                  Nach dem Kleinen Satz von Fermat ist jetzt zu sehen:
+                  Nach dem Kleinen Satz von Fermat (\ref{satz:kleiner-fermat}) ist jetzt zu sehen:
                   \begin{equation*}
-                    x \equiv (x^{p - 1})^{t(q - 1)} \cdot x \equiv
+                    (x^{p - 1})^{t(q - 1)} \cdot x \equiv
                     1^{t(q - 1)} \cdot x \equiv x \pmod{p}
                   \end{equation*}
           \end{enumerate}
@@ -258,9 +258,9 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
               2   & 1   & 2   & 0   & 0   & 1                       \\ \hline
             \end{tabular}
           \end{center}
-          Das Ergebnis stimmt, denn es gilt $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
+          Das Ergebnis stimmt, denn es gilt: $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
     \item Alice kennt den öffentlichen Schlüssel $\keypub = (N,e) = (33,3)$ und kann eine
-          Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$
+          Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$.
     \item Bob kennt den privaten Schlüssel $\keypr = (N,d) = (33,7)$ und kann die Nachricht
           entschlüsseln mit $y^d = 31^7 \equiv (-2)^7 \equiv (-2)^5 \cdot 2^2 \equiv
             1 \cdot 4 \equiv 4 = x \pmod{33}$. \qedhere

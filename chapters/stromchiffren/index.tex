@@ -87,7 +87,7 @@ besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 \begin{enumerate}
   \item Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?
   \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
-  \item Was sind die Eigenschaften der Schlüsselstrombit $k_i$?
+  \item Was sind die Eigenschaften der Schlüsselstrombit?
 \end{enumerate}
 
 \paragraph{Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
@@ -135,9 +135,8 @@ unterscheidet und diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
 (\ref{tab:truth-table-xor}) befindet
 man sich demnach in der ersten oder zweiten Zeile.
-Je nach Schlüsselbit $k_i$ ist das Geheimtextbit $y_i$ gegeben als
-$y_i = 0 \oplus 0 \vee 0 \oplus 1 = 0 \vee 1$.
-Verhalten sich die Schlüsselbit unvorhersehbar, d. h. sie sind mit genau 50-prozentiger
+Je nach Schlüsselbit ist das Geheimtextbit gegeben als $y_i = 0 \vee 1$.
+Verhalten sich die Schlüsselbit unvorhersehbar, d.\,h. sie sind mit genau 50-prozentiger
 Wahrscheinlichkeit null oder eins, ist es nur durch das Chiffrat nicht möglich, auf
 den Klartext zu schließen. Zu jedem Zeitpunkt hat ein Angreifer nur eine
 50-prozentige Chance, den richtigen Klartext zu erraten.
@@ -207,13 +206,13 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   \noindent
   Vor der Übertragung wird der Großbuchstabe \texttt{P} durch die XOR-Verknüpfung
   in den Kleinbuchstaben \texttt{j}
-  umgewandelt. Der Gegenspieler Oscar kann mit dieser Information aufgrund der oben beschriebenen
+  umgewandelt. Oscar kann mit dieser Information aufgrund der oben beschriebenen
   Eigenschaften nur wenig anfangen.
 \end{example}
 
 \noindent
-Stromchiffren erscheinen fast zu gut, um wahr zu sein, doch wie später gezeigt wird,
-gibt es aus auch hier Einschränkungen, welche in der Praxis entstehen.
+Stromchiffren erscheinen fast zu gut, um wahr zu sein.
+Es gibt jedoch auch hier Einschränkungen, welche in der Praxis entstehen.
 Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombit?}\mbox{}\\
@@ -226,9 +225,9 @@ Zufallszahlen diskutiert werden.
 
 \section{Zufallszahlengeneratoren}
 Die Unvorhersehbarkeit des Schlüsselstroms ist die wesentliche
-Eigenschaft von Stromchiffren. Im Folgenden sollen einige
+Eigenschaft von Stromchiffren. Im Folgenden werden einige
 Formen von Zufallszahlengeneratoren (engl. \acp{rng}) vorgestellt
-und deren Unterschiede beschrieben werden
+und deren Unterschiede beschrieben
 \parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
 
 \paragraph{Echte Zufallszahlengeneratoren}
@@ -251,7 +250,8 @@ mathematische Formeln errechnet und sind deterministisch, d.\,h. dieselbe Sequen
 kann zu einem späteren Zeitpunkt reproduziert werden.
 In der Kryptografie können \acp{prng} aufgrund dieser Eigenschaft
 nicht ohne Weiteres eingesetzt werden.
-Dennoch haben sie außerhalb der Kryptografie weitreichende Anwendungsgebiete,
+Die Relevanz der Generatoren sollte jedoch auf keinen Fall unterschätzt werden.
+\acp{prng} haben außerhalb der Kryptografie weitreichende Anwendungsgebiete,
 beispielsweise in der Steganografie, Simulation oder während des Testens von Software und Hardware.
 Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
 
@@ -294,7 +294,7 @@ Zu jedem Bit im Geheimtext gibt es eine Gleichung der Form:
   y_0   \equiv x_0 & + k_0 \pmod{2} \\
   y_1   \equiv x_1 & + k_1 \pmod{2} \\
   \vdots           &                \\
-  y_n   \equiv x_n & + k_n \pmod{2} \\
+  y_n   \equiv x_n & + k_n \pmod{2}
 \end{align*}
 \noindent
 Stammt der Schlüsselstrom von einem \ac{trng} können diese Gleichungen nicht gelöst werden.
@@ -330,16 +330,7 @@ Praxis verwendeten Algorithmen (Stromchiffren, Blockchiffren, asymmetrische
 Verfahren), keine informationstheoretische Sicherheit aufweisen \parencite[38]{BOOK:crypto}.
 Um den Sicherheitsbegriff realistischer zu gestalten, wird der Angreifer in seiner
 Rechenleistung beschränkt, man hofft also, dass ein Verfahren berechenbarkeitstheoretisch
-sicher ist. Diese Eigenschaft ist von \citeauthor{BOOK:crypto}
-folgendermaßen definiert \parencite*[35]{BOOK:crypto}:
-
-\begin{definition}[\textit{Computational Security}]
-  \enquote{\textit{A crpytosystem is computationally secure if the best
-      known algorithm for breaking it requires at least $t$ operations.}}
-\end{definition}
-
-\noindent
-Die Definition besagt, dass ein System berechenbarkeitstheoretisch sicher ist, wenn es
+sicher ist. Ein System heißt berechenbarkeitstheoretisch sicher ist, wenn es
 keinen bekannten Algorithmus gibt, welcher das System effizient brechen kann.
 In anderen Worten ausgedrückt: Es ist nicht effizient möglich, den
 Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
@@ -347,8 +338,8 @@ Aussage darüber getroffen werden, ob ein Problem mit bekannten Verfahren
 optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
 sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryptosystems
 (asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
-berechnet werden kann, durch das Faktorisieren zweier großer
-natürlicher Zahlen. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
+berechnet werden kann, durch das Bestimmen der Primfaktorzerlegung einer großen
+natürlichen Zahl. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
 ob es andere Verfahren gibt, welche das Problem effizienter lösen können.
 Im Fall von symmetrischen Verfahren nimmt man an, dass es keinen besseren Algorithmus
 gibt als die vollständige Schlüsselsuche.
