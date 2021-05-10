@@ -146,11 +146,11 @@ folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
           von 512 oder 1024 Bit.
     \item Berechne $N = p \cdot q$.
     \item Berechne $\phif{N} = \phif{p \cdot q} = \phif{p} \cdot \phif{q} = (p-1) \cdot (q-1)$.
-    \item Wähle eine Zahl $e$ mit $1 < e < N$ und $\ggt{e}{\phif{N}} = 1$. Jetzt bilden
-          $(N,e)$ den öffentlichen Schlüssel $(\keypub)$.
+    \item Wähle eine Zahl $e$ mit $1 \leq e < \phif{N}$ und $\ggt{e}{\phif{N}} = 1$. Jetzt bilden
+          $(N,e)$ den öffentlichen Schlüssel.
     \item Berechne $d$ mit $e \cdot d \equiv 1 \pmod{\phif{N}}$ und dem erweiterten
           Euklidischen Algorithmus. Das Inverse existiert, denn es gilt $e \perp \phif{N}$.
-          Jetzt bilden $(N,d)$ den privaten Schlüssel $(\keypr)$.
+          Jetzt bilden $(N,d)$ den privaten Schlüssel.
   \end{enumerate}
 \end{definition}
 
