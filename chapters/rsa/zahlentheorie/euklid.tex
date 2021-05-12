@@ -151,7 +151,7 @@ bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
     9   & = 3 \cdot 3 + 0
   \end{align*}
   Der $\ggt{132}{51}$ ist mit 3 bestimmt. Es soll nun versucht werden, ein $x$ und $y$
-  zu finden, sodass $3 = x \cdot 132 + y \cdot 51$. Aus der vorletzten Zeile weiß man:
+  zu finden, sodass: $3 = x \cdot 132 + y \cdot 51$. Aus der vorletzten Zeile weiß man:
   \begin{equation*}
     3 = 21 - 2 \cdot 9
   \end{equation*}
@@ -235,9 +235,9 @@ als Kongruenzrelation Modulo $m$ dar, erhalten wir:
 Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welches
 mit $y$ bestimmt wurde.
 \begin{example}
-  Es soll das Inverse $21^{-1} \pmod{89}$ bestimmt werden. Die Zahlen 21 und 89 sind
-  teilerfremd, d.\,h. das Inverse existiert und es gilt
-  $\ggt{89}{21} = 1 = x \cdot 89 + y \cdot 21$. Der Euklidische
+  Es soll das Inverse $21 \cdot 21^{-1} \equiv 1 \pmod{89}$ bestimmt werden.
+  Es gilt: $21 \perp 89$ und es gibt somit eine Gleichung:
+  $x \cdot 89 + y \cdot 21 = 1$. Der Euklidische
   Algorithmus kann tabellarisch durchgeführt werden:
   \begin{center}
     \centering

@@ -45,7 +45,7 @@ Diffusion (engl. \textit{diffusion}) \parencite[57]{BOOK:crypto}:
         \acs{aes} verwendet eine komplexere MixColumn-Transformation.
 \end{enumerate}
 Chiffren, welche nur eine der beiden Operationen anwenden, wie die alleinige Konfusion
-mit der Cäsar-Chiffre, sind nicht sicher. Die heutigen Blockchiffren
+bei der Cäsar-Chiffre, sind nicht sicher. Die heutigen Blockchiffren
 arbeiten iterativ in aufeinanderfolgenden Runden, die gleich aufgebaut sind. In jeder Runde wird eine
 Rundenfunktion angewandt, welche sowohl Konfusion als auch Diffusion durchführt.
 Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOOK:crypto}:
@@ -85,35 +85,35 @@ Betrachteten wir die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf
 besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 
 \begin{enumerate}
-  \item Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?
-  \item Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
+  \item Warum sind Verschlüsselung und Entschlüsselung dieselbe Funktion?
+  \item Warum ist Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?
   \item Was sind die Eigenschaften der Schlüsselstrombit?
 \end{enumerate}
 
-\paragraph{Warum sind Verschlüsselung und Entschlüsselung die selbe Funktion?}\mbox{}\\
+\paragraph{Warum sind Verschlüsselung und Entschlüsselung dieselbe Funktion?}\mbox{}\\
 Bis auf spezielle Kürzungsregeln erlauben Kongruenzen (ganz analog wie mit Gleichungen)
 das Ausführen der elementaren Rechenoperationen \parencite[181-183]{BOOK:numberTheory}.
 Mit diesem Wissen kann die Verschlüsselungsfunktion durch einfaches Umformen in die
 Entschlüsselungsfunktion überführt werden:
 \begin{proof}
   \begin{align*}
-    y_i  & \equiv x_i + s_i \pmod{2}          \\
-    -x_i & \equiv -y_i + s_i \pmod{2}         \\
-    x_i  & \equiv y_i + s_i \pmod{2} \qedhere
+    y_i  & \equiv x_i + k_i \pmod{2}          \\
+    -x_i & \equiv -y_i + k_i \pmod{2}         \\
+    x_i  & \equiv y_i + k_i \pmod{2} \qedhere
   \end{align*}
 \end{proof}
 \noindent
 Im letzten Schritt wird erneut vom Wechsel innerhalb der Restklasse Gebrauch gemacht.
 Es gilt: $-1 \equiv 1 \pmod{2}$.
 
-\paragraph{Warum ist einfache Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
-Das Rechnen in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
+\paragraph{Warum ist Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
+Addition in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
 der Menge $\{0,1\}$. Dieses Verhalten ist sehr hilfreich, denn es ermöglicht das Ausdrücken der
 Rechenregeln durch einfache boolesche Algebra.
 Betrachten wir die Wahrheitstabelle (\ref{tab:truth-table-addition-mod-2})
 der Addition in $\mathbb{Z}_2$, kann sofort eine weitere Beobachtung gemacht werden:
 Die Addition Modulo 2 ist äquivalent zu der Exklusiv-Oder-Verknüpfung durch ein
-XOR-Gatter:
+XOR-Gatter.
 
 \begin{table}[h]
   \centering
@@ -135,12 +135,10 @@ unterscheidet und diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
 (\ref{tab:truth-table-xor}) befindet
 man sich demnach in der ersten oder zweiten Zeile.
-Je nach Schlüsselbit ist das Geheimtextbit gegeben als $y_i = 0 \vee 1$.
 Verhalten sich die Schlüsselbit unvorhersehbar, d.\,h. sie sind mit genau 50-prozentiger
-Wahrscheinlichkeit null oder eins, ist es nur durch das Chiffrat nicht möglich, auf
-den Klartext zu schließen. Zu jedem Zeitpunkt hat ein Angreifer nur eine
-50-prozentige Chance, den richtigen Klartext zu erraten.
-Gleichermaßen kann argumentiert werden, sei $x_i = 1$.
+Wahrscheinlichkeit null oder eins, ist es nur durch den Klartext nicht möglich, auf
+den Geheimtext zu schließen. Zu jedem Zeitpunkt hat ein Angreifer nur eine
+50-prozentige Chance, die richtigen Zeichen zu erraten.
 Diese Symmetrie unterscheidet das XOR-Gatter von anderen Logikgattern, zusätzlich ist es die einzige
 Verknüpfung, welche durch doppeltes Anwenden invertierbar ist.
 \autoref{fig:enc-dec-stream-cipher} zeigt den Ver- und Entschlüsselungsprozess
@@ -152,7 +150,7 @@ bei Stromchiffren.
   \begin{tabular}{cc|c}
     $x_i$      & $k_i$      & $y_i = x_i \oplus k_i$ \\ \hline
     \textbf{0} & \textbf{0} & \textbf{0}             \\
-    \textbf{0} & \textbf{1} & \textbf{1}             \\
+    \textbf{0} & \textbf{1} & \textbf{1}             \\ \hline
     1          & 0          & 1                      \\
     1          & 1          & 0                      \\
   \end{tabular}
@@ -217,11 +215,11 @@ Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombit?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
-Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet daher
+Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet
 die zentrale Fragestellung der Verschlüsselungsmethode.
 Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
-Folge von Bit aussehen muss. Im nächsten Abschnitt soll deshalb das Thema der
-Zufallszahlen diskutiert werden.
+Folge von Bit aussehen muss. Das Theme der Zufallszahlen soll deshalb
+im nächsten Abschnitt näher untersucht werden.
 
 \section{Zufallszahlengeneratoren}
 Die Unvorhersehbarkeit des Schlüsselstroms ist die wesentliche
@@ -232,8 +230,8 @@ und deren Unterschiede beschrieben
 
 \paragraph{Echte Zufallszahlengeneratoren}
 Echte Zufallszahlengeneratoren (engl. \acp{trng})
-erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Notiert man
-beispielsweise das Ergebnis von 100 Münzwürfen und erzeugt eine Folge von 100 Bit, ist es quasi
+erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Wirft man
+eine Münze 100-mal und erzeugt eine Folge von 100 Bit, ist es quasi
 unmöglich, dieselbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit,
 dass dies passieren würde, beträgt 1 in $2^{100}$, was verschwindend gering ist.
 Echte Zufallszahlen basieren auf physikalischen Prozessen wie das Werfen einer Münze, Würfeln,
@@ -250,7 +248,7 @@ mathematische Formeln errechnet und sind deterministisch, d.\,h. dieselbe Sequen
 kann zu einem späteren Zeitpunkt reproduziert werden.
 In der Kryptografie können \acp{prng} aufgrund dieser Eigenschaft
 nicht ohne Weiteres eingesetzt werden.
-Die Relevanz der Generatoren sollte jedoch auf keinen Fall unterschätzt werden.
+Die große Relevanz der Generatoren sollte aber auf keinen Fall unterschätzt werden.
 \acp{prng} haben außerhalb der Kryptografie weitreichende Anwendungsgebiete,
 beispielsweise in der Steganografie, Simulation oder während des Testens von Software und Hardware.
 Determinismus ist in diesen Bereichen oftmals eine gewünschte Eigenschaft.
@@ -288,21 +286,6 @@ erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
   \end{enumerate}
   Das One-Time-Pad ist beweisbar sicher.
 \end{definition}
-\noindent
-Zu jedem Bit im Geheimtext gibt es eine Gleichung der Form:
-\begin{align*}
-  y_0   \equiv x_0 & + k_0 \pmod{2} \\
-  y_1   \equiv x_1 & + k_1 \pmod{2} \\
-  \vdots           &                \\
-  y_n   \equiv x_n & + k_n \pmod{2}
-\end{align*}
-\noindent
-Stammt der Schlüsselstrom von einem \ac{trng} können diese Gleichungen nicht gelöst werden.
-Für alle $y_i$ gibt es genau zwei Lösungen mit gleich großer Wahrscheinlichkeit:
-\begin{align*}
-  y_i = 0 & \equiv 0_{x_i} + 0_{k_i} \equiv 1_{x_i} + 1_{k_i} \pmod{2} \\
-  y_i = 1 & \equiv 0_{x_i} + 1_{k_i} \equiv 1_{x_i} + 0_{k_i} \pmod{2}
-\end{align*}
 
 \section{Die praktischen Stromchiffren}
 In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst

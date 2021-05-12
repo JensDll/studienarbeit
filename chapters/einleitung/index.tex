@@ -53,6 +53,7 @@ durch folgende Definition beschrieben ist \parencite*[11]{BOOK:crypto}:
 \end{definition}
 
 \noindent
+Die Sicherheit eines Kryptosystems darf also nur auf der Geheimhaltung des Schlüssels beruhen.
 Auf den ersten Blick scheint das \textit{Kerckhoffs's principle} nicht sonderlich intuitiv.
 Es sei einfach zu glauben, dass ein System
 sicherer sein muss, wenn die Details der Implementierung geheim gehalten werden.
@@ -73,7 +74,7 @@ wie stark ein Bild angepasst werden kann und ab welcher Nachrichtenlängen
 eine Veränderung sichtbar wird.
 \section{Symmetrische Verschlüsselung}
 Denkt man an die Teilbereiche der Kryptografie, ist die symmetrische Verschlüsselung
-dass wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
+das wohl klassischste Beispiel. Zwei Parteien kommunizieren mit einem
 Algorithmus zum Ver- und Entschlüsseln von Nachrichten und haben sich auf einen
 gemeinsamen geheimen Schlüssel geeinigt. Wie es in der Literatur sehr beliebt ist,
 wird die Idee der symmetrischen Verschlüsselung
@@ -87,7 +88,8 @@ oder jedes andere Medium, über das sich digitale Daten übertragen lassen.
 \input{chapters/einleitung/tikz/insecure-channel.tex}
 
 \noindent
-Es ist klar, warum Alice und Bob gerne geheime Nachrichten austauschen würden: Alice möchte sich an ihrem
+Es ist klar, warum Alice und Bob gerne geheime Nachrichten austauschen würden:
+Alice möchte sich an ihrem
 Bankkonto anmelden und sendet ihr Passwort zu Bob. Ein potenzieller Angreifer Oscar
 soll die Passwörter von Alice nicht in Klartext mitlesen können.
 In einer solchen Situation bietet die symmetrische Verschlüsselung eine gute Lösung:
@@ -107,8 +109,7 @@ Kryptografie eine besondere Bedeutung:
   \item $y$ ist das Chiffrat oder der Geheimtext (engl. \textit{ciphertext}).
   \item $k$ ist der Schlüssel (engl. \textit{key}).
   \item $e$ bezeichnet die Verschlüsselung (engl. \textit{encryption}).
-  \item $d$ bezeichnet die Entschlüsselung (engl. \textit{decryption}),
-        d.\,h. die Umkehrung von $e$.
+  \item $d$ bezeichnet die Entschlüsselung (engl. \textit{decryption}).
 \end{itemize}
 
 \noindent
@@ -119,10 +120,20 @@ muss vor der Kommunikation auf einem sicheren Weg zwischen Alice und Bob verteil
 Fast alle kryptografischen Algorithmen, sowohl symmetrische als auch asymmetrische Chiffren
 basieren auf Arithmetik in einer endlichen Menge von ganzen Zahlen \parencite[13]{BOOK:crypto}.
 Dies steht im Gegensatz zu der Mathematik (und dem Alltagsleben),
-in der wir es gewohnt sind, in unendlichen
-Mengen zu rechnen, z.\,B. den natürlichen Zahlen oder den reellen Zahlen. Die modulare Arithmetik,
+von der wir es gewohnt sind, in unendlichen
+Mengen zu rechnen, z.\,B. den natürlichen oder reellen Zahlen. Die modulare Arithmetik,
 also die Division mit Rest, bietet eine gute Möglichkeit, um mit diesen begrenzten Mengen
 zu arbeiten.
+
+\begin{definition}[{Teilbarkeitsbegriff \parencite[22]{BOOK:numberTheory}}]
+  Eine Zahl $d \in \mathbb{Z}$ heißt \textit{Teiler} der Zahl $a \in \mathbb{Z}$,
+  in Zeichen $d \mid a$, wenn es eine Zahl $v \in \mathbb{Z}$ gibt, sodass gilt: $a = dv$.
+  Ist $d$ kein \textit{Teiler} von $a$, so schreibt man: $d \nmid a$.
+\end{definition}
+
+\begin{example}
+  $3 \mid 12$, $-5 \mid 20$, $3 \nmid 7$, $19 \mid 0$, $0 \mid 0$
+\end{example}
 
 \begin{lemma}[{\cite[179-180]{BOOK:numberTheory}}]
   Folgende Aussagen über drei ganze Zahlen $a$, $b$, $m$, wobei $m > 0$, sind äquivalent:
@@ -131,6 +142,7 @@ zu arbeiten.
     \item Die Differenz $a - b$ ist durch $m$ teilbar.
   \end{enumerate}
 \end{lemma}
+\newpage
 \begin{proof}
   Es seien $a = q_1m + r_1$ und $b = q_2m + r_2$ mit $0 \leq r_1,r_2 < m$
   und  $q_1,q_2,r_1,r_2 \in \mathbb{Z}$, die Gleichungen,
@@ -157,7 +169,7 @@ zu arbeiten.
     \Rightarrow m     & \mid (q_1 - q_2)m + (r_1 - r_2) - (q_1 - q_2)m             \\
     \Leftrightarrow m & \mid (r_1 - r_2)
   \end{align*}
-  Aus der letzten Zeile folgt wegen $0 \leq r_1,r_2 < m$ sofort $r_1 - r_2 = 0$.
+  Aus der letzten Zeile folgt wegen $0 \leq r_1,r_2 < m$ sofort: $r_1 - r_2 = 0$.
   Es folgt: $r_1 = r_2$.
 \end{proof}
 
@@ -192,7 +204,7 @@ können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restkla
     \vert7\vert_8 =\{\dots,-17,-9,-1,7,15,23,31,\dots\}
   \end{gather*}
   Man schreibt $|a|_m$ und bezeichnet $a$ als einen
-  Repräsentanten der Restklasse mit dem Modul $m$.
+  Repräsentanten der Klasse mit dem Modul $m$.
 \end{example}
 
 \noindent
@@ -211,12 +223,12 @@ wie es in der Kryptografie oft der Fall ist.
     \item $3^8 = 6561 \equiv 2 \pmod{7}$, weil $6561 = 937 \cdot 7 + 2$ \\
           Wir erhalten das relative große Zwischenergebnis 6561 obwohl wir wissen,
           dass das Ergebnis im Bereich $[0, 6]$ liegen muss.
-    \item Es ist $3^3 = 27 \equiv -1 \pmod{7}$. Man schreibt:
+    \item Es gilt: $3^3 = 27 \equiv -1 \pmod{7}$ und man schreibt:
           \begin{equation*}
             3^8 = (3^3)^2 \cdot 3^2 \equiv (-1)^2 \cdot 9 \equiv 2 \pmod{7}
           \end{equation*}
-          Indem man das Zwischenergebnis $3^3 = 27$ mit einem kleineren Element aus der selben
-          Restklasse ersetzt, kann das Ergebnis effizient ermittelt werden. Zwischenergebnisse
+          Indem das Zwischenergebnis $3^3 = 27$ mit einem kleineren Element aus der selben
+          Restklasse ersetzt wird, kann das Ergebnis effizient ermittelt werden. Zwischenergebnisse
           werden nie größer als 27 und man könnte die Berechnung mit wenig Aufwand auch ohne
           Taschenrechner durchführen. \qedhere
   \end{enumerate}
@@ -297,7 +309,7 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
   Zu zeigen: $d_k(e_k(x)) \equiv x \pmod{26}$.
   \begin{equation*}
-    d_k(e_k(x)) = x \equiv x + k - k \equiv x \pmod{26} \qedhere
+    d_k(e_k(x)) \equiv x + k - k \equiv x \pmod{26} \qedhere
   \end{equation*}
 \end{proof}
 \begin{example}
