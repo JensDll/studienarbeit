@@ -202,15 +202,15 @@ wie es in der Kryptografie oft der Fall ist.
 
 \begin{example}[{\cite[15-16]{BOOK:crypto}}]
   Die Hauptoperation in vielen asymmetrischen Chiffren ist die Exponentiation der Form
-  $x^e \mod{m}$, wobei $x,e,m$ sehr große natürliche Zahlen sind. Anhand eines Beispiels können
+  $x^e \bmod{m}$, wobei $x,e,m$ sehr große natürliche Zahlen sind. Anhand eines Beispiels können
   zwei Formen der modularen Exponentiation gezeigt werden. Es soll das Ergebnis der
-  Berechnung $3^8 \mod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
+  Berechnung $3^8 \bmod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
   ausgerechnet, und im zweiten Beispiel wird zwischen den Restklassen gewechselt:
   \begin{enumerate}
-    \item Es gilt $3^8 = 6561 \equiv 2 \pod{7}$ wir erhalten das relative
+    \item Es gilt $3^8 = 6561 \equiv 2 \pod{7}$, wir erhalten das relative
           große Zwischenergebnis 6561 obwohl wir wissen,
           dass das Ergebnis im Bereich $[0, 6]$ liegen muss.
-    \item Es gilt $3^3 = 27 \equiv -1 \pod{7}$ und man schreibt:
+    \item Es gilt $3^3 = 27 \equiv -1 \pod{7}$, man schreibt:
           \begin{equation*}
             3^8 = (3^3)^2 \cdot 3^2 \equiv (-1)^2 \cdot 9 \equiv 2 \pod{7}
           \end{equation*}
@@ -245,8 +245,8 @@ besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ def
           definiert als die Menge $\mathbb{Z}_m = \{0,1,\dots,m - 1\}$
     \item Zu je zwei Elementen $a,b \in \mathbb{Z}_m$ existiert eindeutig in $\mathbb{Z}_m$
           \begin{enumerate}[topsep=0pt]
-            \item Eine Summe $a + b \mod{m}$
-            \item Ein Produkt $a \cdot b \mod{m}$
+            \item Eine Summe $a + b \bmod{m}$
+            \item Ein Produkt $a \cdot b \bmod{m}$
           \end{enumerate}
   \end{enumerate}
 \end{definition}
