@@ -108,8 +108,8 @@ Definition gegeben werden \parencite[153]{BOOK:crypto}:
           d.\,h. die Laufzeit des Algorithmus wächst
           nicht stärker als eine Polynomfunktion (Polynomialzeit).
     \item Die Umkehrfunktion $x = f^{-1}(y)$ ist komplexitätstheoretisch schwierig berechenbar,
-          d.\,h. es gibt keinen bekannten Algorithmus welcher das Problem in angemessener
-          Zeit lösen kann, zum Beispiel in 1000 Jahren.
+          d.\,h. es gibt keinen bekannten Algorithmus, der das Problem in angemessener
+          Zeit lösen kann, z.\,B. in 1000 Jahren.
   \end{enumerate}
 \end{definition}
 
@@ -150,7 +150,7 @@ folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
     \item Berechne $N = p \cdot q$.
     \item Berechne $\phif{N} = \phif{p \cdot q} = \phif{p} \cdot \phif{q} = (p-1) \cdot (q-1)$.
     \item Wähle eine Zahl $e$ mit $1 \leq e < \phif{N}$ und $e \perp \phif{N}$.
-    \item Berechne $d$ mit $e \cdot d \equiv 1 \pmod{\phif{N}}$ und dem erweiterten
+    \item Berechne $d$ mit $e \cdot d \equiv 1 \pod{\phif{N}}$ und dem erweiterten
           Euklidischen Algorithmus.
     \item Vernichte $p$ und $q$.
     \item Jetzt bilden $(N,e)$ den öffentlichen und $(N,d)$ den privaten Schlüssel.
@@ -163,43 +163,34 @@ von $N$ zu bestimmen und damit auch $\phif{N}$. Die Ver- und Entschlüsselung mi
 gestaltet sich sehr einfach:
 
 \begin{definition}[Das RSA-Verfahren]
-  Es seien der öffentliche und private Schlüssel gegeben mit
-  $\keypub = (N,e)$ und $\keypr = (N,d)$. Dann gilt
+  Es sei $\keypub = (N,e)$ und $\keypr = (N,d)$ der öffentliche und private Schlüssel.
+  Dann gilt für $x,y \in \mathbb{Z}_N$:
   \begin{description}
-    \item[Verschlüsselung:] $y = e_{\keypub}(x) \equiv x^e \pmod{N}$
-    \item[Entschlüsselung:] $x = d_{\keypr}(y) \equiv y^d \pmod{N}$
+    \item[Verschlüsselung:] $y = e_{\keypub}(x) \equiv x^e \pod{N}$
+    \item[Entschlüsselung:] $x = d_{\keypr}(y) \equiv y^d \pod{N}$
   \end{description}
-  mit $x,y \in \mathbb{Z}_N$.
 \end{definition}
 
 \noindent
-Bevor die Korrektheit von RSA bewiesen wird, schreiben wir noch einen Satz auf, welcher im
+Bevor die Korrektheit von RSA bewiesen wird, schreiben wir noch einen Satz auf, der im
 Beweis verwendet werden kann:
 
 \begin{satz}
   \label{satz:composite-mod}
   $m$ ist eine zusammengesetzte Zahl der Form $m = k_1 \cdot k_2 \cdot \ldots \cdot k_n$ und
-  es gilt $a \equiv b \pmod{m}$, dann gilt auch:
+  es gilt $a \equiv b \pod{m}$, dann gilt auch:
   \begin{equation*}
-    a \equiv b \pmod{k_1} \quad\ldots\quad a \equiv b \pmod{k_n}
+    a \equiv b \pod{k_1} \quad\ldots\quad a \equiv b \pod{k_n}
   \end{equation*}
 \end{satz}
 \begin{proof}
   Die eben gezeigten Kongruenzen lassen sich als Gleichungen schreiben:
-  \begin{align*}
-    a - b & = t_0 \cdot m   \\
-    a - b & = t_1 \cdot k_1 \\
-    \vdots                  \\
-    a - b & = t_n \cdot k_n
-  \end{align*}
-  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Es lässt sich schreiben:
   \begin{equation*}
-    t_0 \cdot m = t_1 \cdot k_1 = \ldots = t_n \cdot k_n
+    a - b = t_0 m \qquad a - b = t_1k_1 \quad\ldots\quad a - b = t_nk_n
   \end{equation*}
+  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Es folgt: $t_0m = t_1k_1 = \ldots = t_nk_n$.
   Man wählt jetzt
-  \begin{equation*}
-    t_1 = \frac{t_0m}{k_1} \quad\ldots\quad t_n = \frac{t_0m}{k_n}
-  \end{equation*}
+  $t_1 = \frac{t_0m}{k_1} \quad\ldots\quad t_n = \frac{t_0m}{k_n}$
   und findet immer eine Lösung.
 \end{proof}
 
@@ -210,33 +201,32 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben. Zu zeigen:
   \begin{equation}
     \label{eq:proof-rsa-3.5}
-    x \equiv x^{ed} \pmod{N} \tag{$*$}
+    x \equiv x^{ed} \pod{N} \tag{$*$}
   \end{equation}
-  Wir wissen per Definition:
+  Wir wissen wegen $ed \equiv 1 \pod{\phif{N}}$:
   \begin{align}
     \label{eq:proof-rsa-3.6}
-    e \cdot d & = t \cdot \phif{N} + 1 \qquad t \in \mathbb{Z} \tag{$**$}
+    ed & = t\phif{N} + 1 \qquad t \in \mathbb{Z} \tag{$**$}
   \end{align}
-  Um $x \equiv x^{ed} \pmod{pq}$ zu zeigen, reicht es nach \eqref{satz:composite-mod}
+  Um $x \equiv x^{ed} \pod{pq}$ zu zeigen, reicht es nach \eqref{satz:composite-mod}
   die Faktoren einzeln zu betrachten.
   \begin{enumerate}
-    \item Um $x \equiv x^{ed} \pmod{p}$ zu beweisen, betrachten wir zwei Fälle:
+    \item Um $x \equiv x^{ed} \pod{p}$ zu beweisen, betrachten wir zwei Fälle:
           \begin{enumerate}[topsep=0pt]
-            \item Es gilt $p \mid x$ und es folgt:
-                  $x \equiv 0 \pmod{p}$ woraus folgt: $x^{ed} \equiv 0 \pmod{p}$
-            \item Es gilt $p \nmid x \Rightarrow p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
+            \item Trivial für $p \mid x$.
+            \item Es gilt $p \nmid x$ und daher auch $p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
                   \eqref{eq:proof-rsa-3.5}
                   und umformen:
                   \begin{equation*}
                     x^{ed} \equiv x^{t\phif{N} + 1} \equiv
                     x^{t\phif{N}} \cdot x \equiv
                     x^{t(p - 1)(q - 1)} \cdot x \equiv
-                    (x^{p - 1})^{t(q - 1)} \cdot x \pmod{p}
+                    (x^{p - 1})^{t(q - 1)} \cdot x \pod{p}
                   \end{equation*}
                   Nach dem Kleinen Satz von Fermat (\ref{satz:kleiner-fermat}) ist jetzt zu sehen:
                   \begin{equation*}
                     (x^{p - 1})^{t(q - 1)} \cdot x \equiv
-                    1^{t(q - 1)} \cdot x \equiv x \pmod{p}
+                    1^{t(q - 1)} \cdot x \equiv x \pod{p}
                   \end{equation*}
           \end{enumerate}
     \item Die Überlegung für $q$ kann analog durchgeführt werden. Es müssen hierfür
@@ -260,11 +250,10 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
               2   & 1   & 2   & 0   & 0   & 1                       \\ \hline
             \end{tabular}
           \end{center}
-          Das Ergebnis stimmt, denn es gilt: $e \cdot d = 3 \cdot 7 = 21 \equiv 1 \pmod{20}$.
-    \item Alice kennt den öffentlichen Schlüssel $\keypub = (N,e) = (33,3)$ und kann eine
-          Nachricht $x = 4$ verschlüsseln mit $y = x^e = 4^3 \equiv 31 \pmod{33}$.
-    \item Bob kennt den privaten Schlüssel $\keypr = (N,d) = (33,7)$ und kann die Nachricht
+    \item Alice kennt den öffentlichen Schlüssel $(N,e) = (33,3)$ und kann eine
+          Nachricht $x = 4$ verschlüsseln mit $x^e = 4^3 \equiv 31 \pod{33}$.
+    \item Bob kennt den privaten Schlüssel $(N,d) = (33,7)$ und kann die Nachricht
           entschlüsseln mit $y^d = 31^7 \equiv (-2)^7 \equiv (-2)^5 \cdot 2^2 \equiv
-            1 \cdot 4 \equiv 4 = x \pmod{33}$. \qedhere
+            1 \cdot 4 \equiv 4 \pod{33}$. \qedhere
   \end{enumerate}
 \end{example}

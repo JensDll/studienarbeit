@@ -1,7 +1,7 @@
 \subsection{Satz von Euler und Fermat}
-Es werden im Folgenden zwei Sätze vorgestellt von Euler und Fermat, welche
-in der asymmetrischen Verschlüsselung sehr hilfreich sind. Es muss zuvor jedoch noch eine
-Eigenschaft der Restklassen festgehalten werden:
+Es werden im Folgenden zwei Sätze bewiesen von Euler und Fermat, die
+in fast allen asymmetrischen Verschlüsselungsverfahren eine sehr wesentliche Bedeutung haben.
+Es muss zuvor jedoch noch eine Eigenschaft der Restklassen festgehalten werden:
 
 \begin{satz}[Eindeutigkeit des $ggT$ von Repräsentanten einer Restklasse und dem Modul $m$]
   \label{satz:restklasse-ggt}
@@ -12,14 +12,14 @@ Eigenschaft der Restklassen festgehalten werden:
   \end{equation*}
 \end{satz}
 \begin{proof}
-  Es gilt $b = a + t \cdot m$ mit $t \in \mathbb{Z}$. Es sind
+  Es ist $b = a + tm$ mit $t \in \mathbb{Z}$ nach Definition gegeben. Es sind
   \begin{align*}
     g_1 & = \ggt{a}{m} = x \cdot \hl{Red}{a} + y \cdot \hl{Red}{m}     \\
     g_2 & = \ggt{b}{m} = p \cdot \hl{Green}{b} + q \cdot \hl{Green}{m}
   \end{align*}
-  mit $x,y,p,q \in \mathbb{Z}$. Es gilt außerdem allgemeiner: Wenn $c = x \cdot a + y \cdot m$,
+  mit $x,y,p,q \in \mathbb{Z}$. Es gilt außerdem allgemeiner: Sei $c = x \cdot a + y \cdot m$,
   dann ist $c$ ein Vielfaches von $\ggt{a}{m}$.
-  Man schreibt
+  Man schreibt:
   \begin{align*}
     g_1 & = xa + ym                                    & g_2 & = pb + qm                                \\
         & = x(b - tm) + ym                             &     & = p(a + tm) + qm                         \\
@@ -27,14 +27,14 @@ Eigenschaft der Restklassen festgehalten werden:
         & = x\,\hl{Green}{b} - (xt + y)\,\hl{Green}{m} &     & = p\,\hl{Red}{a} + (pt + q)\,\hl{Red}{m} \\
         & \Rightarrow g_1 \mid g_2                     &     & \Rightarrow g_2 \mid g_1
   \end{align*}
-  und es folgt aus der letzten Zeile: $g_1 = g_2$.
+  Aus den beiden letzten Zeile folgen: $g_1 = g_2$.
 \end{proof}
 
 
 \begin{satz}[Der Satz von Euler]
   Es seien $a,m \in \mathbb{N}^\times$ mit $a \perp m$, dann gilt:
   \begin{equation*}
-    a^{\phif{m}} \equiv 1 \pmod{m}
+    a^{\phif{m}} \equiv 1 \pod{m}
   \end{equation*}
 \end{satz}
 \begin{proof}
@@ -47,7 +47,7 @@ Eigenschaft der Restklassen festgehalten werden:
   Wir betrachten ein Beispiel um eine Vermutung zu bestätigen:
   \begin{example}
     Es ist $\phif{8} = |\{1,3,5,7\}| = 4$. Wir wählen $a = 3$ und bilden in $\mathbb{Z}_8$ die Produkte:
-    $3\cdot \{1,3,5,7\} = \{3,9,15,21\} \equiv \{3,1,7,5\} \pmod{8}$. Die Multiplikation von $a$ erzeugt eine
+    $3\cdot \{1,3,5,7\} = \{3,9,15,21\} \equiv \{3,1,7,5\} \pod{8}$. Die Multiplikation von $a$ erzeugt eine
     Permutation der Menge $\{1,3,5,7\}$.
   \end{example}
   \noindent
@@ -57,28 +57,28 @@ Eigenschaft der Restklassen festgehalten werden:
     gilt dies auch für alle anderen Zahlen der Restklasse.
   }
   Es gilt $x_i \perp m$ und $a \perp m$, wonach auch das Produkt $ax_i$ teilerfremd zu $m$ sein muss.\\
-  Es folgt $ax_i \mod{m} = x_j$ und wir halten fest:
+  Es folgt $ax_i \bmod{m} = x_j$ und wir halten fest:
   \begin{equation*}
     \label{eq:proof-satz-euler}
-    \forall ax_i \, \exists x_j: ax_i \equiv x_j \pmod{m} \tag{$*$}
+    \forall ax_i \, \exists x_j: ax_i \equiv x_j \pod{m} \tag{$*$}
   \end{equation*}
   Es bleibt zu zeigen, dass in \eqref{eq:proof-satz-euler} keine Doppelungen entstehen,
   also alle $ax_i$ Teil unterschiedlicher Restklassen sind. Es muss gelten:
   \begin{equation*}
-    ax_i \not\equiv ax_j \pmod{m} \qquad i \neq j
+    ax_i \not\equiv ax_j \pod{m} \qquad i \neq j
   \end{equation*}
-  Angenommen $ax_i \equiv ax_j \pmod{m}$ für $i \neq j$, dann gilt nach der Kürzungsregel
+  Angenommen $ax_i \equiv ax_j \pod{m}$ für $i \neq j$, dann gilt nach der Kürzungsregel
   \footnote{
     Da das Inverse wegen $a \perp m$ existiert, kann mit diesem multipliziert werden und die $a$'s
     fallen weg.
   }
-  $x_i \equiv x_j \pmod{m}$, was nicht sein kann.
+  $x_i \equiv x_j \pod{m}$, was nicht sein kann.
   Wegen $x_1,x_2,\ldots,x_n \perp m$ liefert die Kürzungsregel, wenn man noch
   $n = \phif{m}$ beachtet, die ursprüngliche Behauptung:
   \begin{align*}
     ax_1 \cdot ax_2 \cdot \ldots \cdot ax_n & \equiv
-    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pmod{m}                       \\
-    a^{\phif{m}}                            & \equiv 1 \pmod{m} \qedhere
+    x_1 \cdot x_2 \cdot \ldots \cdot x_n  \pod{m}                       \\
+    a^{\phif{m}}                            & \equiv 1 \pod{m} \qedhere
   \end{align*}
 \end{proof}
 
@@ -88,9 +88,9 @@ aufgeschrieben werden:
 
 \begin{satz}[Kleiner Satz von Fermat]
   \label{satz:kleiner-fermat}
-  Es seien $a \in \mathbb{N}^\times$ und $p \in \mathbb{P}$ mit $a \perp p$, dann gilt:
+  Es sei $a \in \mathbb{N}^\times$ und $p \in \mathbb{P}$ mit $a \perp p$, dann gilt:
   \begin{equation*}
-    a^{p-1} \equiv 1 \pmod{p}
+    a^{p-1} \equiv 1 \pod{p}
   \end{equation*}
 \end{satz}
 

@@ -12,8 +12,7 @@ dann heißt jedes $t \in T(a) \cap T(b)$ gemeinsamer Teiler von $a$ und $b$.
 \end{example}
 
 \begin{definition}[Größter gemeinsamer Teiler]
-  Es seien $a,b \in \mathbb{N}$.\\
-  Es sei $T = T(a) \cap T(b)$.\\
+  Es seien $a,b \in \mathbb{N}$. Es sei $T = T(a) \cap T(b)$.
   Es sei $g \in T$ und es gelte für alle $t \in T$: $t \leq g$. Dann heißt $g$
   größter gemeinsamer Teiler von $a$ und $b$.
   Man schreibt auch $g = \ggt{a}{b}$.
@@ -71,7 +70,7 @@ Es ist zu sehen, dass sich Rechenregel \ref{enum:ggT5} iterativ anwenden lässt:
 Wird ein maximales $m$ gewählt, mit der Bedingung $(a-mb) > 0$, kann der Algorithmus
 in minimalen Schritten durchgeführt werden. Dies ist der Fall für die Division mit Rest:
 \begin{equation*}
-  \ggt{a}{b} = \ggt{a \mod{b}}{b}
+  \ggt{a}{b} = \ggt{a \bmod{b}}{b}
 \end{equation*}
 
 \begin{example}
@@ -105,7 +104,7 @@ Das Verfahren terminiert nachdem das erste Mal ein Rest von null berechnet wurde
     \KwOut{$\ggt{a}{b}$}
     \BlankLine
     \Fn(){$\ggt{a}{b}$}{
-      $r \leftarrow a \mod{b}$\;
+      $r \leftarrow a \bmod{b}$\;
       \If(){$r = 0$}{
         \Return{$b$}
       }
@@ -126,13 +125,14 @@ Betrachtet man den Ring $\mathbb{Z}_m$, dann ist das Inverse $a^{-1}$
 einer Zahl $a \in \mathbb{Z}_m$ gegeben durch die folgende Beziehung:
 \begin{equation}
   \label{eq:inverse}
-  a \cdot a^{-1} \equiv 1 \pmod{m}
+  a \cdot a^{-1} \equiv 1 \pod{m}
 \end{equation}
 Das multiplikative Inverse existiert nicht für alle Elemente. Es kann aber eine Aussage
 darüber getroffen werden, wann es existiert. Ein Element
 $a \in \mathbb{Z}_m$ besitzt genau dann ein Inverses, wenn gilt $\ggt{a}{m} = 1$.
 Zwei Zahlen $a$ und $b$ für die gilt $\ggt{a}{b} = 1$ nennt man teilerfremd oder
-relativ Prim (Symbol $a \perp b$, engl. \textit{relatively prime} oder \textit{coprime}).
+relativ Prim (engl. \textit{relatively prime} oder \textit{coprime}).
+Es wird hierfür das Symbol $a \perp b$ verwendet.
 Der Erweiterte Euklidische Algorithmus berechnet eine Linearkombination der folgenden Form,
 welche auch als diophantische Gleichung
 bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
@@ -151,7 +151,7 @@ bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
     9   & = 3 \cdot 3 + 0
   \end{align*}
   Der $\ggt{132}{51}$ ist mit 3 bestimmt. Es soll nun versucht werden, ein $x$ und $y$
-  zu finden, sodass: $3 = x \cdot 132 + y \cdot 51$. Aus der vorletzten Zeile weiß man:
+  zu finden, sodass $3 = x \cdot 132 + y \cdot 51$. Aus der vorletzten Zeile weiß man:
   \begin{equation*}
     3 = 21 - 2 \cdot 9
   \end{equation*}
@@ -227,16 +227,16 @@ $m > a$. Das Inverse existiert genau dann, wenn $\ggt{m}{a} = 1$, dies bedeutet 
 eine Gleichung der Form $x \cdot m + y \cdot a = 1$. Stellt man diese Gleichung
 als Kongruenzrelation Modulo $m$ dar, erhalten wir:
 \begin{align*}
-  x \cdot m + y \cdot a & = 1               \\
-  x \cdot m + y \cdot a & \equiv 1 \pmod{m} \\
-  x \cdot 0 + y \cdot a & \equiv 1 \pmod{m} \\
-  a \cdot y             & \equiv 1 \pmod{m}
+  x \cdot m + y \cdot a & = 1              \\
+  x \cdot m + y \cdot a & \equiv 1 \pod{m} \\
+  x \cdot 0 + y \cdot a & \equiv 1 \pod{m} \\
+  a \cdot y             & \equiv 1 \pod{m}
 \end{align*}
 Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welches
 mit $y$ bestimmt wurde.
 \begin{example}
-  Es soll das Inverse $21 \cdot 21^{-1} \equiv 1 \pmod{89}$ bestimmt werden.
-  Es gilt: $21 \perp 89$ und es gibt somit eine Gleichung:
+  Es soll das Inverse $21 \cdot 21^{-1} \equiv 1 \pod{89}$ bestimmt werden.
+  Es gilt $21 \perp 89$ und es gibt somit eine Gleichung
   $x \cdot 89 + y \cdot 21 = 1$. Der Euklidische
   Algorithmus kann tabellarisch durchgeführt werden:
   \begin{center}
@@ -263,7 +263,7 @@ mit $y$ bestimmt wurde.
 
 \noindent
 Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
-\autoref{alg:ggt-e} zu sehen, das Symbol $\div$ bezeichnet die Ganzzahldivision
+\autoref{alg:ggt-e} zu sehen. Das Symbol $\div$ bezeichnet die Ganzzahldivision
 zweier Zahlen $a$ und $b$.
 Wie zuvor terminiert das Verfahren nachdem das erste
 Mal ein Rest von null berechnet wurde.

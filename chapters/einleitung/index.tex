@@ -142,27 +142,15 @@ zu arbeiten.
     \item Die Differenz $a - b$ ist durch $m$ teilbar.
   \end{enumerate}
 \end{lemma}
-\newpage
 \begin{proof}
   Es seien $a = q_1m + r_1$ und $b = q_2m + r_2$ mit $0 \leq r_1,r_2 < m$
-  und  $q_1,q_2,r_1,r_2 \in \mathbb{Z}$, die Gleichungen,
+  und  $q_1,q_2,r_1,r_2 \in \mathbb{Z}$ die Gleichungen,
   die bei Division mit Rest entstehen. \\
-  \textit{i)} $\Rightarrow$ \textit{ii)}: \\
-  Es gilt: $r_1 = r_2$. \\
-  Zu zeigen: $m \mid (a-b)$.
-  \begin{align*}
-    a - b & = q_1m + r_1 - q_2m - r_2    \\
-    a - b & = (q_1 - q_2)m + (r_1 - r_2) \\
-    a - b & = (q_1 - q_2)m
-  \end{align*}
-  Aus der letzten Gleichung folgt: $m \mid (a - b)$. \\
-  \textit{ii)} $\Rightarrow$ \textit{i)}: \\
-  Es gilt: $m \mid (a - b)$. \\
-  Zu zeigen: $r_1 = r_2$.
-  \begin{align*}
-    m                 & \mid (a - b)                    \\
-    \Leftrightarrow m & \mid (q_1 - q_2)m + (r_1 - r_2)
-  \end{align*}
+  \textit{i)} $\Rightarrow$ \textit{ii)}:
+  Es gilt $a - b = q_1m + r_1 - q_2m - r_2 = (q_1 - q_2)m + (r_1 - r_2)$.
+  Da $r_1 = r_2$ vorausgesetzt wird, folgt: $m \mid (a - b)$. \\
+  \textit{ii)} $\Rightarrow$ \textit{i)}:
+  Es gilt $m \mid (a - b) \Leftrightarrow m \mid (q_1 - q_2)m + (r_1 - r_2)$.
   Teilt $m$ zwei Zahlen $a$ und $b$ muss $m$ auch eine Linearkombination dieser Zahlen teilen.
   \begin{align*}
     m                 & \mid (q_1 - q_2)m + (r_1 - r_2) \wedge m \mid (q_1 - q_2)m \\
@@ -184,11 +172,10 @@ führte Gauß folgende Schreibweise ein \parencite[180]{BOOK:numberTheory}:
 \end{equation}
 
 \begin{example}
-  Es sind $a = 29$ und $m = 8$. Man schreibt
+  Es sind $a = 29$ und $m = 8$. Man schreibt:
   \begin{equation*}
-    29 \equiv 5 \pmod{8} \text{\quad oder als Gleichung:\quad} 29 = 3 \cdot 8 + 5
+    29 \equiv 5 \pod{8} \text{\quad oder als Gleichung:\quad} 29 = 3 \cdot 8 + 5 \qedhere
   \end{equation*}
-  und deshalb $8 \mid (29 - 5)$.
 \end{example}
 
 \noindent
@@ -204,7 +191,7 @@ können in eine Klasse zusammengefasst werden, diese nennt man dann eine Restkla
     \vert7\vert_8 =\{\dots,-17,-9,-1,7,15,23,31,\dots\}
   \end{gather*}
   Man schreibt $|a|_m$ und bezeichnet $a$ als einen
-  Repräsentanten der Klasse mit dem Modul $m$.
+  Repräsentanten der Restklasse mit dem Modul $m$.
 \end{example}
 
 \noindent
@@ -220,12 +207,12 @@ wie es in der Kryptografie oft der Fall ist.
   Berechnung $3^8 \mod{7}$ ermittelt werden. Im ersten Beispiel wird das Ergebnis einfach
   ausgerechnet, und im zweiten Beispiel wird zwischen den Restklassen gewechselt:
   \begin{enumerate}
-    \item $3^8 = 6561 \equiv 2 \pmod{7}$, weil $6561 = 937 \cdot 7 + 2$ \\
-          Wir erhalten das relative große Zwischenergebnis 6561 obwohl wir wissen,
+    \item Es gilt $3^8 = 6561 \equiv 2 \pod{7}$ wir erhalten das relative
+          große Zwischenergebnis 6561 obwohl wir wissen,
           dass das Ergebnis im Bereich $[0, 6]$ liegen muss.
-    \item Es gilt: $3^3 = 27 \equiv -1 \pmod{7}$ und man schreibt:
+    \item Es gilt $3^3 = 27 \equiv -1 \pod{7}$ und man schreibt:
           \begin{equation*}
-            3^8 = (3^3)^2 \cdot 3^2 \equiv (-1)^2 \cdot 9 \equiv 2 \pmod{7}
+            3^8 = (3^3)^2 \cdot 3^2 \equiv (-1)^2 \cdot 9 \equiv 2 \pod{7}
           \end{equation*}
           Indem das Zwischenergebnis $3^3 = 27$ mit einem kleineren Element aus der selben
           Restklasse ersetzt wird, kann das Ergebnis effizient ermittelt werden. Zwischenergebnisse
@@ -248,6 +235,7 @@ Bezeichnung: $\mathbb{N}^\times := \{1,2,3,\dots\}$.
 Es gilt also: $\mathbb{N} := \{0\} \cup \mathbb{N}^\times$.
 Um das bekannte Verschlüsselungsverfahren, die Cäsar-Chiffre, im nächsten Abschnitt
 besser beschreiben zu können, wird an dieser Stelle der Ring $\mathbb{Z}_m$ definiert:
+\newpage
 
 \begin{definition}[Der Ring $\mathbb{Z}_m$ der Reste Modulo $m$]
   % https://ftp.agdsn.de/pub/mirrors/latex/dante/macros/latex/required/amscls/doc/amsthdoc.pdf#page=4&zoom=100,148,505
@@ -298,8 +286,8 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
 \begin{definition}[Cäsar-Chiffre]
   Es seien $x,y,k \in \mathbb{Z}_{26}$. Dann gilt:
   \begin{description}
-    \item[Verschlüsselung:] $y = e_k(x) \equiv x + k \pmod{26}$
-    \item[Entschlüsselung:] $x = d_k(y) \equiv y - k \pmod{26}$
+    \item[Verschlüsselung:] $y = e_k(x) \equiv x + k \pod{26}$
+    \item[Entschlüsselung:] $x = d_k(y) \equiv y - k \pod{26}$
   \end{description}
 \end{definition}
 
@@ -307,9 +295,9 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
 \begin{proof}
   Das Verschlüsselungsverfahren funktioniert.
   Die Entschlüsselung des Geheimtextes muss erneut den Klartext ergeben.
-  Zu zeigen: $d_k(e_k(x)) \equiv x \pmod{26}$.
+  Zu zeigen: $d_k(e_k(x)) \equiv x \pod{26}$.
   \begin{equation*}
-    d_k(e_k(x)) \equiv x + k - k \equiv x \pmod{26} \qedhere
+    d_k(e_k(x)) \equiv x + k - k \equiv x \pod{26} \qedhere
   \end{equation*}
 \end{proof}
 \begin{example}
@@ -320,12 +308,12 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
   \end{equation*}
   Der Geheimtext wird wie folgt berechnet:
   \begin{align*}
-    e_9(0)  & \equiv 9 \pmod{26}           \\
-    e_9(13) & \equiv 22 \pmod{26}          \\
-    e_9(6)  & \equiv 15 \pmod{26}          \\
-    e_9(17) & \equiv 26 \equiv 0 \pmod{26} \\
-    e_9(8)  & \equiv 17 \pmod{26}          \\
-    e_9(5)  & \equiv 14 \pmod{26}
+    e_9(0)  & \equiv 9 \pod{26}           \\
+    e_9(13) & \equiv 22 \pod{26}          \\
+    e_9(6)  & \equiv 15 \pod{26}          \\
+    e_9(17) & \equiv 26 \equiv 0 \pod{26} \\
+    e_9(8)  & \equiv 17 \pod{26}          \\
+    e_9(5)  & \equiv 14 \pod{26}
   \end{align*}
   \begin{equation*}
     y_1,y_2,\dots,y_7 = 9,22,15,0,17,14,14 =
@@ -334,7 +322,7 @@ Das Verfahren kann nun folgendermaßen beschrieben werden:
 \end{example}
 
 \noindent
-Wie zu erwarten ist, bietet die Cäsar-Chiffre natürlich keine besonders sicher Verschlüs\-selung.
+Wie zu erwarten, bietet die Cäsar-Chiffre natürlich keine besonders sicher Verschlüs\-selung.
 Es gibt nur 26 verschiedene Schlüssel (wobei $k = 0$ den Klartext nicht verändert),
 welche schnell alle ausprobiert werden können. Zusätzlich
 haben Klartext und Geheimtext die selben statistischen Eigenschaften.

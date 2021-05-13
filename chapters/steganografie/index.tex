@@ -148,7 +148,7 @@ kryptografischen Algorithmus zu verschlüsseln.
         \While(){true}{
           \lIf(){$n = 9$}{$y$ ist zu lang}
           \For{$p \in v(\mathbf{B})$}{
-            \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
+            \For(\tcp*[f]{Farbwerte (r,g,b)}){$c \in p$}{
               $b \leftarrow$ lese nächstes Bit von $y$\;
               schreibe $b$ nach Position $n$ von $c$\;
               \lIf(){$y$ bearbeitet}{\Return{}}
@@ -173,7 +173,7 @@ kryptografischen Algorithmus zu verschlüsseln.
         $l \leftarrow$ lese Nachrichtenlänge bei $p_{1,1}$ und $p_{m,n}$\;
         \While(){$l \neq 0$}{
           \For(){$p \in v(\mathbf{B})$}{
-            \For(\tcp*[f]{Farbwerte r,g,b}){$c \in p$}{
+            \For(\tcp*[f]{Farbwerte (r,g,b)}){$c \in p$}{
               $b \leftarrow$ lese Bit bei Position $n$ von $c$\;
               $y \leftarrow y \cup \{b\}$\;
               \lIf(){$l = 0$} {
@@ -206,7 +206,7 @@ als das Fisher-Yates-Verfahren:
     \KwOut{Permutation $A'$}
     \Begin(){
       \For(){$i \leftarrow mn - 1$ \KwTo $0$}{
-        $j \leftarrow$ erzeuge pseudozufällige Zahl mit $s$ und $j \in [0,i]$\;
+        $j \leftarrow$ pseudozufällige Zahl im Beriech $[0,i]$\;
         tausche $A[i]$ und $A[j]$\;
       }
       \Return{$A$}\;
@@ -288,7 +288,7 @@ zusammen mit dem Erneuerungstoken aktualisiert werden.
 
 \section{Sicherheitsanalyse}
 Es soll nun weiter auf die beschriebene Architektur der Anwendung eingegangen werden,
-mit dem Ziel, Sicherheitsbedenken aufzudecken und Lösungen zu diskutieren.
+mit dem Ziel, Sicherheitsbedenken aufzudecken und mögliche Lösungen zu diskutieren.
 Anschließend wird die steganografische Qualität des Algorithmus
 untersucht und einige Beispiele gezeigt.
 
@@ -339,7 +339,7 @@ Als Garantie, dass nur der geplante Empfänger eine Nachricht lesen
 kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
 der Verschlüsselungsfunktion übergeben wird.
 Der Parameter setzt sich zusammen aus (Datenbank ID $\parallel$ - $\parallel$ Name)
-und ist somit garantiert eindeutig, das Symbol $\parallel$
+und ist somit garantiert eindeutig. Das Symbol $\parallel$
 beschreibt hierbei die Konkatenation zweier Zeichenketten.
 \autoref{alg:data-protect} und \ref{alg:data-unprotect}
 zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
@@ -348,31 +348,28 @@ eine Methode \texttt{CreateProtector} zur Verfügung:
 \begin{singlespace}
   \begin{algorithm}[h]
     \DontPrintSemicolon
-    \KwIn{message $x$ and information of the receiver $(id,username)$}
-    \KwOut{protected message $y$}
+    \KwIn{Nachricht $x$ and Informationen des Empfängers $(id,username)$}
+    \KwOut{Verschlüsselte Nachtricht $y$}
     \Begin(){
       $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
       \Return{$e_k(x)$}
     }
-    \caption{\textit{Data Protection Encryption}}
+    \caption{\textit{Data Protection API} Verschlüsselung}
     \label{alg:data-protect}
   \end{algorithm}
 \end{singlespace}
 
-\noindent
-Es ist jetzt zu sehen, warum es wichtig ist, Anfragen mit einem Benutzer in Verbindung zu bringen:
-
 \begin{singlespace}
   \begin{algorithm}[h]
     \DontPrintSemicolon
-    \KwIn{protected message $y$}
-    \KwOut{message $x$}
+    \KwIn{Verschlüsselte Nachtricht $y$}
+    \KwOut{Entschlüsselte Nachricht $x$}
     \Begin(){
-      $(id, username) \leftarrow$ get user information of request\;
+      $(id, username) \leftarrow$ Benutzerinformationen der Anfrage\;
       $(e_k, d_k) \leftarrow$ \texttt{CreateProtector}($id \parallel \text{-} \parallel username$)\;
       \Return{$d_k(y)$}
     }
-    \caption{\textit{Data Protection Decryption}}
+    \caption{\textit{Data Protection API} Entschlüsselung}
     \label{alg:data-unprotect}
   \end{algorithm}
 \end{singlespace}
@@ -402,14 +399,14 @@ der maximalen Bildkapazität $\bmax$ angegeben:
   \begin{tabular}{|c|c|}
     \hline
     n & $l$        \\ \hline
-    0 & \num{0}    \\ \hline
-    1 & \num{12,5} \\ \hline
-    2 & \num{25}   \\ \hline
-    3 & \num{37,5} \\ \hline
-    4 & \num{50}   \\ \hline
-    5 & \num{62,5} \\ \hline
-    6 & \num{75}   \\ \hline
-    7 & \num{87,5} \\ \hline
+    0 & \num{0}    \\
+    1 & \num{12,5} \\
+    2 & \num{25}   \\
+    3 & \num{37,5} \\
+    4 & \num{50}   \\
+    5 & \num{62,5} \\
+    6 & \num{75}   \\
+    7 & \num{87,5} \\
     8 & \num{100}  \\ \hline
   \end{tabular}
   \label{tab:zuordnung-n-bmax}

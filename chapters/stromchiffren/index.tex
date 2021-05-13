@@ -58,16 +58,18 @@ Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOO
         Mobilgeräten oder anderen eingebetteten Systemen. Ein bekanntes Verfahren ist der
         A5/1 Algorithmus, welcher Teil des GSM-Mobilfunkstandards ist und die Gesprächsdaten
         an der Luftschnittstelle verschlüsselt. A5/1 gilt aufgrund der kurzen Schlüssellänge von
-        64 Bit nicht mehr als uneingeschränkt sicher, erschwert aber dennoch das einfache Abhören.
+        64 Bit nicht mehr als sicher. Obwohl die vollständige Schlüsselsuche immer noch
+        aufwändig ist, wurden viele Angriffe gezeigt, welche die Verschlüsselung
+        in nahezu Echtzeit brechen können.
   \item In der Vergangenheit galt der generelle Gedanke, dass Stromchiffren
         effizienter seien als Blockchiffren.
-        Im Allgemeinen gilt diese Annahme heutzutage jedoch nicht mehr. Moderne Verfahren wie AES
+        Diese Annahme gilt im Allgemeinen heutzutage jedoch nicht mehr. Moderne Verfahren wie AES
         können sowohl in Hardware als auch Software sehr effizient implementiert werden.
 \end{enumerate}
 
 \section{Die Ver- und Entschlüsselung mit Stromchiffren}
 Stromchiffren verschlüsseln jedes Bit im Klartext einzeln. Hierfür
-wird durch ein Schlüs\-sel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bit
+wird mit einem Schlüs\-sel ein geheimer Bitstrom errechnet, welcher paarweise mit den Bit
 des Klartextes kombiniert wird. Die Ver- und Entschlüsselung ist verblüffend einfach, es handelt
 sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 
@@ -75,8 +77,8 @@ sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
   Es seien $x_i,y_i,k_i \in \{0,1\}$ die einzelnen Bit aus Klartext, Geheimtext und Schlüs\-selstrom.
   Es gilt:
   \begin{description}
-    \item[Verschlüsselung:] $y_i = e_{k_i}(x_i) \equiv x_i + k_i \pmod{2}$
-    \item[Entschlüsselung:] $x_i = d_{k_i}(y_i) \equiv y_i + k_i \pmod{2}$
+    \item[Verschlüsselung:] $y_i = e_{k_i}(x_i) \equiv x_i + k_i \pod{2}$
+    \item[Entschlüsselung:] $x_i = d_{k_i}(y_i) \equiv y_i + k_i \pod{2}$
   \end{description}
 \end{definition}
 
@@ -97,14 +99,14 @@ Mit diesem Wissen kann die Verschlüsselungsfunktion durch einfaches Umformen in
 Entschlüsselungsfunktion überführt werden:
 \begin{proof}
   \begin{align*}
-    y_i  & \equiv x_i + k_i \pmod{2}          \\
-    -x_i & \equiv -y_i + k_i \pmod{2}         \\
-    x_i  & \equiv y_i + k_i \pmod{2} \qedhere
+    y_i  & \equiv x_i + k_i \pod{2}          \\
+    -x_i & \equiv -y_i + k_i \pod{2}         \\
+    x_i  & \equiv y_i + k_i \pod{2} \qedhere
   \end{align*}
 \end{proof}
 \noindent
 Im letzten Schritt wird erneut vom Wechsel innerhalb der Restklasse Gebrauch gemacht.
-Es gilt: $-1 \equiv 1 \pmod{2}$.
+Es gilt: $-1 \equiv 1 \pod{2}$.
 
 \paragraph{Warum ist Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
 Addition in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
@@ -189,12 +191,20 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
   ASCII-Zeichenkodierung angegeben ist $\text{\texttt{P}} = 80_{10} = 01010000_2$. Der
   Schlüsselstrom wird außerdem angegeben, es seien
   $(k_0,k_1,\dots,k_7) \allowbreak = 00111010_2$.
-  \newpage
-  \begin{table*}
+
+  \vspace{8mm}
+  \begin{table*}[!h]
     \centering
     \begin{tabular}{lc}
       $\streamencryption$              & \textbf{Alice} \\
                                        &                \\
+      \multicolumn{1}{c}{\streamarrow} & \textbf{Oscar}
+    \end{tabular}
+  \end{table*}
+
+  \begin{table*}[!h]
+    \centering
+    \begin{tabular}{lc}
       \multicolumn{1}{c}{\streamarrow} & \textbf{Oscar} \\
                                        &                \\
       $\streamdecryption$              & \textbf{Bob}
@@ -210,12 +220,13 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
 
 \noindent
 Stromchiffren erscheinen fast zu gut, um wahr zu sein.
-Es gibt jedoch auch hier Einschränkungen, welche in der Praxis entstehen.
+Es gibt jedoch auch hier Einschränkungen, welche in der Praxis entstehen und
+später untersucht werden.
 Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombit?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
-Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet
+Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet daher
 die zentrale Fragestellung der Verschlüsselungsmethode.
 Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
 Folge von Bit aussehen muss. Das Theme der Zufallszahlen soll deshalb
@@ -241,7 +252,7 @@ Schlüsselerzeugung häufig eingesetzt.
 \paragraph{Pseudozufallszahlengeneratoren}
 Pseudozufallszahlengeneratoren (engl. \acp{prng})
 generieren Zahlenfolgen basierend auf einem Startwert, welcher im Englischen oft als
-\enquote{\textit{seed}} bezeichnet wird. Die Zahlen eines \ac{prng} sind nicht
+\textit{seed} bezeichnet wird. Die Zahlen eines \ac{prng} sind nicht
 in der Art zufällig, wie man es erwarten könnte.
 Obwohl sie aussehen wie echte Zufallszahlen, werden sie durch
 mathematische Formeln errechnet und sind deterministisch, d.\,h. dieselbe Sequenz
@@ -288,6 +299,10 @@ erfüllt. Es ist folgendermaßen definiert \parencite[37]{BOOK:crypto}:
 \end{definition}
 
 \section{Die praktischen Stromchiffren}
+
+\input{chapters/stromchiffren/tikz/key-generation-stream.tex}
+
+\noindent
 In der Praxis hat das Verschlüsseln mit \ac{otp} natürlich einen Hacken, denn warum sonst
 sollten heutzutage andere Verfahren eingesetzt werden?
 Der erste Nachteil ist die Anforderung eines \ac{trng}, dieser benötigt spezielle
@@ -295,19 +310,16 @@ Hardware und ist in der Regel nicht Teil eines Standardcomputers.
 Der zweite und wahrscheinlich größere Nachteil ist die Handhabung des Schlüsselstroms:
 Jedes Schlüsselstrombit wird nur einmal verwendet.
 Das One-Time-Pad benötigt somit einen Schlüssel, welcher genauso lang ist
-wie die Nachricht selbst. Es ist klar, warum diese Anforderung
+wie die Nachricht selbst.
+Es ist klar, warum diese Anforderung
 selbst bei mittelgroßen Nachrichten problematisch wird, zusätzlich muss nach jeder
-Übertragung ein neuer Schlüssel ausgetauscht werden. Die Idee von \ac{otp} ist gut,
+Übertragung ein neuer Schlüssel ausgetauscht werden.
+Die Idee von \ac{otp} ist gut,
 jedoch müssen für den praktischen Gebrauch einige Modifikationen vorgenommen werden.
 Es wird versucht, den Schüsselstrom, welcher aus einer echt zufälligen Quelle stammt,
 durch die Ausgabe eines \ac{csprng} zu ersetzen, wobei der Schlüssel $k$
 den Startwert des \ac{prng} bildet. Das Prinzip dieser Idee ist in
-\autoref{fig:stream-key-gen} zu sehen.
-
-\input{chapters/stromchiffren/tikz/key-generation-stream.tex}
-
-\noindent
-Zunächst ist wichtig festzuhalten, dass
+\autoref{fig:stream-key-gen} zu sehen. Zunächst ist wichtig festzuhalten, dass
 Stromchiffren nicht beweisbar sicher sind. Es ist allerdings so, dass alle in der
 Praxis verwendeten Algorithmen (Stromchiffren, Blockchiffren, asymmetrische
 Verfahren), keine informationstheoretische Sicherheit aufweisen \parencite[38]{BOOK:crypto}.
@@ -323,6 +335,6 @@ sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryp
 (asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
 berechnet werden kann, durch das Bestimmen der Primfaktorzerlegung einer großen
 natürlichen Zahl. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,
-ob es andere Verfahren gibt, welche das Problem effizienter lösen können.
+ob es andere Verfahren gibt, die das Problem effizienter lösen können.
 Im Fall von symmetrischen Verfahren nimmt man an, dass es keinen besseren Algorithmus
 gibt als die vollständige Schlüsselsuche.
