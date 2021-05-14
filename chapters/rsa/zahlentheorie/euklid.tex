@@ -174,10 +174,13 @@ bezeichnet wird \parencite[160]{BOOK:crypto} \parencite{SITE:diophant}:
 \noindent
 Das Verfahren kann erneut allgemein betrachtet werden. Durch Rückwärtsarbeiten erhält
 man verschiedene Gleichungen der folgenden Form:
-\begin{align*}
-  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                                           \\
-  \ggt{a}{b} & = x_{i+1} \cdot \hl{Red}{$a_{i+1}$} + y_{i+1} \cdot \hl{Green}{$b_{i+1}$}
-\end{align*}
+\begin{align}
+  \label{eq:ggt1}
+  \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i \tag{$*$} \\
+  \label{eq:ggt2}
+  \ggt{a}{b} & = x_{i+1} \cdot \hl{Red}{$a_{i+1}$} +
+  y_{i+1} \cdot \hl{Green}{$b_{i+1}$} \tag{$**$}
+\end{align}
 Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
 \begin{align*}
   a_i                      & = q_i \cdot b_i + r_i             \\
@@ -185,7 +188,7 @@ Außerdem kennen wir die Gleichungen aus \eqref{eq:euklid}:
   \text{mit} \quad a_{i+1} & = b_i                             \\
   b_{i+1}                  & = r_i = a_i - q_i \cdot b_i
 \end{align*}
-Einsetzen und umformen:
+Einsetzen von \eqref{eq:euklid} in \eqref{eq:ggt1} und in die Form von \eqref{eq:ggt2} bringen:
 \begin{align*}
   \ggt{a}{b} & = x_i \cdot a_i + y_i \cdot b_i                                                     \\
              & = x_i \cdot (q_i \cdot b_i + r_i) + y_i \cdot a_{i+1}                               \\
@@ -222,8 +225,8 @@ einfach und schnell durchführbar ist:
 
 \noindent
 Es soll nun gezeigt werden, wie der erweiterte Euklidischen Algorithmus verwendet werden kann,
-um multiplikative Inverse zu berechnen. Es soll das Inverse $a \mod{m}$ bestimmt werden, wobei
-$m > a$. Das Inverse existiert genau dann, wenn $\ggt{m}{a} = 1$, dies bedeutet es gibt
+um multiplikative Inverse zu berechnen. Es soll das Inverse $a \bmod{m}$ bestimmt werden, wobei
+$m > a$. Das Inverse existiert genau dann, wenn gilt $\ggt{m}{a} = 1$, dies bedeutet es gibt
 eine Gleichung der Form $x \cdot m + y \cdot a = 1$. Stellt man diese Gleichung
 als Kongruenzrelation Modulo $m$ dar, erhalten wir:
 \begin{align*}
@@ -236,7 +239,7 @@ Die letzte Zeile ist genau die Definition des Inversen \eqref{eq:inverse}, welch
 mit $y$ bestimmt wurde.
 \begin{example}
   Es soll das Inverse $21 \cdot 21^{-1} \equiv 1 \pod{89}$ bestimmt werden.
-  Es gilt $21 \perp 89$ und es gibt somit eine Gleichung
+  Es gilt $21 \perp 89$ und es gibt somit eine Gleichung der Form
   $x \cdot 89 + y \cdot 21 = 1$. Der Euklidische
   Algorithmus kann tabellarisch durchgeführt werden:
   \begin{center}
@@ -263,7 +266,7 @@ mit $y$ bestimmt wurde.
 
 \noindent
 Eine rekursive Implementierung des erweiterten Euklidischen Algorithmus ist in
-\autoref{alg:ggt-e} zu sehen. Das Symbol $\div$ bezeichnet die Ganzzahldivision
+\autoref{alg:ggt-e} zu sehen. Das Symbol $\div$ bezeichnet hierbei die Ganzzahldivision
 zweier Zahlen $a$ und $b$.
 Wie zuvor terminiert das Verfahren nachdem das erste
 Mal ein Rest von null berechnet wurde.
@@ -274,7 +277,7 @@ Mal ein Rest von null berechnet wurde.
     \KwOut{$\ggt{a}{b}$ als auch $x$ und $y$, sodass $\ggt{a}{b} = x \cdot a + y \cdot b$}
     \BlankLine
     \Fn(){$ggT(a,b)$}{
-      $r \leftarrow a \mod{b}$\;
+      $r \leftarrow a \bmod{b}$\;
       $q \leftarrow a \div b$\;
       \If(){$r = 0$}{
         \Return{$(0,1,b)$}

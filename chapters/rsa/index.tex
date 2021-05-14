@@ -114,7 +114,7 @@ Definition gegeben werden \parencite[153]{BOOK:crypto}:
 \end{definition}
 
 \noindent
-Es gibt zwei Einwegfunktionen, welche in der Praxis häufig eingesetzt werden:
+Es gibt zwei Einwegfunktionen, die in der Praxis häufig eingesetzt werden:
 Das Faktorisierungsproblem und die Umkehrung der Exponentiation mit ganzen Zahlen
 (Lösen des diskreten Logarithmus).
 RSA basiert auf dem Faktorisierungsproblem.
@@ -140,7 +140,7 @@ um nachzuvollziehen warum die RSA-Verschlüsselung funktioniert.
 Das RSA-Verfahren basiert auf der Annahme, dass es nicht effizient
 möglich ist, die Primfaktorzerlegung einer natürlichen Zahl zu bestimmen.
 Die Generierung des privaten und öffentlichen Schlüssels kann in die
-folgenden fünf Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
+folgenden Schritte unterteilt werden \parencite[176]{BOOK:crypto}:
 \newpage
 
 \begin{definition}[RSA Schlüsselgenerierung]\mbox{}
@@ -188,9 +188,8 @@ Beweis verwendet werden kann:
   \begin{equation*}
     a - b = t_0 m \qquad a - b = t_1k_1 \quad\ldots\quad a - b = t_nk_n
   \end{equation*}
-  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Es folgt: $t_0m = t_1k_1 = \ldots = t_nk_n$.
-  Man wählt jetzt
-  $t_1 = \frac{t_0m}{k_1} \quad\ldots\quad t_n = \frac{t_0m}{k_n}$
+  Wobei $t_i$ irgendwelche ganzen Zahlen sind. Es gilt $t_0m = t_1k_1 = \ldots = t_nk_n$.
+  Man wählt jetzt $t_1 = \frac{t_0m}{k_1} \,\ldots\, t_n = \frac{t_0m}{k_n}$
   und findet immer eine Lösung.
 \end{proof}
 
@@ -213,7 +212,7 @@ Es soll nun Bewiesen werden, warum das RSA-Verfahren funktioniert:
   \begin{enumerate}
     \item Um $x \equiv x^{ed} \pod{p}$ zu beweisen, betrachten wir zwei Fälle:
           \begin{enumerate}[topsep=0pt]
-            \item Trivial für $p \mid x$.
+            \item Es gilt $p \mid x \Rightarrow$ trivial.
             \item Es gilt $p \nmid x$ und daher auch $p \perp x$, einsetzen von \eqref{eq:proof-rsa-3.6} in
                   \eqref{eq:proof-rsa-3.5}
                   und umformen:

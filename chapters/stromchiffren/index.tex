@@ -58,9 +58,9 @@ Generell lassen sich die folgenden drei Punkte zusammenfassen \parencite[31]{BOO
         Mobilgeräten oder anderen eingebetteten Systemen. Ein bekanntes Verfahren ist der
         A5/1 Algorithmus, welcher Teil des GSM-Mobilfunkstandards ist und die Gesprächsdaten
         an der Luftschnittstelle verschlüsselt. A5/1 gilt aufgrund der kurzen Schlüssellänge von
-        64 Bit nicht mehr als sicher. Obwohl die vollständige Schlüsselsuche immer noch
-        aufwändig ist, wurden viele Angriffe gezeigt, welche die Verschlüsselung
-        in nahezu Echtzeit brechen können.
+        64 Bit nicht mehr als sicher. Obwohl die vollständige Schlüsselsuche noch immer
+        aufwändig ist, wurden viele Angriffe demonstriert, mit denen die Verschlüsselung
+        in nahezu Echtzeit gebrochen werden kann.
   \item In der Vergangenheit galt der generelle Gedanke, dass Stromchiffren
         effizienter seien als Blockchiffren.
         Diese Annahme gilt im Allgemeinen heutzutage jedoch nicht mehr. Moderne Verfahren wie AES
@@ -83,7 +83,7 @@ sich in beide Richtungen um eine einfache Addition im Ring $\mathbb{Z}_2$.
 \end{definition}
 
 \noindent
-Betrachteten wir die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf, welche
+Betrachteten wir die Ver- und Entschlüsselungsfunktion, fallen drei Aspekte auf, die
 besprochen werden müssen \parencite[31-34]{BOOK:crypto}:
 
 \begin{enumerate}
@@ -106,7 +106,7 @@ Entschlüsselungsfunktion überführt werden:
 \end{proof}
 \noindent
 Im letzten Schritt wird erneut vom Wechsel innerhalb der Restklasse Gebrauch gemacht.
-Es gilt: $-1 \equiv 1 \pod{2}$.
+Es gilt $-1 \equiv 1 \pod{2}$.
 
 \paragraph{Warum ist Addition im Ring $\mathbb{Z}_2$ eine gute Verschlüsselung?}\mbox{}\\
 Addition in $\mathbb{Z}_2$ liefert aufgrund der Division mit Rest nur Ergebnisse in
@@ -132,7 +132,7 @@ XOR-Gatter.
 
 \noindent
 Das XOR-Gatter spielt eine wesentliche Rolle in vielen kryptografischen Verfahren.
-Es besitzt besondere Eigenschaften, welche es von anderen Logikgattern
+Es besitzt besondere Eigenschaften, die es von anderen Logikgattern
 unterscheidet und diese sollen jetzt untersucht werden.
 Angenommen es soll das Klartextbit $x_i = 0$ verschlüsselt werden. In der Wahrheitstabelle
 (\ref{tab:truth-table-xor}) befindet
@@ -166,19 +166,19 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
 
 \newcommand{\streamencryption}{
   \begin{aligned}
-    x_0,\dots,x_7 = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}  \\
-    \oplus                &                                      \\
-    k_0,\dots,k_7 = 00111 & 010_2                                \\
-    y_0,\dots,y_7 = 01101 & 010_2 = 106_{10} = \text{\texttt{j}}
+    (x_0,\dots,x_7) = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}  \\
+    \oplus                  &                                      \\
+    (k_0,\dots,k_7) = 00111 & 010_2                                \\
+    (y_0,\dots,y_7) = 01101 & 010_2 = 106_{10} = \text{\texttt{j}}
   \end{aligned}
 }
 
 \newcommand{\streamdecryption}{
   \begin{aligned}
-    y_0,\dots,y_7 = 01101 & 010_2 = 106_{10} = \text{\texttt{j}} \\
-    \oplus                &                                      \\
-    k_0,\dots,k_7 = 00111 & 010_2                                \\
-    x_0,\dots,x_7 = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}
+    (y_0,\dots,y_7) = 01101 & 010_2 = 106_{10} = \text{\texttt{j}} \\
+    \oplus                  &                                      \\
+    (k_0,\dots,k_7) = 00111 & 010_2                                \\
+    (x_0,\dots,x_7) = 01010 & 000_2 = 80_{10} = \text{\texttt{P}}
   \end{aligned}
 }
 
@@ -220,29 +220,28 @@ In einem Beispiel soll jetzt ein einfacher Informationsaustausch demonstriert we
 
 \noindent
 Stromchiffren erscheinen fast zu gut, um wahr zu sein.
-Es gibt jedoch auch hier Einschränkungen, welche in der Praxis entstehen und
-später untersucht werden.
+Wie sich jedoch später zeigt, gibt es auch hier Einschränkungen, welche in der Praxis entstehen.
 Es bleibt die Letzte der drei Fragestellungen zu beantworten.
 
 \paragraph{Was sind die Eigenschaften der Schlüsselstrombit?}\mbox{}\\
 Die Sicherheit von Stromchiffren hängt vollständig von der Qualität des Schlüsselstroms ab.
-Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet daher
+Das Generieren dieser Folge ($k_1,k_2,\dots,k_n$) bildet somit
 die zentrale Fragestellung der Verschlüsselungsmethode.
 Es wurde gezeigt, dass der Schlüsselstrom wie eine zufällige
-Folge von Bit aussehen muss. Das Theme der Zufallszahlen soll deshalb
-im nächsten Abschnitt näher untersucht werden.
+Folge von Bit aussehen muss. Im folgenden Abschnitt soll deshalb
+das Thema der Zufallszahlen näher untersucht werden.
 
 \section{Zufallszahlengeneratoren}
 Die Unvorhersehbarkeit des Schlüsselstroms ist die wesentliche
-Eigenschaft von Stromchiffren. Im Folgenden werden einige
+Eigenschaft von Stromchiffren. Es werden in diesem Abschnitt einige
 Formen von Zufallszahlengeneratoren (engl. \acp{rng}) vorgestellt
 und deren Unterschiede beschrieben
 \parencite[35-36]{BOOK:crypto} \parencite{SITE:randomorg}.
 
 \paragraph{Echte Zufallszahlengeneratoren}
 Echte Zufallszahlengeneratoren (engl. \acp{trng})
-erzeugen Zahlen, welche in keiner Weise vorhersehbar und reproduzierbar sind. Wirft man
-eine Münze 100-mal und erzeugt eine Folge von 100 Bit, ist es quasi
+erzeugen Zahlen, die in keiner Weise vorhersehbar und reproduzierbar sind. Wirft man
+eine Münze 100-mal und erstellt eine Folge von 100 Bit, ist es quasi
 unmöglich, dieselbe Sequenz ein zweites Mal zu erzeugen. Die Wahrscheinlichkeit,
 dass dies passieren würde, beträgt 1 in $2^{100}$, was verschwindend gering ist.
 Echte Zufallszahlen basieren auf physikalischen Prozessen wie das Werfen einer Münze, Würfeln,
@@ -331,7 +330,7 @@ In anderen Worten ausgedrückt: Es ist nicht effizient möglich, den
 Schlüssel anhand des Geheimtextes zu berechnen. Allgemein kann keine
 Aussage darüber getroffen werden, ob ein Problem mit bekannten Verfahren
 optimal gelöst wird, weshalb die Sicherheit eines Systems nie garantiert,
-sondern nur angenommen werden kann. Ein bekanntes Beispiel ist dass des RSA-Kryptosystems
+sondern nur angenommen werden kann. Ein bekanntes Beispiel ist das des RSA-Kryptosystems
 (asymmetrisches Verschlüsselungsverfahren), wessen Schlüssel
 berechnet werden kann, durch das Bestimmen der Primfaktorzerlegung einer großen
 natürlichen Zahl. Obwohl viele Faktorisierungsverfahren bekannt sind, ist es nicht klar,

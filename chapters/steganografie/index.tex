@@ -134,7 +134,8 @@ kryptografischen Algorithmus zu verschlüsseln.
   mit $y \in [1, m]$ und $x \in [1, n]$. Es sei $P$ die Menge aller Pixel von $\mathbf{B}$
   und $v$ eine Funktion mit $v: P \setminus \{p_{1,1},p_{m,n}\} \leftarrow v(\mathbf{B})$.
   \autoref{alg:lsb-enkodierung} und \ref{alg:lsb-dekodierung} zeigen ein Verfahren für das
-  Schreiben und Lesen einer Nachricht in $\mathbf{B}$.
+  Schreiben und Lesen einer Nachricht in $\mathbf{B}$. Das Symbol $\parallel$
+  beschreibt hierbei die Konkatenation zweier Zeichenketten.
 
   \begin{singlespace}
     \begin{algorithm}
@@ -175,7 +176,7 @@ kryptografischen Algorithmus zu verschlüsseln.
           \For(){$p \in v(\mathbf{B})$}{
             \For(\tcp*[f]{Farbwerte (r,g,b)}){$c \in p$}{
               $b \leftarrow$ lese Bit bei Position $n$ von $c$\;
-              $y \leftarrow y \cup \{b\}$\;
+              $y \leftarrow y \parallel b$\;
               \lIf(){$l = 0$} {
                 \Return{$d_k(y)$}
               }
@@ -195,7 +196,7 @@ Damit eine Nachricht im Bild möglichst wenig auffällt, macht es Sinn, Pixel
 so auszuwählen, dass diese gleichmäßig verteilt sind. Die Verteilfunktion $v$ hat genau diese
 Aufgabe. Das Bild $\mathbf{B}$ wird als Folge der natürlichen Zahlen
 $a_i = 0,1,\ldots,mn - 1$ betrachtet.
-Durch ein \acs{prng} wird jetzt
+Durch ein \acs{prng} wird
 eine pseudozufällige Permutation von $a_i$ bestimmt. Der Algorithmus ist bekannt
 als das Fisher-Yates-Verfahren:
 
@@ -218,10 +219,10 @@ als das Fisher-Yates-Verfahren:
 
 
 \noindent
-Der Determinismus des \acs{prng} ist wichtig, da die gleiche Permutation
-für das Lesen der Nachricht ein zweites Mal erzeugt werden muss.
 Durch das Lösen von $a = n \cdot y + x$ für alle $a \in A'$ mit $0 \leq x < n$
 kann die Permutation in null indizierte Koordinaten $(x,y)$ des Bilds umgewandelt werden.
+Der Determinismus des \acs{prng} ist wichtig, da die gleiche Permutation
+für das Lesen der Nachricht ein zweites Mal erzeugt werden muss.
 \begin{example}
   Ein wird ein $2 \times 3$ großes Bild betrachtet und es gilt $A' = (2,5,3,1,0,4)$.
   \begin{align*}
@@ -332,15 +333,14 @@ von 30 Sekunden und es werden keine Sitzungsinformationen gespeichert.
 
 \subsection{Kryptografische Qualität}
 Nachrichten werden verschlüsselt, bevor sie in einem Bild versteckt werden.
-Verschlüssel\-ung geschieht durch die \textit{ASP.NET Core Data Protection API}
-, welche als sicher angenommen wird.
+Verschlüssel\-ung geschieht durch die \textit{ASP.NET Core Data Protection API},
+welche als sicher angenommen wird.
 \footnote{\url{https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/introduction?view=aspnetcore-5.0}}
 Als Garantie, dass nur der geplante Empfänger eine Nachricht lesen
 kann, ist ein eindeutiger \textit{purposes parameter} nötig, welcher
 der Verschlüsselungsfunktion übergeben wird.
 Der Parameter setzt sich zusammen aus (Datenbank ID $\parallel$ - $\parallel$ Name)
-und ist somit garantiert eindeutig. Das Symbol $\parallel$
-beschreibt hierbei die Konkatenation zweier Zeichenketten.
+und ist somit garantiert eindeutig.
 \autoref{alg:data-protect} und \ref{alg:data-unprotect}
 zeigen das Prinzip der Verschlüsselung. Die \textit{Data Protection API} stellt
 eine Methode \texttt{CreateProtector} zur Verfügung:
